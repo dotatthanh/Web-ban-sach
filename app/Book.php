@@ -13,6 +13,7 @@ class Book extends Model
     	'price',
         'sale',
         'content',
+        'amount',
         'total_export'
     ];
 
@@ -49,8 +50,17 @@ class Book extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function bookSuppliers(){
+        return $this->hasMany(BookSupplier::class);
+    }
+
     public function getTotalExportAttribute()
     {
         return $this->orders->sum('amount');
+    }
+
+    public function getAmountAttribute()
+    {
+        return $this->bookSuppliers->sum('amount');
     }
 }

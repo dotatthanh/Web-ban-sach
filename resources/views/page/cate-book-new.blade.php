@@ -40,25 +40,17 @@
 							<div class="book">
 								<div class="book-img">
 									<div class="img-item">
-									<a href="" class="c-img">
-										<img title="" src="{{ asset('storage/'.$book->img) }}" alt="" class=""><!-- img-item -->
-									</a>
+										<a href="" class="c-img">
+											<img title="" src="{{ asset('storage/'.$book->img) }}" alt="" class=""><!-- img-item -->
+										</a>
 									</div>
 									<div class="hover">
 										<div class="icon-book">
-											<!-- <a href="{{ route('pages.show', $book->id) }}" title="">
+											<a href="{{ route('pages.show', $book->id) }}" title="">
 												<img title="" src="{{ asset('images/timkiem.png') }}" alt="">
 											</a>
 											<a href="{{ route('page.add-to-cart', [$book->id, $book->name]) }}" title="" class="add-to-cart">
 												<img title="" src="{{ asset('images/cart.png') }}" alt="">
-											</a> -->
-											<a href="{{ route('pages.show', $book->id) }}" title="" class="text-white align-top">
-												<img title="" src="{{ asset('images/timkiem.png') }}" alt="" class="d-block m-auto">
-												<span class="mt-1 d-inline-block font-10 mr-0">Chi tiết sách</span>
-											</a>
-											<a href="{{ route('page.add-to-cart', [$book->id, $book->name]) }}" title="" class="add-to-cart text-white">
-												<img title="" src="{{ asset('images/cart.png') }}" alt="" class="d-block m-auto">
-												<span class="mt-1 d-inline-block font-10 mr-0">Thêm vào giỏ hàng</span>
 											</a>
 										</div>
 									</div>

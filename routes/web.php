@@ -8,7 +8,7 @@ Auth::routes();
 
 Route::get('/home', 'TypeController@index')->name('home');
 
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin'], function(){
 	Route::resource('books', 'BookController');
 	Route::resource('authors', 'AuthorController');
 	Route::resource('types', 'TypeController');
@@ -17,6 +17,11 @@ Route::group(['prefix' => 'admin'],function(){
 	Route::resource('news', 'NewController');
 	Route::resource('contacts', 'ContactController');
 	Route::resource('warehouses', 'WarehouseController');
+
+
+	Route::group(['prefix' => 'statistic'], function(){
+		Route::get('book', 'StatisticController@bookStatistic')->name('book-statistic');
+	});
 });
 
 

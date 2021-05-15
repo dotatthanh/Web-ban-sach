@@ -39,19 +39,11 @@
 						<img title="" src="{{ asset('storage/'.$bookTV->img) }}" alt="" class="img-item">
 						<div class="hover">
 							<div class="icon-book">
-								<!-- <a href="{{ route('pages.show', $bookTV->id) }}" title="">
+								<a href="{{ route('pages.show', $bookTV->id) }}" title="">
 									<img title="" src="{{ asset('images/timkiem.png') }}" alt="">
 								</a>
 								<a href="{{ route('page.add-to-cart', [$bookTV->id, $bookTV->name]) }}" title="" class="add-to-cart">
 									<img title="" src="{{ asset('images/cart.png') }}" alt="">
-								</a> -->
-								<a href="{{ route('pages.show', $bookTV->id) }}" title="" class="text-white align-top font-10">
-									<img title="" src="{{ asset('images/timkiem.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Chi tiết sách</span>
-								</a>
-								<a href="{{ route('page.add-to-cart', [$bookTV->id, $bookTV->name]) }}" title="" class="add-to-cart text-white font-10">
-									<img title="" src="{{ asset('images/cart.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Thêm vào giỏ hàng</span>
 								</a>
 							</div>
 						</div>
@@ -96,16 +88,15 @@
 						<img title="" src="{{ asset('storage/'.$bookTA->img) }}" alt="" class="img-item">
 						<div class="hover">
 							<div class="icon-book">
-								<a href="{{ route('pages.show', $bookTA->id) }}" title="" class="text-white align-top font-10">
-									<img title="" src="{{ asset('images/timkiem.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Chi tiết sách</span>
+								<a href="{{ route('pages.show', $bookTA->id) }}" title="">
+									<img title="" src="{{ asset('images/timkiem.png') }}" alt="">
 								</a>
-								<a href="{{ route('page.add-to-cart', [$bookTA->id, $bookTA->name]) }}" title="" class="add-to-cart text-white font-10">
-									<img title="" src="{{ asset('images/cart.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Thêm vào giỏ hàng</span>
+								<a href="{{ route('page.add-to-cart', [$bookTA->id, $bookTA->name]) }}" title="" class="add-to-cart">
+									<img title="" src="{{ asset('images/cart.png') }}" alt="">
 								</a>
 							</div>
 						</div>
+						<!-- <span class="book-sale">New</span> -->
 					</div>
 					<div class="book-info">
 						<h4><a href="#" title="{{ $bookTA->name }}">
@@ -153,17 +144,15 @@
 						<img title="" src="{{ asset('storage/'.$bookSale->img) }}" alt="" class="img-item">
 						<div class="hover">
 							<div class="icon-book">
-								<a href="{{ route('pages.show', $bookSale->id) }}" title="" class="text-white align-top font-10">
-									<img title="" src="{{ asset('images/timkiem.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Chi tiết sách</span>
+								<a href="{{ route('pages.show', $bookSale->id) }}" title="">
+									<img title="" src="{{ asset('images/timkiem.png') }}" alt="">
 								</a>
-								<a href="{{ route('page.add-to-cart', [$bookSale->id, $bookSale->name]) }}" title="" class="add-to-cart text-white font-10">
-									<img title="" src="{{ asset('images/cart.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Thêm vào giỏ hàng</span>
+								<a href="{{ route('page.add-to-cart', [$bookSale->id, $bookSale->name]) }}" title="" class="add-to-cart">
+									<img title="" src="{{ asset('images/cart.png') }}" alt="">
 								</a>
 							</div>
 						</div>
-						<span class="book-sale">- {{ $bookSale->sale }}%</span>
+						<!-- <span class="book-sale">New</span> -->
 					</div>
 					<div class="book-info">
 						<h4><a href="#" title="{{ $bookSale->name }}">
@@ -236,16 +225,15 @@
 						<img title="" src="{{ asset('storage/'.$bookLiterature->img) }}" alt="" class="img-item">
 						<div class="hover">
 							<div class="icon-book">
-								<a href="{{ route('pages.show', $bookLiterature->id) }}" title="" class="text-white align-top font-10">
-									<img title="" src="{{ asset('images/timkiem.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Chi tiết sách</span>
+								<a href="{{ route('pages.show', $bookLiterature->id) }}" title="">
+									<img title="" src="{{ asset('images/timkiem.png') }}" alt="">
 								</a>
-								<a href="{{ route('page.add-to-cart', [$bookLiterature->id, $bookLiterature->name]) }}" title="" class="add-to-cart text-white font-10">
-									<img title="" src="{{ asset('images/cart.png') }}" alt="" class="d-block m-auto">
-									<span class="mt-1 d-inline-block">Thêm vào giỏ hàng</span>
+								<a href="{{ route('page.add-to-cart', [$bookLiterature->id, $bookLiterature->name]) }}" title="" class="add-to-cart">
+									<img title="" src="{{ asset('images/cart.png') }}" alt="">
 								</a>
 							</div>
 						</div>
+						<!-- <span class="book-sale">New</span> -->
 					</div>
 					<div class="book-info">
 						<h4><a href="#" title="{{ $bookLiterature->name }}">
