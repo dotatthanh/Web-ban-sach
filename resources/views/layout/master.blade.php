@@ -55,6 +55,7 @@
 							<li><a href="{{ route('page.tophighlight') }}" title="">Top nổi bật</a></li>
 							<li><a href="{{ route('page.forum') }}" title="">Diễn đàn</a></li>
 							<li><a href="{{ route('page.contact') }}" title="">Liên hệ</a></li>
+							<li><a href="{{ route('user.login') }}">Tài khoản</a></li>
 						</ul>
 					</div>
 				</div>
@@ -287,6 +288,7 @@
 			<li><a href="#" title="">Top nổi bật</a></li>
 			<li><a href="#" title="">Diễn đàn</a></li>
 			<li><a href="#" title="">Liên hệ</a></li>
+			<li><a href="{{ route('user.login') }}">Tài khoản</a></li>
 		</ul>
 	</div>
 

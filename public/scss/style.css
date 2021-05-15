@@ -1929,3 +1929,8 @@ textarea {
   background: none !important; }
 
 /*# sourceMappingURL=style.css.map */
+
+.error,
+.required {
+  color: red;
+}

@@ -1,3 +1,10 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
 // Slider
 var Slider=function(){
 	if($('.slider').length>0){
@@ -208,3 +215,4 @@ $(document).ready(function(d, s, id) {
 }(document, 'script', 'facebook-jssdk'));
 
 
+$("select.select2Role").select2({});

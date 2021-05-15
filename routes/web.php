@@ -8,7 +8,7 @@ Auth::routes();
 
 Route::get('/home', 'TypeController@index')->name('home');
 
-Route::group(['prefix' => 'admin'],function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function(){
 	Route::resource('books', 'BookController');
 	Route::resource('authors', 'AuthorController');
 	Route::resource('types', 'TypeController');
@@ -17,6 +17,53 @@ Route::group(['prefix' => 'admin'],function(){
 	Route::resource('news', 'NewController');
 	Route::resource('contacts', 'ContactController');
 	Route::resource('warehouses', 'WarehouseController');
+
+	 // Thành viên
+	 Route::group(['prefix' => 'member'], function(){
+		Route::get('/', 'MemberController@index')->name('admin.member.index');
+		Route::get('/add', 'MemberController@create')->name('admin.member.create');
+		Route::post('/add', 'MemberController@store')->name('admin.member.store');
+		Route::get('/edit/{id}', 'MemberController@edit')->name('admin.member.edit');
+		Route::post('/edit/{id}', 'MemberController@update')->name('admin.member.update');
+		Route::get('/destroy/{id}', 'MemberController@destroy')->name('admin.member.destroy');
+	});
+	Route::get('/profile', 'MemberController@profile')->name('admin.profile');
+	Route::post('/profile', 'MemberController@updateProfile')->name('admin.update-profile');
+
+	 // Khách hàng
+	 Route::group(['prefix' => 'customer'], function(){
+		Route::get('/', 'CustomerController@index')->name('admin.customer.index');
+		Route::get('/edit/{id}', 'CustomerController@edit')->name('admin.customer.edit');
+		Route::post('/edit/{id}', 'CustomerController@update')->name('admin.customer.update');
+		Route::get('/destroy/{id}', 'CustomerController@destroy')->name('admin.customer.destroy');
+	});
+
+	// Vai trò
+	Route::group(['prefix' => 'role'], function(){
+		Route::get('/', 'RoleController@index')->name('admin.role.index');
+		Route::get('/create', 'RoleController@create')->name('admin.role.create');
+		Route::post('/store', 'RoleController@store')->name('admin.role.store');
+
+		Route::get('/edit/{id}', 'RoleController@edit')->name('admin.role.edit');
+		Route::post('/edit/{id}', 'RoleController@update')->name('admin.role.update');
+		Route::get('/destroy/{id}', 'RoleController@destroy')->name('admin.role.destroy');
+
+		Route::get('/getAll', 'RoleController@getAllRole');
+		Route::post('/getPermissionOfRole', 'RoleController@getPermissionOfRole');
+	});
+
+	// Quyền hạn
+	Route::group(['prefix' => 'permission'], function(){
+		Route::get('/', 'PermissionController@index')->name('admin.permission.index');
+		Route::get('/create', 'PermissionController@create')->name('admin.permission.create');
+		Route::post('/store', 'PermissionController@store')->name('admin.permission.store');
+
+		Route::get('/edit/{id}', 'PermissionController@edit')->name('admin.permission.edit');
+		Route::post('/edit/{id}', 'PermissionController@update')->name('admin.permission.update');
+		Route::get('/destroy/{id}', 'PermissionController@destroy')->name('admin.permission.destroy');
+
+		Route::get('/getAll', 'PermissionController@getAllRole')->name('admin.permission.getAll');
+	});
 });
 
 
@@ -45,4 +92,22 @@ Route::prefix('page')->name('page.')->group(function(){
 	Route::post('send_us', 'PageController@send_us')->name('send_us');
 
 	Route::get('search', 'PageController@search')->name('search');
+});
+
+
+Route::get('/customer/register', 'CustomerController@register')->name('user.register');
+Route::post('/customer/register', 'CustomerController@postRegister')->name('user.postRegister');
+Route::get('/customer/login', 'CustomerController@login')->name('user.login');
+Route::post('/customer/login', 'CustomerController@postLogin')->name('user.postLogin');
+
+Route::group(['middleware' => 'auth'], function () {
+	// Khách hàng
+	Route::group(['prefix' => 'customer'], function(){
+		Route::get('/', 'CustomerController@index')->name('pages.customer.index');
+		Route::get('/add', 'CustomerController@create')->name('pages.customer.create');
+		Route::post('/add', 'CustomerController@store')->name('pages.customer.store');
+		Route::get('/edit/{id}', 'CustomerController@edit')->name('pages.customer.edit');
+		Route::post('/edit/{id}', 'CustomerController@update')->name('pages.customer.update');
+		Route::get('/destroy/{id}', 'CustomerController@destroy')->name('pages.customer.destroy');
+	});
 });
