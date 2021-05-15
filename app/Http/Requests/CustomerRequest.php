@@ -25,7 +25,6 @@ class CustomerRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
             'phone' => 'required',
             'address' => 'required',
         ];
@@ -35,8 +34,6 @@ class CustomerRequest extends FormRequest
     {
         return [
             'name.required' => 'Hãy điền tên của bạn.',
-            'email.required' => 'Hãy điền email của bạn.',
-            'email.email' => 'Email không đúng định dạng.',
             'phone.required' => 'Hãy điền số điện thoại của bạn.',
             'address.required' => 'Hãy điền địa chỉ của bạn.',
         ];

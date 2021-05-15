@@ -14,10 +14,10 @@
                 
                 <li><a href="">Nhà cung cấp</a></li>
                 <li><a href="{{ route('warehouses.index') }}">Nhập kho</a></li>
-                <li><a href="">Khách hàng</a></li>
-                <li><a href="">Nhân viên</a></li>
-                <li><a href="">Vai trò</a></li>
-                <li><a href="">Quyền</a></li>
+                <li><a href="{{ route('pages.customer.index') }}">Khách hàng</a></li>
+                <li><a href="{{ route('admin.member.index') }}">Nhân viên</a></li>
+                <li><a href="{{ route('admin.role.index') }}">Vai trò</a></li>
+                <li><a href="{{ route('admin.permission.index') }}">Quyền</a></li>
     		</ul>
     	</li>
     	<li><a href="#" class="lili">Thống kê</a>
@@ -28,6 +28,11 @@
     			{{-- <li><a href="{{ route('contacts.index') }}">Phản hồi</a></li> --}}
     		</ul>
     	</li>
+        <li>
+            <a href="{{ route('admin.profile') }}">
+                Thông tin cá nhân
+            </a>
+        </li>
     	<li>
             <a href="{{ route('logout') }}" onclick="
                 event.preventDefault();
@@ -38,5 +43,6 @@
                 @csrf
             </form>
         </li>
+    	
     </ul>
 </header>
