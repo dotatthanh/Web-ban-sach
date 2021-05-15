@@ -11,7 +11,7 @@ use App\Customer;
 
 class CustomerController extends Controller
 {
-    public function register() {
+    public function register(Request $request) {
         $categories = Category::paginate(10);
         if($request->key){
             $key = $request->key;
