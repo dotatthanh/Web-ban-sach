@@ -19,8 +19,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function(){
 	Route::resource('warehouses', 'WarehouseController');
 	Route::group(['prefix' => 'statistic'], function(){
 		Route::get('book', 'StatisticController@bookStatistic')->name('book-statistic');
-	 // Thành viên
-	 Route::group(['prefix' => 'member'], function(){
+	});
+	// Thành viên
+	Route::group(['prefix' => 'member'], function(){
 		Route::get('/', 'MemberController@index')->name('admin.member.index');
 		Route::get('/add', 'MemberController@create')->name('admin.member.create');
 		Route::post('/add', 'MemberController@store')->name('admin.member.store');
