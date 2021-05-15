@@ -16,6 +16,9 @@
     </div>
 
     <div class="container">
+        @if (Session::has('alert-success'))
+            <div class="alert alert-success">{{ Session::get('alert-success') }}</div>
+        @endif
         <form class="row" action="{{ route('user.postLogin') }}" method="post">
             @csrf
             <div class="col-md-6" style="margin: 0 auto">

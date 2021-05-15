@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UpdateProfieRequest;
 use App\Category;
 use App\Customer;
+use DB;
+use Str;
+use Hash;
+use Auth;
 
 class CustomerController extends Controller
 {
@@ -31,25 +36,67 @@ class CustomerController extends Controller
         $params = $request->all();
         DB::beginTransaction();
 
-        $created = $this->user->create([
+        $created = Customer::create([
             'name' => $params['name'],
             'phone' => $params['phone'],
             'address' => $params['address'],
             'email' => $params['email'],
             'remember_token' => Str::random(60),
-            'password' => Hash::make($params['password_confirm']),
+            'password' => Hash::make($params['password']),
+            'code' => 0
         ]);
 
         if ($created) {
             DB::commit();
-            return redirect()->route('page')->with('alert-success', 'Đăng ký tài khoản thành công');
+            return redirect()->route('user.login')->with('alert-success', 'Đăng ký tài khoản thành công');
         } else {
             DB::rollback();
             return redirect()->back()->with('alert-error', 'Đăng ký tài khoản thất bại');
         }
     }
 
+    public function profile(Request $request) {
+        if (!Auth()->guard('customer')->user()) {
+            return redirect(route('user.login'));
+        }
+        $categories = Category::paginate(10);
+        if($request->key){
+            $key = $request->key;
+            $categories = Category::where('name', 'like', '%'. $request->key .'%')->paginate(10);
+        }
+
+        $data = [
+            'title' => "Đăng nhập tài khoản",
+            'categories' => $categories,
+            'content' => [],
+            'total' => '',
+        ];
+        return view('page.user.profile', $data);
+    }
+
+    public function updateProfile(UpdateProfieRequest $request) {
+        $customer = Customer::findOrFail(['id' => auth()->guard('customer')->user()->id]);
+        $params = $request->all();
+        unset($params['_token']);
+        if (isset($params['password']) && $params['password']) {
+            $params = array_merge($params, [
+                'password' => Hash::make($params['password'])
+            ]);
+        } else {
+            unset($params['password']);
+        }
+        $updated = Customer::where(['id' => auth()->guard('customer')->user()->id])->update($params);
+        if($updated){
+            return redirect()->back()->with('alert-success', 'Cập nhật thông tin cá nhân thành công');
+        } else{
+            return redirect()->back()->with('alert-error', 'Cập nhật thông tin cá nhân thất bại');
+        }
+    }
+
     public function login(Request $request) {
+        if (Auth()->guard('customer')->user()) {
+            return redirect(route('pages.index'));
+        }
         $categories = Category::paginate(10);
         if($request->key){
             $key = $request->key;
@@ -69,11 +116,11 @@ class CustomerController extends Controller
         $params = $request->all();
 
         $remember = isset($params['remember']) ? true : false;
-        if(Auth::guard('web')->attempt([
+        if(Auth::guard('customer')->attempt([
             'email'=>$params['email'], 
             'password'=>$params['password']
         ], $remember)){
-            return redirect()->route('page')->with('alert-success', 'Đăng nhập thành công');
+            return redirect()->route('pages.index')->with('alert-success', 'Đăng nhập thành công');
         } else{
             return redirect()->back()->with('alert-error', 'Sai tài khoản hoặc mật khẩu');
         }

@@ -102,6 +102,9 @@ Route::post('/customer/register', 'CustomerController@postRegister')->name('user
 Route::get('/customer/login', 'CustomerController@login')->name('user.login');
 Route::post('/customer/login', 'CustomerController@postLogin')->name('user.postLogin');
 
+Route::get('/customer/profile', 'CustomerController@profile')->name('user.profile');
+Route::post('/customer/profile', 'CustomerController@updateProfile')->name('user.updateProfile');
+
 Route::group(['middleware' => 'auth'], function () {
 	// Khách hàng
 	Route::group(['prefix' => 'customer'], function(){
