@@ -13,7 +13,7 @@
                 <li><a href="{{ route('orders.index') }}">Bán hàng</a></li>
                 
                 <li><a href="">Nhà cung cấp</a></li>
-                <li><a href="">Nhập kho</a></li>
+                <li><a href="{{ route('warehouses.index') }}">Nhập kho</a></li>
                 <li><a href="{{ route('pages.customer.index') }}">Khách hàng</a></li>
                 <li><a href="{{ route('admin.member.index') }}">Nhân viên</a></li>
                 <li><a href="{{ route('admin.role.index') }}">Vai trò</a></li>
@@ -22,7 +22,7 @@
     	</li>
     	<li><a href="#" class="lili">Thống kê</a>
     		<ul>
-                <li><a href="">Sách</a></li>
+                <li><a href="{{ route('book-statistic') }}">Sách</a></li>
                 <li><a href="">Doanh thu cửa hàng</a></li>
                 <li><a href="">Doanh thu nhân viên</a></li>
     			{{-- <li><a href="{{ route('contacts.index') }}">Phản hồi</a></li> --}}

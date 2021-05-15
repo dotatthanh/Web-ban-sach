@@ -44,7 +44,7 @@
 	</div>
 
 	<div class="container-fluid mt-5">
-		<button class="btn btn-success" data-toggle="modal" data-target="#add_book">Nhập hàng</button>
+		<a class="btn btn-success text-white" href="{{ route('warehouses.create') }}">Nhập hàng</a>
 		{{-- <form action="{{ route('warehouses.index') }}" method="GET" class="row mt-3">
 			<div class="col-3">
 				<input type="text" name="key" placeholder="Tên sách" class="form-control w-100">
@@ -56,54 +56,39 @@
 		<table class="table table-bordered table-striped mt-3 mb-5">
 			<tr class="text-center">
 				<th>STT</th>
+				<th>Người nhập</th>
 				<th>Tên sách</th>
-				<th>Ảnh</th>
 				<th>Nhà cung cấp</th>
-				<th>Tên tác giả</th>
-				<th>Thể loại</th>
-				<th>Danh mục</th>
-				<th>Đơn giá</th>
-				<th>Sale</th>
-				<th class="minw-140">Thao tác</th>
+				<th>Số lượng</th>
+				<th>Giá</th>
+				<th>Ngày nhập</th>
+				{{-- <th class="minw-140">Thao tác</th> --}}
 			</tr>
 			<?php $stt = 1; ?>
-			@foreach ($books as $book)
+			@foreach ($warehouses as $warehouse)
 			<tr>
 				<td class="text-center">{{ $stt++ }}</td>
-				<td>{{ $book->name }}</td>
-				<td class="text-center"><img class="maxw-90" src="{{ asset('storage/'.$book->img) }}" alt=""></td>
-				<td>{{ $book->supplier->name }}</td>
-				<td>
-					@foreach ($book->authors as $author)
-						- {{ $author->name }}<br>
-					@endforeach
-				</td>
-				<td>
-					@foreach ($book->types as $type)
-						- {{ $type->name }}<br>
-					@endforeach
-				</td>
-				<td>
-					@foreach ($book->categories as $category)
-						- {{ $category->name }}<br>
-					@endforeach
-				</td>
-				<td class="text-center">{{ number_format($book->price, 0, ',', '.') }}₫</td>
-				<td class="text-center">{{ $book->sale }}%</td>
-				<td class="text-center">
-					{{-- <button class="btn btn-warning text-white" data-toggle="modal" data-target="#edit_book{{ $book->id }}">Sửa</button>
-					<form action="{{ route('books.destroy', $book->id) }}" method="POST" class="d-inline">
+				<td>{{ $warehouse->user->name }}</td>
+				<td>{{ $warehouse->book->name }}</td>
+				<td>{{ $warehouse->supplier->name }}</td>
+				<td class="text-center">{{ $warehouse->amount }}</td>
+				<td class="text-center">{{ number_format($warehouse->price, 0, ',', '.') }}₫</td>
+				<td class="text-center">{{ date_format($warehouse->created_at, 'd/m/Y') }}</td>
+				{{-- <td class="text-center">
+					<button class="btn btn-warning text-white" data-toggle="modal" data-target="#edit_book{{ $warehouse->id }}">Sửa</button>
+					<form action="{{ route('books.destroy', $warehouse->id) }}" method="POST" class="d-inline">
 						@csrf
 						@method('DELETE')
 						<button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
-					</form> --}}
-				</td>
+					</form>
+				</td> --}}
 			</tr>
 			@endforeach
 		</table>
-		{{-- <div class="text-center">
-			{{ $books->appends(['key' => $request->key])->links()}}
-		</div> --}}
+		<div class="text-center">
+			{{-- {{ $warehouses->appends(['key' => $request->key])->links()}} --}}
+			{{ $warehouses->links()}}
+		</div>
 	</div>
 
 	@include('layout.script')

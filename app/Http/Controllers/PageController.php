@@ -30,34 +30,38 @@ class PageController extends Controller
 
         // Sách Tiếng Việt
         $id_categoryBookTV = Category::where('name', 'Sách Tiếng Việt')->first()->id;
-        $bookTVs = Category::find($id_categoryBookTV)->books()->where('amount', '>', 0)->limit(5)->latest()->get();
+        $bookTVs = Category::find($id_categoryBookTV)->books()->limit(5)->latest()->get();
 
         // Sách Tiếng Anh
         $id_categoryBookTA = Category::where('name', 'Sách Tiếng Anh')->first()->id;
-        $bookTAs = Category::find($id_categoryBookTA)->books()->where('amount', '>', 0)->limit(5)->latest()->get();
+        $bookTAs = Category::find($id_categoryBookTA)->books()->limit(5)->latest()->get();
 
         // Sách đang khuyến mãi
         $id_categoryBookSale = Category::where('name', 'Sách đang khuyến mãi')->first()->id;
-        $bookSales = Category::find($id_categoryBookSale)->books()->where('amount', '>', 0)->limit(5)->latest()->get();
+        $bookSales = Category::find($id_categoryBookSale)->books()->limit(5)->latest()->get();
 
         // Sách nổi bật
         // $id_categoryBookHighlight = Category::where('name', 'Sách nổi bật')->first()->id;
-        // $bookHighlights = Category::find($id_categoryBookHighlight)->books()->where('amount', '>', 0)->limit(5)->latest()->get();
+        // $bookHighlights = Category::find($id_categoryBookHighlight)->books()->limit(5)->latest()->get();
         $bookHighlights = Book::all()->sortByDesc('total_export')->take(3);
 
         // Sách bán chạy
         // $id_categoryBookSelling = Category::where('name', 'Sách bán chạy')->first()->id;
-        // $bookSellings = Category::find($id_categoryBookSelling)->books()->where('amount', '>', 0)->limit(5)->latest()->get();
+        // $bookSellings = Category::find($id_categoryBookSelling)->books()->limit(5)->latest()->get();
 
         // Sách văn học nước ta
         $id_categoryBookLiterature = Category::where('name', 'Sách văn học nước ta')->first()->id;
-        $bookLiteratures = Category::find($id_categoryBookLiterature)->books()->where('amount', '>', 0)->limit(5)->latest()->get();
+        $bookLiteratures = Category::find($id_categoryBookLiterature)->books()->limit(5)->latest()->get();
 
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
 
 
-        return view('page.index', compact('title', 'categories', 'bookTVs', 'bookTAs', 'bookSales', 'bookHighlights', 'bookLiteratures', 'content', 'total', 'id_categoryBookTV', 'id_categoryBookTA', 'id_categoryBookSale', 'id_categoryBookLiterature'));
+        return view('page.index', compact(
+            'title', 
+            'categories', 
+            'bookTVs', 'bookTAs', 'bookSales', 'bookHighlights', 'bookLiteratures', 'content', 'total', 'id_categoryBookTV', 'id_categoryBookTA', 'id_categoryBookSale', 'id_categoryBookLiterature'
+        ));
     }
 
     /**
@@ -139,7 +143,7 @@ class PageController extends Controller
     {
         $categories = Category::all();
         $category = Category::find($id);
-        $books = $category->books()->where('amount', '>', 0)->paginate(8);
+        $books = $category->books()->paginate(8);
         $title = "Danh mục $category->name";
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");

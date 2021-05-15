@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BookSupplier;
+use App\Book;
+use App\Supplier;
+use Auth;
 
 class WarehouseController extends Controller
 {
@@ -15,9 +18,9 @@ class WarehouseController extends Controller
     public function index()
     {
         $warehouses = BookSupplier::paginate(10);
-        
+
         $data = [
-            // 'warehouses' => $warehouses,
+            'warehouses' => $warehouses,
         ]; 
 
         return view('admin.warehouse.index', $data);
@@ -30,7 +33,15 @@ class WarehouseController extends Controller
      */
     public function create()
     {
-        //
+        $books = Book::all();
+        $suppliers = Supplier::all();
+
+        $data = [
+            'books' => $books,
+            'suppliers' => $suppliers,
+        ]; 
+
+        return view('admin.warehouse.import_book', $data);
     }
 
     /**
@@ -41,7 +52,18 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->book_id);
+        foreach ($request->book_id as $key => $book_id) {
+            BookSupplier::create([
+                'user_id' => Auth::id(),
+                'supplier_id' => $request->supplier_id[$key],
+                'book_id' => $book_id,
+                'amount' => $request->amount[$key],
+                'price' => $request->price[$key],
+            ]);
+        }
+
+        return redirect()->route('warehouses.index');
     }
 
     /**
