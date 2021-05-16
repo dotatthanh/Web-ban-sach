@@ -58,7 +58,6 @@
 				<th>STT</th>
 				<th>Tên sách</th>
 				<th>Ảnh</th>
-				<th>Nhà cung cấp</th>
 				<th>Tên tác giả</th>
 				<th>Thể loại</th>
 				<th>Danh mục</th>
@@ -72,7 +71,6 @@
 				<td class="text-center">{{ $stt++ }}</td>
 				<td>{{ $book->name }}</td>
 				<td class="text-center"><img class="maxw-90" src="{{ asset('storage/'.$book->img) }}" alt=""></td>
-				<td>{{ $book->supplier->name }}</td>
 				<td>
 					@foreach ($book->authors as $author)
 						- {{ $author->name }}<br>
@@ -124,15 +122,6 @@
 												@if($errors->has('imgupdate'))
 													<span class="text-danger d-block mt-2">{{ $errors->first('imgupdate') }}</span>
 												@endif
-											</div>
-
-											<div class="col-3 mb-3">Nhà cung cấp:</div>
-											<div class="col-9 mb-3">
-												<select name="supplierupdate" id="" class="form-control select2 w-100">
-													@foreach ($suppliers as $supplier)
-														<option value="{{ $supplier->id }}" {{ $book->supplier_id == $supplier->id ? 'selected' : '' }}>{{ $supplier->name }}</option>
-													@endforeach	
-												</select>
 											</div>
 
 											<div class="col-3 mb-3">Tác giả:</div>
@@ -266,16 +255,6 @@
 								<select name="author_id[]" id="" class="form-control select2 w-100" multiple="multiple">
 									@foreach ($authors as $author)
 										<option value="{{ $author->id }}">{{ $author->name }}</option>
-									@endforeach
-								</select>
-							</div>
-
-							<div class="col-3 mb-3">Nhà cung cấp:</div>
-							<div class="col-9 mb-3">
-								<select name="supplier_id" id="" class="form-control select2 w-100">
-									<option value=""></option>
-									@foreach ($suppliers as $supplier)
-										<option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
 									@endforeach
 								</select>
 							</div>

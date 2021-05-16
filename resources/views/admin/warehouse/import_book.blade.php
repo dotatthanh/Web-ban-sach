@@ -18,40 +18,44 @@
 		
 		<form method="POST" action="{{ route('warehouses.store') }}">
 			@csrf
+			<div class="form-group row mt-3">
+				<label class="col-2 col-form-label">Nhà cung cấp</label>
+				<div class="col-3">
+					<select name="supplier_id" class="form-control" required>
+						<option value=""></option>
+						@foreach($suppliers as $supplier)
+						<option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
 			<table class="table table-bordered table-striped mt-3">
 				<tr class="text-center">
 					<th>STT</th>
 					<th width="350px">Tên sách</th>
-					<th width="450px">Nhà cung cấp</th>
-					<th>Số lượng</th>
-					<th>Giá</th>
+					<th>Số lượng (quyển)</th>
+					<th>Giá (VNĐ)</th>
+					<th>Thành tiền (VNĐ)</th>
 					<th class="minw-140">Thao tác</th>
 				</tr>
 				<?php $stt = 1; ?>
 				<tr>
 					<td class="text-center">{{ $stt++ }}</td>
 					<td>
-						<select name="book_id[]" class="form-control">
+						<select name="book_id[0]" class="form-control" required>
 							<option value=""></option>
 							@foreach($books as $book)
 							<option value="{{ $book->id }}">{{ $book->name }}</option>
 							@endforeach
 						</select>
 					</td>
-					<td>
-						<select name="supplier_id[]" class="form-control">
-							<option value=""></option>
-							@foreach($suppliers as $supplier)
-							<option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
-							@endforeach
-						</select>
+					<td class="text-center">
+						<input type="number" name="amount[0]" class="form-control" min="0" onkeyup="totalMoney(0)" required>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[]" class="form-control" min="0">
+						<input type="number" name="price[0]" class="form-control" min="0" onkeyup="totalMoney(0)" required>
 					</td>
-					<td class="text-center">
-						<input type="number" name="price[]" class="form-control" min="0">
-					</td>
+					<td class="text-center" id="totalMoney0">0</td>
 					<td></td>
 				</tr>
 				<tfoot>
@@ -71,34 +75,27 @@
 	@include('layout.script')
 
 	<script type="text/javascript">
-		let stt = 1;
+		let stt = 0;
 		function addRow() {
 			stt++;
 			let row = `
 				<tr>
-					<td class="text-center">${stt}</td>
+					<td class="text-center">${stt +1}</td>
 					<td>
-						<select name="book_id[]" class="form-control">
+						<select name="book_id[${stt}]" class="form-control" required>
 							<option value=""></option>
 							@foreach($books as $book)
 							<option value="{{ $book->id }}">{{ $book->name }}</option>
 							@endforeach
 						</select>
 					</td>
-					<td>
-						<select name="supplier_id[]" class="form-control">
-							<option value=""></option>
-							@foreach($suppliers as $supplier)
-							<option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
-							@endforeach
-						</select>
+					<td class="text-center">
+						<input type="number" name="amount[${stt}]" class="form-control" min="0" onkeyup="totalMoney(${stt})" required>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[]" class="form-control" min="0">
+						<input type="number" name="price[${stt}]" class="form-control" min="0" onkeyup="totalMoney(${stt})" required>
 					</td>
-					<td class="text-center">
-						<input type="number" name="price[]" class="form-control" min="0">
-					</td>
+					<td class="text-center" id="totalMoney${stt}">0</td>
 					<td class="text-center">
 						<button type="button" class="btn btn-danger" onclick="removeRow($(this))">X</button>
 					</td>
@@ -111,6 +108,12 @@
 		function removeRow(obj) {
 			stt--;
 			let a = obj.closest('tr').remove();
+		}
+
+		function totalMoney(stt) {
+			let amount = $(`input[name="amount[${stt}]"]`).val();
+			let price = $(`input[name="price[${stt}]"]`).val();
+			$(`#totalMoney${stt}`).text(amount * price);
 		}
 	</script>
 </body>
