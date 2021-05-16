@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\BookSupplier;
+use App\ImportOrder;
+use App\ImportOrderDetail;
 use App\Book;
 use App\Supplier;
 use Auth;
@@ -17,7 +18,7 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        $warehouses = BookSupplier::paginate(10);
+        $warehouses = ImportOrder::paginate(10);
 
         $data = [
             'warehouses' => $warehouses,
@@ -52,16 +53,32 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->book_id);
+        // dd($request->all());
+
+        // tạo đơn nhập hàng
+        $import_order = ImportOrder::create([
+            'code' => 'PN'.strval(ImportOrder::count()+1),
+            'user_id' => Auth::id(),
+            'supplier_id' => $request->supplier_id,
+            'total_money' => 0,
+        ]);
+
+        $total_money = 0;
+        // tạo chi tiết đơn nhập hàng
         foreach ($request->book_id as $key => $book_id) {
-            BookSupplier::create([
-                'user_id' => Auth::id(),
-                'supplier_id' => $request->supplier_id[$key],
+            ImportOrderDetail::create([
+                'import_order_id' => $import_order->id,
                 'book_id' => $book_id,
                 'amount' => $request->amount[$key],
                 'price' => $request->price[$key],
             ]);
+            $total = $request->amount[$key] * $request->price[$key];
+            $total_money += $total;
         }
+
+        $import_order->update([
+            'total_money' => $total_money
+        ]);
 
         return redirect()->route('warehouses.index');
     }
@@ -74,7 +91,13 @@ class WarehouseController extends Controller
      */
     public function show($id)
     {
-        //
+        $import_order_details = ImportOrderDetail::where('import_order_id', $id)->paginate(10);
+
+        $data = [
+            'import_order_details' => $import_order_details
+        ];
+
+        return view('admin.warehouse.import_order_detail', $data);
     }
 
     /**

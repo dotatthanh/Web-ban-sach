@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $fillable = [
-    	'supplier_id',
+    	// 'supplier_id',
         'name',
         'img',
     	'price',
@@ -17,10 +17,10 @@ class Book extends Model
         'total_export'
     ];
 
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
+    // public function supplier()
+    // {
+    //     return $this->belongsTo(Supplier::class);
+    // }
 
     public function authors(){
     	return $this->belongsToMany(Author::class);
