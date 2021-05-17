@@ -14,22 +14,28 @@
 	</div>
 
 	<div class="container-fluid mt-5">
-		{{-- <a class="btn btn-success text-white" href="{{ route('warehouses.create') }}">Nhập hàng</a> --}}
-		{{-- <form action="{{ route('warehouses.index') }}" method="GET" class="row mt-3">
+		<form action="{{ route('book-statistic') }}" method="GET" class="row mt-3">
 			<div class="col-3">
-				<input type="text" name="key" placeholder="Tên sách" class="form-control w-100">
+				<input type="text" name="name" placeholder="Tên sách" class="form-control w-100">
+			</div>
+			<div class="col-3">
+				{{-- <input type="text" name="name" placeholder="Tên sách" class="form-control w-100"> --}}
+				<select class="form-control w-100" name="amount">
+					<option value=""></option>
+					<option value="Còn hàng">Còn hàng</option>
+					<option value="Hết hàng">Hết hàng</option>
+				</select>
 			</div>
 			<div class="col-2">
 				<button class="btn btn-success w-75">Tìm kiếm</button>
 			</div>
-		</form> --}}
+		</form>
 		<table class="table table-bordered table-striped mt-3 mb-5">
 			<tr class="text-center">
 				<th>STT</th>
 				<th>Tên sách</th>
 				<th>Ảnh</th>
 				<th>Số lượng</th>
-				{{-- <th>Giá</th> --}}
 			</tr>
 			<?php $stt = 1; ?>
 			@foreach ($books as $book)
@@ -38,7 +44,6 @@
 				<td>{{ $book->name }}</td>
 				<td class="text-center"><img class="maxw-90" src="{{ asset('storage/'.$book->img) }}" alt=""></td>
 				<td class="text-center">{{ $book->amount }}</td>
-				{{-- <td class="text-center">{{ number_format($book->price, 0, ',', '.') }}₫</td> --}}
 			</tr>
 			@endforeach
 		</table>

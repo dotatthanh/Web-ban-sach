@@ -16,9 +16,13 @@ class WarehouseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $warehouses = ImportOrder::paginate(10);
+
+        if ($request->code) {
+            $warehouses = ImportOrder::where('code', $request->code)->paginate(10);
+        }
 
         $data = [
             'warehouses' => $warehouses,
