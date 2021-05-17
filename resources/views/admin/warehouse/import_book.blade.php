@@ -42,7 +42,7 @@
 				<tr>
 					<td class="text-center">{{ $stt++ }}</td>
 					<td>
-						<select name="book_id[0]" class="form-control" required>
+						<select name="book_id[0]" class="form-control select2" required>
 							<option value=""></option>
 							@foreach($books as $book)
 							<option value="{{ $book->id }}">{{ $book->name }}</option>
@@ -50,10 +50,10 @@
 						</select>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[0]" class="form-control" min="0" onkeyup="totalMoney(0)" required>
+						<input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0)" required>
 					</td>
 					<td class="text-center">
-						<input type="number" name="price[0]" class="form-control" min="0" onkeyup="totalMoney(0)" required>
+						<input type="number" name="price[0]" class="form-control" min="1" onkeyup="totalMoney(0)" required>
 					</td>
 					<td class="text-center" id="totalMoney0">0</td>
 					<td></td>
@@ -77,12 +77,13 @@
 	<script type="text/javascript">
 		let stt = 0;
 		function addRow() {
+
 			stt++;
 			let row = `
 				<tr>
 					<td class="text-center">${stt +1}</td>
 					<td>
-						<select name="book_id[${stt}]" class="form-control" required>
+						<select name="book_id[${stt}]" class="form-control select2" required>
 							<option value=""></option>
 							@foreach($books as $book)
 							<option value="{{ $book->id }}">{{ $book->name }}</option>
@@ -90,10 +91,10 @@
 						</select>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[${stt}]" class="form-control" min="0" onkeyup="totalMoney(${stt})" required>
+						<input type="number" name="amount[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt})" required>
 					</td>
 					<td class="text-center">
-						<input type="number" name="price[${stt}]" class="form-control" min="0" onkeyup="totalMoney(${stt})" required>
+						<input type="number" name="price[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt})" required>
 					</td>
 					<td class="text-center" id="totalMoney${stt}">0</td>
 					<td class="text-center">
@@ -101,8 +102,12 @@
 					</td>
 				</tr>
 			`;
-
 			jQuery('tbody').append(row);
+			
+			if($( ".select2" ).length>0) {
+				$(".select2").select2({ 
+				});
+			}
 		}
 
 		function removeRow(obj) {

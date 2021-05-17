@@ -7,20 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $fillable = [
-    	// 'supplier_id',
         'name',
         'img',
     	'price',
         'sale',
         'content',
-        'amount',
         'total_export'
     ];
-
-    // public function supplier()
-    // {
-    //     return $this->belongsTo(Supplier::class);
-    // }
 
     public function authors(){
     	return $this->belongsToMany(Author::class);
@@ -50,8 +43,8 @@ class Book extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function bookSuppliers(){
-        return $this->hasMany(BookSupplier::class);
+    public function importOrderDetails(){
+        return $this->hasMany(ImportOrderDetail::class);
     }
 
     public function getTotalExportAttribute()
@@ -61,6 +54,6 @@ class Book extends Model
 
     public function getAmountAttribute()
     {
-        return $this->bookSuppliers->sum('amount');
+        return $this->importOrderDetails->sum('amount');
     }
 }

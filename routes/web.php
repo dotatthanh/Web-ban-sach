@@ -18,7 +18,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function(){
 	Route::resource('contacts', 'ContactController');
 	Route::resource('warehouses', 'WarehouseController');
 	Route::group(['prefix' => 'statistic'], function(){
-		Route::get('book', 'StatisticController@bookStatistic')->name('book-statistic');
+	
+	Route::get('book', 'StatisticController@bookStatistic')->name('book-statistic');
 	});
 	// Thành viên
 	Route::group(['prefix' => 'member'], function(){
