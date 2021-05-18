@@ -7,20 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $fillable = [
-    	'user_id',
-        'book_id',
+    	'code',
+        'user_id',
     	'customer_id',
-    	'price',
         'status',
         'payment_method',
-    	'amount'
+    	'total_money',
     ];
 
     public function customer(){
     	return $this->belongsTo(Customer::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public function book(){
     	return $this->belongsTo(Book::class);
+    }
+
+    public function orderDetails(){
+        return $this->hasMany(OrderDetail::class);
     }
     
 }

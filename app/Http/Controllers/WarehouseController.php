@@ -8,6 +8,7 @@ use App\ImportOrderDetail;
 use App\Book;
 use App\Supplier;
 use Auth;
+use DB;
 
 class WarehouseController extends Controller
 {
@@ -26,6 +27,7 @@ class WarehouseController extends Controller
 
         $data = [
             'warehouses' => $warehouses,
+            'request' => $request,
         ]; 
 
         return view('admin.warehouse.index', $data);
@@ -57,34 +59,46 @@ class WarehouseController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
-        // tạo đơn nhập hàng
-        $import_order = ImportOrder::create([
-            'code' => 'PN'.strval(ImportOrder::count()+1),
-            'user_id' => Auth::id(),
-            'supplier_id' => $request->supplier_id,
-            'total_money' => 0,
-        ]);
-
-        $total_money = 0;
-        // tạo chi tiết đơn nhập hàng
-        foreach ($request->book_id as $key => $book_id) {
-            ImportOrderDetail::create([
-                'import_order_id' => $import_order->id,
-                'book_id' => $book_id,
-                'amount' => $request->amount[$key],
-                'price' => $request->price[$key],
+        DB::beginTransaction();
+        try {
+            // tạo đơn nhập hàng
+            $import_order = ImportOrder::create([
+                'code' => 'PN'.strval(ImportOrder::count()+1),
+                'user_id' => Auth::id(),
+                'supplier_id' => $request->supplier_id,
+                'total_money' => 0,
             ]);
-            $total = $request->amount[$key] * $request->price[$key];
-            $total_money += $total;
+
+            $total_money = 0;
+            // tạo chi tiết đơn nhập hàng
+            foreach ($request->book_id as $key => $book_id) {
+                ImportOrderDetail::create([
+                    'import_order_id' => $import_order->id,
+                    'book_id' => $book_id,
+                    'amount' => $request->amount[$key],
+                    'price' => $request->price[$key],
+                ]);
+
+                $book = Book::findOrFail($book_id);
+                $book->update([
+                    'amount' => $book->amount + $request->amount[$key],
+                ]);
+
+                $total = $request->amount[$key] * $request->price[$key];
+                $total_money += $total;
+            }
+
+            $import_order->update([
+                'total_money' => $total_money
+            ]);
+
+            DB::commit();
+            return redirect()->route('warehouses.index')->with('alert-success', 'Nhập hàng thành công!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+            return redirect()->back()->with('alert-error', 'Nhập hàng thất bại!');
         }
-
-        $import_order->update([
-            'total_money' => $total_money
-        ]);
-
-        return redirect()->route('warehouses.index');
     }
 
     /**

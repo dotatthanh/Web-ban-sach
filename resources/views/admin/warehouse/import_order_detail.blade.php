@@ -24,9 +24,9 @@
 				<th>Nhân viên nhập</th>
 				<th>Tên sách</th>
 				<th>Nhà cung cấp</th>
-				<th>Số lượng</th>
-				<th>Giá</th>
-				<th>Thành tiền</th>
+				<th>Số lượng (Quyển)</th>
+				<th>Giá (VNĐ)</th>
+				<th>Thành tiền (VNĐ)</th>
 			</tr>
 			@php ($stt = 1)
 			@foreach ($import_order_details as $import_order_detail)

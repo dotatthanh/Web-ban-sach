@@ -10,10 +10,10 @@
     			<li><a href="{{ route('books.index') }}">Sách</a></li>
     			<li><a href="{{ route('news.index') }}">Tin tức</a></li>
     			<li><a href="{{ route('orders.index') }}">Đặt hàng</a></li>
-                <li><a href="{{ route('orders.index') }}">Bán hàng</a></li>
+                <li><a href="{{ route('orders.sales-orders') }}">Bán hàng</a></li>
                 
                 <li><a href="">Nhà cung cấp</a></li>
-                <li><a href="{{ route('warehouses.index') }}">Nhập kho</a></li>
+                <li><a href="{{ route('warehouses.index') }}">Nhập hàng</a></li>
                 <li><a href="{{ route('pages.customer.index') }}">Khách hàng</a></li>
                 <li><a href="{{ route('admin.member.index') }}">Nhân viên</a></li>
                 <li><a href="{{ route('admin.role.index') }}">Vai trò</a></li>
@@ -23,8 +23,8 @@
     	<li><a href="#" class="lili">Thống kê</a>
     		<ul>
                 <li><a href="{{ route('book-statistic') }}">Sách</a></li>
-                <li><a href="">Doanh thu cửa hàng</a></li>
-                <li><a href="">Doanh thu nhân viên</a></li>
+                {{-- <li><a href="">Doanh thu cửa hàng</a></li> --}}
+                <li><a href="{{ route('staff-revenue') }}">Doanh thu nhân viên</a></li>
     			{{-- <li><a href="{{ route('contacts.index') }}">Phản hồi</a></li> --}}
     		</ul>
     	</li>

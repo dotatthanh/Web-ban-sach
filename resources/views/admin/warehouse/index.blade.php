@@ -30,7 +30,7 @@
 				<th>STT</th>
 				<th>Mã đơn nhập hàng</th>
 				<th>Nhà cung cấp</th>
-				<th>Tổng tiền</th>
+				<th>Tổng tiền (VNĐ)</th>
 				<th>Nhân viên nhập</th>
 				<th>Ngày nhập</th>
 			</tr>
@@ -42,15 +42,14 @@
 					<a href="{{ route('warehouses.show', $warehouse->id) }}" class="text-primary">{{ $warehouse->code }}</a>
 				</td>
 				<td>{{ $warehouse->supplier->name }}</td>
-				<td class="text-center">{{ $warehouse->total_money }}</td>
+				<td class="text-center">{{ number_format($warehouse->total_money) }}</td>
 				<td>{{ $warehouse->user->name }}</td>
 				<td class="text-center">{{ date_format($warehouse->created_at, 'd/m/Y') }}</td>
 			</tr>
 			@endforeach
 		</table>
 		<div class="text-center">
-			{{-- {{ $warehouses->appends(['key' => $request->key])->links()}} --}}
-			{{ $warehouses->links()}}
+			{{ $warehouses->appends(['code' => $request->code])->links()}}
 		</div>
 	</div>
 
