@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Book;
 use App\Order;
+use App\OrderDetail;
 use App\Customer;
 use Illuminate\Http\Request;
+use DB;
+use Auth;
 
 class OrderController extends Controller
 {
@@ -19,22 +23,36 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = Customer::paginate(10);
-        if($request->key){
-            $customers = Customer::where('name', 'like', '%'. $request->key .'%')
-            ->orWhere('email', 'like', '%'. $request->key .'%')
-            ->orWhere('phone', 'like', '%'. $request->key .'%')
-            ->orWhere('address', 'like', '%'. $request->key .'%')
-            ->paginate(10);
+        $orders = Order::where('user_id', null)->paginate(10);
+
+        if($request->code){
+            $orders = Order::where('user_id', null)->where('code', 'like', '%'.$request->code.'%')->paginate(10);
         }
 
         $data = [
-            'title' => "Quản lý đơn hàng",
-            'customers' => $customers,
+            'title' => "Quản lý đặt hàng",
+            'orders' => $orders,
             'request' => $request
         ];
 
-        return view('admin.order', $data);
+        return view('admin.order.index', $data);
+    }
+
+    public function indexSalesOrders(Request $request)
+    {
+        $orders = Order::where('customer_id', null)->paginate(10);
+        
+        if($request->code){
+            $orders = Order::where('customer_id', null)->where('code', 'like', '%'.$request->code.'%')->paginate(10);
+        }
+
+        $data = [
+            'title' => "Quản lý bán hàng",
+            'orders' => $orders,
+            'request' => $request
+        ];
+
+        return view('admin.sales-orders.index', $data);
     }
 
     /**
@@ -44,7 +62,13 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $books = Book::all();
+
+        $data = [
+            'books' => $books,
+        ]; 
+
+        return view('admin.sales-orders.order', $data);
     }
 
     /**
@@ -55,7 +79,51 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        DB::beginTransaction();
+        try {
+            // tạo đơn nhập hàng
+            $order = Order::create([
+                'code' => 'PB'.strval(Order::count()+1),
+                'user_id' => Auth::id(),
+                'status' => 4,
+                'payment_method' => 2,
+                'total_money' => 0,
+            ]);
+
+            $total_money = 0;
+            // tạo chi tiết đơn nhập hàng
+            foreach ($request->book_id as $key => $book_id) {
+                $book = Book::findOrFail($book_id);
+
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'book_id' => $book_id,
+                    'amount' => $request->amount[$key],
+                    'price' => $book->price,
+                    'sale' => $book->sale,
+                ]);
+
+                $book->update([
+                    'amount' => $book->amount - $request->amount[$key],
+                ]);
+
+                // Thành tiền 1 sản phẩm
+                $total = ($request->amount[$key] * $book->price) - ($request->amount[$key] * $book->price * $book->sale / 100);
+                $total_money += $total;
+            }
+
+            $order->update([
+                'total_money' => $total_money
+            ]);
+
+            DB::commit();
+            return redirect()->route('orders.sales-orders')->with('alert-success', 'Tạo đơn bán hàng thành công!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+            return redirect()->back()->with('alert-error', 'Tạo đơn bán hàng thất bại!');
+        }
     }
 
     /**
@@ -64,9 +132,26 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $order_details = OrderDetail::where('order_id', $id)->paginate(10);
+
+        $data = [
+            'order_details' => $order_details
+        ];
+
+        return view('admin.order.order_detail', $data);
+    }
+
+    public function salesOrdersDetail($id)
+    {
+        $order_details = OrderDetail::where('order_id', $id)->paginate(10);
+
+        $data = [
+            'order_details' => $order_details
+        ];
+
+        return view('admin.sales-orders.order_detail', $data);
     }
 
     /**
@@ -103,5 +188,58 @@ class OrderController extends Controller
         //
     }
 
-    
+    public function changeStatusOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->status == 1){
+            $order->update([
+                'status' => 2
+            ]);
+            
+            return redirect()->back()->with('alert-success', 'Duyệt đơn đặt hàng thành công!');
+        }
+        if ($order->status == 2){
+            $order->update([
+                'status' => 3
+            ]);
+            
+            return redirect()->back()->with('alert-success', 'Đơn hàng đang vận chuyển!');
+        }
+        if ($order->status == 3){
+            $order->update([
+                'status' => 4
+            ]);
+            
+            return redirect()->back()->with('alert-success', ' Đơn hàng đã hoàn thành!');
+        }
+        
+    }
+
+    public function cancelOrder($id)
+    {
+        DB::beginTransaction();
+        try {
+            $order = Order::findOrFail($id);
+
+            $order->update([
+                'status' => 0
+            ]);
+
+            foreach ($order->orderDetails as $order_detail) {
+                $book = Book::findOrFail($order_detail->book_id);
+                $book->update([
+                    'amount' => $book->amount + $order_detail->amount
+                ]);
+
+            }
+
+            DB::commit();
+            return redirect()->back()->with('alert-success', 'Hùy đơn thành công!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+            return redirect()->back()->with('alert-error', 'Hủy đơn thất bại!');
+        }
+    }
 }

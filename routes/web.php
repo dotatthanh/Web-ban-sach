@@ -17,9 +17,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function(){
 	Route::resource('news', 'NewController');
 	Route::resource('contacts', 'ContactController');
 	Route::resource('warehouses', 'WarehouseController');
-	Route::group(['prefix' => 'statistic'], function(){
+	Route::post('cancel-order/{id}', 'OrderController@cancelOrder')->name('orders.cancel-order');
+	Route::get('sales-orders', 'OrderController@indexSalesOrders')->name('orders.sales-orders');
+	Route::get('sales-orders-detail/{id}', 'OrderController@salesOrdersDetail')->name('orders.sales-orders-detail');
+	Route::post('change-status-order/{id}', 'OrderController@changeStatusOrder')->name('orders.change-status-order');
 	
-	Route::get('book', 'StatisticController@bookStatistic')->name('book-statistic');
+	Route::group(['prefix' => 'statistic'], function(){
+		Route::get('book', 'StatisticController@bookStatistic')->name('book-statistic');
+		Route::get('staff-revenue', 'StatisticController@staffRevenue')->name('staff-revenue');
 	});
 	// Thành viên
 	Route::group(['prefix' => 'member'], function(){

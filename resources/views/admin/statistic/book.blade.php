@@ -19,7 +19,6 @@
 				<input type="text" name="name" placeholder="Tên sách" class="form-control w-100">
 			</div>
 			<div class="col-3">
-				{{-- <input type="text" name="name" placeholder="Tên sách" class="form-control w-100"> --}}
 				<select class="form-control w-100" name="amount">
 					<option value=""></option>
 					<option value="Còn hàng">Còn hàng</option>
@@ -48,8 +47,10 @@
 			@endforeach
 		</table>
 		<div class="text-center">
-			{{-- {{ $books->appends(['key' => $request->key])->links()}} --}}
-			{{ $books->links()}}
+			{{ $books->appends([
+				'name' => $request->name,
+				'amount' => $request->amount,
+			])->links()}}
 		</div>
 	</div>
 
