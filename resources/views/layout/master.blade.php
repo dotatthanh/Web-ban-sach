@@ -60,7 +60,7 @@
 									<a href="{{ route('user.profile') }}">Tài khoản</a>
 									<ul width="155px">
 										<li>
-											<a href="" title="">Đăng xuất</a>
+											<a href="{{ route('user.logout') }}" title="">Đăng xuất</a>
 										</li>
 									</ul>
 								</li>

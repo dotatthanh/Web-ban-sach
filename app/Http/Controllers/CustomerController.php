@@ -168,4 +168,11 @@ class CustomerController extends Controller
         $user->delete();
         return redirect()->route('admin.customer.index')->with('alert-success', 'Xóa khách hàng thành công!');
     }
+
+    public function logout()
+    {
+        auth()->guard('customer')->logout();
+
+        return redirect()->route('pages.index');
+    }
 }

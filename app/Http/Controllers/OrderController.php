@@ -79,7 +79,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
         try {
             // tạo đơn nhập hàng
@@ -134,10 +133,12 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+        $address = Order::findOrFail($id)->customer->address;
         $order_details = OrderDetail::where('order_id', $id)->paginate(10);
 
         $data = [
-            'order_details' => $order_details
+            'order_details' => $order_details,
+            'address' => $address,
         ];
 
         return view('admin.order.order_detail', $data);
@@ -160,9 +161,21 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
-        //
+        // $books = Book::all();
+        $order = Order::findOrFail($id);
+        $address = $order->customer->address;
+        $order_details = OrderDetail::where('order_id', $id)->get();
+
+        $data = [
+            'order_details' => $order_details,
+            'address' => $address,
+            // 'books' => $books,
+            'order' => $order,
+        ];
+
+        return view('admin.order.edit', $data);
     }
 
     /**
@@ -172,9 +185,56 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            // Đơn đặt hàng
+            $order = Order::findOrFail($id);
+
+            // Hoàn trả sách
+            foreach ($order->orderDetails as $order_detail) {
+                $book = Book::findOrFail($order_detail->book_id);
+                $book->update([
+                    'amount' => $book->amount + $order_detail->amount,
+                ]);
+            }
+
+            $order->orderDetails()->delete();
+
+            $total_money = 0;
+            // tạo chi tiết đơn nhập hàng
+            foreach ($request->book_id as $key => $book_id) {
+                $book = Book::findOrFail($book_id);
+
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'book_id' => $book_id,
+                    'amount' => $request->amount[$key],
+                    'price' => $book->price,
+                    'sale' => $book->sale,
+                ]);
+
+                $book->update([
+                    'amount' => $book->amount - $request->amount[$key],
+                ]);
+
+                // Thành tiền 1 sản phẩm
+                $total = ($request->amount[$key] * $book->price) - ($request->amount[$key] * $book->price * $book->sale / 100);
+                $total_money += $total;
+            }
+
+            $order->update([
+                'total_money' => $total_money
+            ]);
+
+            DB::commit();
+            return redirect()->route('orders.index')->with('alert-success', 'Sửa đơn bán hàng thành công!');
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+            return redirect()->back()->with('alert-error', 'Sửa đơn bán hàng thất bại!');
+        }
     }
 
     /**

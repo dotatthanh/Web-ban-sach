@@ -73,9 +73,9 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
 
         if ($permission->name == "Administer roles & permissions") {
-            return redirect()->route('admin.permission.index')->with('notificationDeleteFail', 'Không thể xóa quyền này');
+            return redirect()->route('admin.permission.index')->with('alert-error', 'Không thể xóa quyền này');
         }
         $permission->delete();
-        return redirect()->route('admin.permission.index')->with('notificationDelete', 'Xóa quyền thành công!');
+        return redirect()->route('admin.permission.index')->with('alert-success', 'Xóa quyền thành công!');
     }
 }

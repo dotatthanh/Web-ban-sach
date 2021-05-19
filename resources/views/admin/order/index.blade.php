@@ -81,6 +81,7 @@
 							@csrf
 							<button type="submit" class="btn btn-primary">Duyệt</button>
 						</form>
+						<a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning text-white">Sửa</a>
 					@elseif ($order->status == 2)
 						<form action="{{ route('orders.change-status-order', $order->id) }}" method="POST" class="d-inline">
 							@csrf

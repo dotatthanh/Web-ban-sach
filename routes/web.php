@@ -102,15 +102,6 @@ Route::prefix('page')->name('page.')->group(function(){
 	Route::get('search', 'PageController@search')->name('search');
 });
 
-
-Route::get('/customer/register', 'CustomerController@register')->name('user.register');
-Route::post('/customer/register', 'CustomerController@postRegister')->name('user.postRegister');
-Route::get('/customer/login', 'CustomerController@login')->name('user.login');
-Route::post('/customer/login', 'CustomerController@postLogin')->name('user.postLogin');
-
-Route::get('/customer/profile', 'CustomerController@profile')->name('user.profile');
-Route::post('/customer/profile', 'CustomerController@updateProfile')->name('user.updateProfile');
-
 Route::group(['middleware' => 'auth'], function () {
 	// Khách hàng
 	Route::group(['prefix' => 'customer'], function(){
@@ -121,4 +112,27 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/edit/{id}', 'CustomerController@update')->name('pages.customer.update');
 		Route::get('/destroy/{id}', 'CustomerController@destroy')->name('pages.customer.destroy');
 	});
+	// Đơn hàng trả lại
+	Route::prefix('return-order')->name('return-order.')->group(function(){
+		Route::get('/', 'ReturnOrderController@index')->name('index');
+		Route::get('/create', 'ReturnOrderController@create')->name('create');
+		Route::post('/store', 'ReturnOrderController@store')->name('store');
+		Route::get('/show/{id}', 'ReturnOrderController@show')->name('show');
+		Route::get('/{id}/edit', 'ReturnOrderController@edit')->name('edit');
+		Route::put('/update/{id}', 'ReturnOrderController@update')->name('update');
+		Route::delete('/show/{id}', 'ReturnOrderController@destroy')->name('destroy');
+		Route::get('/get-book-in-order/{id}', 'ReturnOrderController@getBookInOrder');
+	});
+});
+
+
+Route::get('/customer/register', 'CustomerController@register')->name('user.register');
+Route::post('/customer/register', 'CustomerController@postRegister')->name('user.postRegister');
+Route::get('/customer/login', 'CustomerController@login')->name('user.login');
+Route::post('/customer/login', 'CustomerController@postLogin')->name('user.postLogin');
+
+Route::group(['middleware' => 'customer'], function () {
+	Route::get('/customer/profile', 'CustomerController@profile')->name('user.profile');
+	Route::post('/customer/profile', 'CustomerController@updateProfile')->name('user.updateProfile');
+	Route::get('/customer/logout', 'CustomerController@logout')->name('user.logout');
 });

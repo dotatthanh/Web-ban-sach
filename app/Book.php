@@ -13,6 +13,7 @@ class Book extends Model
         'sale',
         'content',
         'amount',
+        'amount_return',
         // 'total_export'
     ];
 

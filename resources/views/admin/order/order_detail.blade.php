@@ -14,8 +14,14 @@
 	</div>
 
 	<div class="container-fluid mt-5">
-		<a class="btn btn-success text-white" href="{{ route('orders.index') }}">Danh sách đặt hàng</a>
-
+		<div class="row">
+			<div class="col-3">
+				<a class="btn btn-success text-white" href="{{ route('orders.index') }}">Danh sách đặt hàng</a>
+			</div>
+			<div class="col-9 font-weight-bold text-right">
+				Địa chỉ: {{ $address }}
+			</div>
+		</div>
 
 		<table class="table table-bordered table-striped mt-3 mb-5">
 			<tr class="text-center">
@@ -24,6 +30,7 @@
 				<th>Tên sách</th>
 				<th>Số lượng (Quyển)</th>
 				<th>Giá (VNĐ)</th>
+				<th>Sale (%)</th>
 				<th>Thành tiền (VNĐ)</th>
 			</tr>
 			@php ($stt = 1)
@@ -34,11 +41,12 @@
 				<td>{{ $order_detail->book->name }}</td>
 				<td class="text-center">{{ $order_detail->amount }}</td>
 				<td class="text-center">{{ number_format($order_detail->price) }}</td>
-				<td class="text-center">{{ number_format($order_detail->amount * $order_detail->price) }}</td>
+				<td class="text-center">{{ $order_detail->sale }}</td>
+				<td class="text-center">{{ number_format(($order_detail->amount * $order_detail->price) - ($order_detail->amount * $order_detail->price * $order_detail->sale / 100)) }}</td>
 			</tr>
 			@endforeach
 			<tr class="font-weight-bold">
-				<td colspan="5" class="text-right">Tổng tiền</td>
+				<td colspan="6" class="text-right">Tổng tiền</td>
 				<td class="text-center">{{ number_format($order_detail->order->total_money) }}</td>
 			</tr>
 		</table>
