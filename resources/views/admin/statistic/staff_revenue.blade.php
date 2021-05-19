@@ -30,7 +30,10 @@
 				<th>STT</th>
 				<th>Tên nhân viên</th>
 				<th>Email</th>
+				<th>Số đơn bán hàng</th>
 				<th>Doanh thu (VNĐ)</th>
+				<th>Số đơn trả hàng</th>
+				<th>Tổng tiền đơn trả hàng (VNĐ)</th>
 			</tr>
 			<?php $stt = 1; ?>
 			@foreach ($users as $user)
@@ -38,7 +41,10 @@
 				<td class="text-center">{{ $stt++ }}</td>
 				<td>{{ $user->name }}</td>
 				<td>{{ $user->email }}</td>
+				<td class="text-center">{{ $user->order }}</td>
 				<td class="text-center">{{ number_format($user->revenue) }}</td>
+				<td class="text-center">0</td>
+				<td class="text-center">0</td>
 			</tr>
 			@endforeach
 		</table>

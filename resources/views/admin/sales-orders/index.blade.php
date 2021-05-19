@@ -45,7 +45,7 @@
 				<th>Phương thức thanh toán</th>
 				<th>Tổng tiền (VNĐ)</th>
 				<th>Ngày bán hàng</th>
-				<th>Thao tác</th>
+				{{-- <th>Thao tác</th> --}}
 			</tr>
 			<?php $stt = 1; ?>
 			@foreach ($orders as $order)
@@ -78,7 +78,7 @@
 				</td>
 				<td class="text-center">{{ number_format($order->total_money) }}</td>
 				<td class="text-center">{{ date_format($order->created_at, 'd/m/Y') }}</td>
-				<td class="text-center">
+				{{-- <td class="text-center">
 					@if ($order->status == 1)
 						<button type="submit" class="btn btn-primary">Duyệt</button>
 					@elseif ($order->status == 2)
@@ -93,7 +93,7 @@
 							<button class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn?')">Hủy đơn</button>
 						</form>
 					@endif
-				</td>
+				</td> --}}
 			</tr>
 			@endforeach
 		</table>

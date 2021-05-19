@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class ReturnOrder extends Model
 {
     protected $fillable = [
     	'code',
-        'user_id',
+        'order_id',
     	'customer_id',
+        'user_id',
+        'total_money',
         'status',
-        'payment_method',
-    	'total_money',
     ];
 
     public function customer(){
@@ -23,11 +23,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function book(){
-    	return $this->belongsTo(Book::class);
+    public function order(){
+    	return $this->belongsTo(Order::class);
     }
 
-    public function orderDetails(){
-        return $this->hasMany(OrderDetail::class);
+    public function returnOrderDetails(){
+        return $this->hasMany(ReturnOrderDetail::class);
     }
 }

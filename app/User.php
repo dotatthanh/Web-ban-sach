@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->orders->sum('total_money');
     }
+
+    public function getOrderAttribute()
+    {
+        return $this->orders->count();
+    }
 }
