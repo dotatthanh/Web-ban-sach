@@ -18,6 +18,17 @@
 		
 		<form method="POST" action="{{ route('orders.store') }}">
 			@csrf
+			<div class="form-group row mt-3">
+				<label class="col-2 col-form-label">khách hàng</label>
+				<div class="col-3">
+					<select name="customer_id" class="form-control select2" required>
+						<option value=""></option>
+						@foreach($customers as $customer)
+						<option value="{{ $customer->id }}">{{ $customer->name }}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
 			<table class="table table-bordered table-striped mt-3">
 				<tr class="text-center">
 					<th>STT</th>
@@ -40,6 +51,7 @@
 						</select>
 					</td>
 					<td class="text-center">
+						{{-- <input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0); checkNumberBook(0, $(this).val())" required> --}}
 						<input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0)" required>
 					</td>
 					<td class="text-center" id="price0">0</td>
@@ -137,6 +149,39 @@
 	        	}
 	        }
 	        $(`#total`).text(total);
+        }
+
+        function checkNumberBook(stt, amount) {
+        	let id = $(`select[name="book_id[${stt}]"]`).val();
+        	$.ajax({
+                url: 'admin/books/show/' + id,
+                method: 'get',
+                data: {
+                    'id': id
+                },
+                success: function (response) {
+                	console.log(response);
+                    // if (response.code === 200) {
+                    //     $('tbody').html(response.html);
+                    //     Toast.fire({
+                    //         icon: 'success',
+                    //         title: "Cập nhật giỏ hàng thành công!"
+                    //     })
+
+                    //     $('header .totalProduct').text(response.totalProduct);
+                    // }
+                    // else if (response.code === 400) {
+                    //     Toast.fire({
+                    //         icon: 'error',
+                    //         title: `Cửa hàng chỉ còn lại ${response.quantity_product} sản phẩm!`
+                    //     })
+                    // }
+
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         }
 	</script>
 </body>

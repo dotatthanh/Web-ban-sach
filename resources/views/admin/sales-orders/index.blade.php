@@ -39,6 +39,8 @@
 			<tr class="text-center">
 				<th>STT</th>
 				<th>Mã đơn bán hàng</th>
+				<th>Mã khách hàng</th>
+				<th>Tên khách hàng</th>
 				{{-- <th>Mã nhân viên</th> --}}
 				<th>Tên nhân viên</th>
 				<th>Trạng thái</th>
@@ -54,6 +56,8 @@
 				<td class="text-center">
 					<a href="{{ route('orders.sales-orders-detail', $order->id) }}" class="text-primary">{{ $order->code }}</a>
 				</td>
+				<td>{{ $order->customer->code }}</td>
+				<td>{{ $order->customer->name }}</td>
 				{{-- <td>{{ $order->user->code }}</td> --}}
 				<td>{{ $order->user->name }}</td>
 				<td>

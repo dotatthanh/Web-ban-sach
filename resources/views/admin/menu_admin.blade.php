@@ -22,8 +22,8 @@
     	</li>
     	<li><a href="#" class="lili">Thống kê</a>
     		<ul>
-                <li><a href="{{ route('book-statistic') }}">Kho sách</a></li>
-                <li><a href="">Sách đã bán</a></li>
+                <li><a href="{{ route('book-statistic') }}">Kho hàng</a></li>
+                <li><a href="{{ route('book-sold') }}">Hàng đã bán</a></li>
                 <li><a href="{{ route('staff-revenue') }}">Doanh thu nhân viên</a></li>
     			{{-- <li><a href="{{ route('contacts.index') }}">Phản hồi</a></li> --}}
     		</ul>

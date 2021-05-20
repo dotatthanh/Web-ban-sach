@@ -23,10 +23,10 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::where('user_id', null)->paginate(10);
+        $orders = Order::where('type', 'online')->paginate(10);
 
         if($request->code){
-            $orders = Order::where('user_id', null)->where('code', 'like', '%'.$request->code.'%')->paginate(10);
+            $orders = Order::where('type', 'online')->where('code', 'like', '%'.$request->code.'%')->paginate(10);
         }
 
         $data = [
@@ -40,10 +40,10 @@ class OrderController extends Controller
 
     public function indexSalesOrders(Request $request)
     {
-        $orders = Order::where('customer_id', null)->paginate(10);
+        $orders = Order::where('type', 'offline')->paginate(10);
         
         if($request->code){
-            $orders = Order::where('customer_id', null)->where('code', 'like', '%'.$request->code.'%')->paginate(10);
+            $orders = Order::where('type', 'offline')->where('code', 'like', '%'.$request->code.'%')->paginate(10);
         }
 
         $data = [
@@ -63,8 +63,10 @@ class OrderController extends Controller
     public function create()
     {
         $books = Book::all();
+        $customers = Customer::all();
 
         $data = [
+            'customers' => $customers,
             'books' => $books,
         ]; 
 
@@ -85,9 +87,11 @@ class OrderController extends Controller
             $order = Order::create([
                 'code' => 'PB'.strval(Order::count()+1),
                 'user_id' => Auth::id(),
+                'customer_id' => $request->customer_id,
                 'status' => 4,
                 'payment_method' => 2,
                 'total_money' => 0,
+                'type' => 'offline',
             ]);
 
             $total_money = 0;
@@ -163,7 +167,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        // $books = Book::all();
+        $books = Book::all();
         $order = Order::findOrFail($id);
         $address = $order->customer->address;
         $order_details = OrderDetail::where('order_id', $id)->get();
@@ -171,7 +175,7 @@ class OrderController extends Controller
         $data = [
             'order_details' => $order_details,
             'address' => $address,
-            // 'books' => $books,
+            'books' => $books,
             'order' => $order,
         ];
 

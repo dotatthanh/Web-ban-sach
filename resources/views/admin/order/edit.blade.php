@@ -43,8 +43,8 @@
 						<td>
 							<select name="book_id[{{ $stt-2 }}]" class="form-control select2" required onchange="setSalePrice($(this).val(), {{ $stt-2 }})">
 								<option value=""></option>
-								@foreach($order_details as $item)
-								<option value="{{ $item->book->id }}" {{ $order_detail->book_id == $item->book->id ? 'selected' : '' }}>{{ $item->book->name }}</option>
+								@foreach($books as $book)
+								<option value="{{ $book->id }}" {{ $order_detail->book_id == $book->id ? 'selected' : '' }}>{{ $book->name }}</option>
 								@endforeach
 							</select>
 						</td>
@@ -88,9 +88,9 @@
 					<td>
 						<select name="book_id[${stt}]" class="form-control select2" required onchange="setSalePrice($(this).val(), ${stt})">
 							<option value=""></option>
-							@foreach($order_details as $item)
-							<option value="{{ $item->book->id }}">{{ $item->book->name }}</option>
-							@endforeach
+							@foreach($books as $book)
+								<option value="{{ $book->id }}">{{ $book->name }}</option>
+								@endforeach
 						</select>
 					</td>
 					<td class="text-center">

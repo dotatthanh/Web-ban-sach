@@ -42,13 +42,27 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    public function getRevenueAttribute()
-    {
-        return $this->orders->sum('total_money');
+    public function returnOrders () {
+        return $this->hasMany(ReturnOrder::class);
     }
 
-    public function getOrderAttribute()
+    public function getTotalSalesOrderAmountAttribute()
     {
-        return $this->orders->count();
+        return $this->orders->where('status', 4)->sum('total_money');
+    }
+
+    public function getTotalSalesOrderAttribute()
+    {
+        return $this->orders->where('status', 4)->count();
+    }
+
+    public function getTotalReturnOrderAttribute()
+    {
+        return $this->returnOrders->count();
+    }
+
+    public function getTotalReturnOrderAmountAttribute()
+    {
+        return $this->returnOrders->sum('total_money');
     }
 }
