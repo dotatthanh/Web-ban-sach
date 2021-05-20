@@ -56,16 +56,9 @@
 							<li><a href="{{ route('page.forum') }}" title="">Diễn đàn</a></li>
 							<li><a href="{{ route('page.contact') }}" title="">Liên hệ</a></li>
 							@if (auth()->guard('customer')->user())
-								<li>
-									<a href="{{ route('user.profile') }}">Tài khoản</a>
-									<ul width="155px">
-										<li>
-											<a href="{{ route('user.logout') }}" title="">Đăng xuất</a>
-										</li>
-									</ul>
-								</li>
+								<li><a href="{{ route('user.profile') }}">Xin chào: {{ auth()->guard('customer')->user()->name }}</a></li>
 							@else
-								<li><a href="{{ route('user.login') }}">Đăng nhập</a></li>
+								<li><a href="{{ route('user.login') }}">Tài khoản</a></li>
 							@endif
 						</ul>
 					</div>

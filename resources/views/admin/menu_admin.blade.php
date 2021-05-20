@@ -13,7 +13,7 @@
     			<li><a href="{{ route('authors.index') }}">Tác giả</a></li>
     			<li><a href="{{ route('books.index') }}">Sách</a></li>
     			<li><a href="{{ route('news.index') }}">Tin tức</a></li>
-                <li><a href="">Nhà cung cấp</a></li>
+                <li><a href="{{ route('suppliers.index') }}">Nhà cung cấp</a></li>
                 <li><a href="{{ route('pages.customer.index') }}">Khách hàng</a></li>
                 <li><a href="{{ route('admin.member.index') }}">Nhân viên</a></li>
                 <li><a href="{{ route('admin.role.index') }}">Vai trò</a></li>

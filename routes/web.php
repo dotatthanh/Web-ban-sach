@@ -124,6 +124,9 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::delete('/show/{id}', 'ReturnOrderController@destroy')->name('destroy');
 		Route::get('/get-book-in-order/{id}', 'ReturnOrderController@getBookInOrder');
 	});
+
+	// Nhà cung cấp
+	Route::resource('suppliers', 'SupplierController');
 });
 
 
