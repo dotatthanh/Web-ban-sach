@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Book;
 use App\User;
 use App\Order;
+use App\ReturnOrder;
 
 class StatisticController extends Controller
 {
@@ -36,6 +37,24 @@ class StatisticController extends Controller
     	return view('admin.statistic.book', $data);
     }
 
+    public function bookSoldStatistic(Request $request)
+    {
+        $books = Book::query();
+
+        if ($request->name) {
+            $books = $books->where('name', 'like', '%'.$request->name.'%');
+        }
+
+        $books = $books->paginate(10);
+
+        $data = [
+            'books' => $books,
+            'request' => $request,
+        ];
+
+        return view('admin.statistic.book-sold', $data);
+    }
+
     public function staffRevenue(Request $request)
     {
         $users = User::query();
@@ -46,7 +65,7 @@ class StatisticController extends Controller
 
         $users = $users->paginate(10);
 
-        $revenue = Order::where('status', 4)->sum('total_money');
+        $revenue = Order::where('status', 4)->sum('total_money') - ReturnOrder::all()->sum('total_money');
 
         $data = [
             'users' => $users,

@@ -24,25 +24,25 @@ class BookUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'nameupdate' => 'required|max:100',
-            'imgupdate' => 'required',
-            'priceupdate' => 'required|min:1',
-            'saleupdate' => 'required|min:0',
-            'contentupdate' => 'required',
+            'name' => 'required|max:100',
+            'img' => 'required',
+            'price' => 'required|min:1',
+            'sale' => 'required|min:0',
+            'content' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'nameupdate.required' => 'Tên sách không được trống.',
-            'nameupdate.max'  => 'Tên sách không được phép vượt quá 100 kí tự.',
-            'imgupdate.required'  => 'Ảnh không được trống.',
-            'priceupdate.required'  => 'Đơn giá không được trống.',
-            'priceupdate.min'  => 'Đơn giá lớn hơn 0.',
-            'saleupdate.required'  => 'Giảm giá không được trống.',
-            'saleupdate.min'  => 'Giảm giá lớn hơn hoặc bằng 0.',
-            'contentupdate.required'  => 'Tóm tắt nội dung không được trống.',
+            'name.required' => 'Tên sách không được trống.',
+            'name.max'  => 'Tên sách không được phép vượt quá 100 kí tự.',
+            'img.required'  => 'Ảnh không được trống.',
+            'price.required'  => 'Đơn giá không được trống.',
+            'price.min'  => 'Đơn giá lớn hơn 0.',
+            'sale.required'  => 'Giảm giá không được trống.',
+            'sale.min'  => 'Giảm giá lớn hơn hoặc bằng 0.',
+            'content.required'  => 'Tóm tắt nội dung không được trống.',
         ];
     }
 }

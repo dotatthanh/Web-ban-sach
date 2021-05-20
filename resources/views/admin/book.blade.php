@@ -56,6 +56,7 @@
 		<table class="table table-bordered table-striped mt-3 mb-5">
 			<tr class="text-center">
 				<th>STT</th>
+				<th>Mã sách</th>
 				<th>Tên sách</th>
 				<th>Ảnh</th>
 				<th>Tên tác giả</th>
@@ -69,6 +70,7 @@
 			@foreach ($books as $book)
 			<tr>
 				<td class="text-center">{{ $stt++ }}</td>
+				<td>{{ $book->code }}</td>
 				<td>{{ $book->name }}</td>
 				<td class="text-center"><img class="maxw-90" src="{{ asset('storage/'.$book->img) }}" alt=""></td>
 				<td>
@@ -108,25 +110,33 @@
 									@method('PUT')
 									<div class="modal-body container">
 										<div class="row">
+											<div class="col-3 mb-3">MÃ sách:</div>
+											<div class="col-9 mb-3">
+												<input type="text" name="code" placeholder="Mã sách" class="form-control w-100" value="{{ $book->code }}">
+												@if($errors->has('code'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('code') }}</span>
+												@endif
+											</div>
+
 											<div class="col-3 mb-3">Tên sách:</div>
 											<div class="col-9 mb-3">
-												<input type="text" name="nameupdate" placeholder="Tên sách" class="form-control w-100" value="{{ $book->name }}">
-												@if($errors->has('nameupdate'))
-													<span class="text-danger d-block mt-2">{{ $errors->first('nameupdate') }}</span>
+												<input type="text" name="name" placeholder="Tên sách" class="form-control w-100" value="{{ $book->name }}">
+												@if($errors->has('name'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('name') }}</span>
 												@endif
 											</div>
 
 											<div class="col-3 mb-3">Ảnh</div>
 											<div class="col-9 mb-3">
-												<input type="file" name="imgupdate" class="form-control" value="{{ asset('storage/'.$book->img) }}">
-												@if($errors->has('imgupdate'))
-													<span class="text-danger d-block mt-2">{{ $errors->first('imgupdate') }}</span>
+												<input type="file" name="img" class="form-control" value="{{ asset('storage/'.$book->img) }}">
+												@if($errors->has('img'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('img') }}</span>
 												@endif
 											</div>
 
 											<div class="col-3 mb-3">Tác giả:</div>
 											<div class="col-9 mb-3">
-												<select name="authorupdate[]" id="" class="form-control select2 w-100" multiple="multiple">
+												<select name="author[]" id="" class="form-control select2 w-100" multiple="multiple">
 													@foreach ($authors as $author)
 													<option value="{{ $author->id }}"
 														@foreach ($book->authors as $value)
@@ -139,7 +149,7 @@
 
 											<div class="col-3 mb-3">Thể loại:</div>
 											<div class="col-9 mb-3">
-												<select name="typeupdate[]" id="" class="form-control select2 w-100" multiple="multiple">
+												<select name="type[]" id="" class="form-control select2 w-100" multiple="multiple">
 													@foreach ($types as $type)
 													<option value="{{ $type->id }}"
 														@foreach ($book->types as $value)
@@ -152,7 +162,7 @@
 
 											<div class="col-3 mb-3">Danh mục:</div>
 											<div class="col-9 mb-3">
-												<select name="categoryupdate[]" id="" class="form-control select2 w-100" multiple="multiple">
+												<select name="category[]" id="" class="form-control select2 w-100" multiple="multiple">
 													@foreach ($categories as $category)
 														<option value="{{ $category->id }}"
 															@foreach ($book->categories as $value)
@@ -165,9 +175,9 @@
 
 											<div class="col-3 mb-3">Đơn giá:</div>
 											<div class="col-7 mb-3 ">
-												<input name="priceupdate" type="number" min="1" class="form-control" value="{{ $book->price }}">
-												@if($errors->has('priceupdate'))
-													<span class="text-danger d-block mt-2">{{ $errors->first('priceupdate') }}</span>
+												<input name="price" type="number" min="1" class="form-control" value="{{ $book->price }}">
+												@if($errors->has('price'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('price') }}</span>
 												@endif
 											</div>
 											<div class="col-2 mb-3 ">
@@ -176,9 +186,9 @@
 
 											<div class="col-3 mb-3">Giảm giá:</div>
 											<div class="col-7 mb-3 ">
-												<input name="saleupdate" type="number" min="0" class="form-control" value="{{ $book->sale }}">
-												@if($errors->has('saleupdate'))
-													<span class="text-danger d-block mt-2">{{ $errors->first('saleupdate') }}</span>
+												<input name="sale" type="number" min="0" class="form-control" value="{{ $book->sale }}">
+												@if($errors->has('sale'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('sale') }}</span>
 												@endif
 											</div>
 											<div class="col-2 mb-3 ">
@@ -186,9 +196,9 @@
 											</div>
 											<div class="col-3 mb-3">Tóm tắt nội dung:</div>
 											<div class="col-9 mb-3">
-												<textarea name="contentupdate" id="" class="w-100 ckeditor form-control" rows="3">{{ $book->content }}</textarea>
-												@if($errors->has('contentupdate'))
-													<span class="text-danger d-block mt-2">{{ $errors->first('contentupdate') }}</span>
+												<textarea name="content" id="" class="w-100 ckeditor form-control" rows="3">{{ $book->content }}</textarea>
+												@if($errors->has('content'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('content') }}</span>
 												@endif
 											</div>
 										</div>
@@ -234,6 +244,14 @@
 					@csrf
 					<div class="modal-body container">
 						<div class="row">
+							<div class="col-3 mb-3">Mã sách:</div>
+							<div class="col-9 mb-3">
+								<input type="text" name="code" placeholder="Mã sách" class="form-control w-100">
+								@if($errors->has('code'))
+									<span class="text-danger d-block mt-2">{{ $errors->first('code') }}</span>
+								@endif
+							</div>
+
 							<div class="col-3 mb-3">Tên sách:</div>
 							<div class="col-9 mb-3">
 								<input type="text" name="name" placeholder="Tên sách" class="form-control w-100">

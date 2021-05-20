@@ -114,7 +114,7 @@ class BookController extends Controller
             }
         }
 
-        return redirect()->route('books.index')->with('notificationAdd', 'Thêm thành công!');
+        return redirect()->route('books.index')->with('alert-success', 'Thêm thành công!');
     }
 
     /**
@@ -148,23 +148,24 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(BookUpdateRequest $request, $id)
+    public function update(BookRequest $request, $id)
     {
         $data = [
-            'supplier_id' => $request->supplierupdate,
-            'name' => $request->nameupdate,
-            'img' => $request->imgupdate,
-            'price' => $request->priceupdate,
-            'sale' => $request->saleupdate,
-            'content' => $request->contentupdate,
+            'supplier_id' => $request->supplier,
+            'name' => $request->name,
+            'img' => $request->img,
+            'price' => $request->price,
+            'sale' => $request->sale,
+            'content' => $request->content,
+            'code' => $request->code,
         ];
 
         // xử lý img
-        if ($request->hasFile('imgupdate')) {
-            $file1Extension = $request->file('imgupdate')
+        if ($request->hasFile('img')) {
+            $file1Extension = $request->file('img')
                 ->getClientOriginalExtension();
             $fileName1 = uniqid() . '.' . $file1Extension;
-            $request->file('imgupdate')
+            $request->file('img')
                 ->storeAs('public', $fileName1);
             $data['img'] = $fileName1;
         }
@@ -174,7 +175,7 @@ class BookController extends Controller
 
         // Book_type
         Book_Type::where('book_id', $id)->delete();
-        $type_id = $request->typeupdate;
+        $type_id = $request->type;
         if($type_id != null)
         {
             for ($i=0; $i < count($type_id); $i++) { 
@@ -187,7 +188,7 @@ class BookController extends Controller
 
         // Book_category
         Book_Category::where('book_id', $id)->delete();
-        $category_id = $request->categoryupdate;
+        $category_id = $request->category;
         if($category_id != null)
         {
             for ($i=0; $i < count($category_id); $i++) { 
@@ -200,7 +201,7 @@ class BookController extends Controller
 
         // Author_Book
         Author_Book::where('book_id', $id)->delete();
-        $author_id = $request->authorupdate;
+        $author_id = $request->author;
         if($author_id != null)
         {
             for ($i=0; $i < count($author_id); $i++) { 
@@ -211,7 +212,7 @@ class BookController extends Controller
             }
         }
         
-        return redirect()->route('books.index')->with('notificationUpdate', 'Sửa thành công!');
+        return redirect()->route('books.index')->with('alert-success', 'Sửa thành công!');
     }
 
     /**
@@ -226,6 +227,7 @@ class BookController extends Controller
         Book::findOrFail($id)->bookTypes()->delete();
         Book::findOrFail($id)->authorBooks()->delete();
         Book::findOrFail($id)->delete();
-        return redirect()->back()->with('notificationDelete', 'Xóa thành công!');
+        
+        return redirect()->back()->with('alert-success', 'Xóa thành công!');
     }
 }

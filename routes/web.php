@@ -25,6 +25,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function(){
 	Route::group(['prefix' => 'statistic'], function(){
 		Route::get('book', 'StatisticController@bookStatistic')->name('book-statistic');
 		Route::get('staff-revenue', 'StatisticController@staffRevenue')->name('staff-revenue');
+		Route::get('book-sold', 'StatisticController@bookSoldStatistic')->name('book-sold');
 	});
 	// Thành viên
 	Route::group(['prefix' => 'member'], function(){

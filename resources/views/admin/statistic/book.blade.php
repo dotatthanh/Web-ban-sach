@@ -32,17 +32,26 @@
 		<table class="table table-bordered table-striped mt-3 mb-5">
 			<tr class="text-center">
 				<th>STT</th>
+				<th>Mã sách</th>
 				<th>Tên sách</th>
-				<th>Ảnh</th>
-				<th>Số lượng</th>
+				<th>Tồn kho</th>
+				<th>Giá trị tồn kho</th>
+			</tr>
+			<tr>
+				<td colspan="3" class="text-center">
+					Tổng {{ $books->count() }} sản phẩm
+				</td>
+				<td class="text-center">{{ $books->sum('amount') }}</td>
+				<td class="text-center">{{ $books->sum('inventory_value') }}</td>
 			</tr>
 			<?php $stt = 1; ?>
 			@foreach ($books as $book)
 			<tr>
 				<td class="text-center">{{ $stt++ }}</td>
+				<td>{{ $book->code }}</td>
 				<td>{{ $book->name }}</td>
-				<td class="text-center"><img class="maxw-90" src="{{ asset('storage/'.$book->img) }}" alt=""></td>
 				<td class="text-center">{{ $book->amount }}</td>
+				<td class="text-center">{{ $book->inventory_value }}</td>
 			</tr>
 			@endforeach
 		</table>
