@@ -105,6 +105,8 @@ class OrderController extends Controller
                     'amount' => $request->amount[$key],
                     'price' => $book->price,
                     'sale' => $book->sale,
+                    'total_money' => $request->amount[$key] * $book->price,
+                    'discount' => $request->amount[$key] * $book->price * $book->sale / 100,
                 ]);
 
                 $book->update([
@@ -117,7 +119,7 @@ class OrderController extends Controller
             }
 
             $order->update([
-                'total_money' => $total_money
+                'total_money' => $total_money,
             ]);
 
             DB::commit();
@@ -217,6 +219,8 @@ class OrderController extends Controller
                     'amount' => $request->amount[$key],
                     'price' => $book->price,
                     'sale' => $book->sale,
+                    'total_money' => $request->amount[$key] * $book->price,
+                    'discount' => $request->amount[$key] * $book->price * $book->sale / 100,
                 ]);
 
                 $book->update([

@@ -23,6 +23,14 @@
 		<form method="POST" action="{{ route('return-order.update', $return_order->id) }}">
 			@csrf
 			@method('PUT')
+
+			<div class="form-group row mt-3">
+				<label class="col-2 col-form-label">Lý do</label>
+				<div class="col-3">
+					<textarea class="form-control" name="reason" rows="3">{{ $return_order->reason }}</textarea>
+				</div>
+			</div>
+
 			<table class="table table-bordered table-striped mt-3">
 				<tr class="text-center">
 					<th>STT</th>
