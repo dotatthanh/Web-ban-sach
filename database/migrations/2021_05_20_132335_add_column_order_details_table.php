@@ -14,6 +14,7 @@ class AddColumnOrderDetailsTable extends Migration
     public function up()
     {
         Schema::table('order_details', function (Blueprint $table) {
+            $table->unsignedBigInteger('sale')->after('price');
             $table->unsignedBigInteger('total_money')->after('amount');
             $table->unsignedBigInteger('discount')->after('total_money');
         });
@@ -27,6 +28,7 @@ class AddColumnOrderDetailsTable extends Migration
     public function down()
     {
         Schema::table('order_details', function (Blueprint $table) {
+            $table->dropColumn('sale');
             $table->dropColumn('total_money');
             $table->dropColumn('discount');
         });

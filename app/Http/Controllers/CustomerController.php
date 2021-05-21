@@ -46,6 +46,10 @@ class CustomerController extends Controller
             'code' => 0
         ]);
 
+        $created->update([
+            'code' => 'KH'.$created->id
+        ]);
+
         if ($created) {
             DB::commit();
             return redirect()->route('user.login')->with('alert-success', 'Đăng ký tài khoản thành công');

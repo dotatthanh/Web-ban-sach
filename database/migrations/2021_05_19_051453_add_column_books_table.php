@@ -15,6 +15,7 @@ class AddColumnBooksTable extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->unsignedBigInteger('amount_return')->after('sale')->default(0);
+            $table->string('code')->after('id');
         });
     }
 
@@ -27,6 +28,7 @@ class AddColumnBooksTable extends Migration
     {
         Schema::table('books', function (Blueprint $table) {
             $table->dropColumn('amount_return');
+            $table->dropColumn('code');
         });
     }
 }
