@@ -35,6 +35,7 @@
 				<th>Nhân viên tạo đơn</th>
 				<th>Tổng tiền (VNĐ)</th>
 				<th>Trạng thái</th>
+				<th>Lý do</th>
 				<th>Ngày tạo</th>
 				<th>Thao tác</th>
 			</tr>
@@ -57,6 +58,7 @@
 						Hoàn thành
 					@endif
 				</td>
+				<td>{{ $return_order->reason }}</td>
 				<td class="text-center">{{ date_format($return_order->created_at, 'd/m/Y') }}</td>
 				<td class="text-center">
 					<a href="{{ route('return-order.edit', $return_order->id) }}" class="btn btn-warning text-white">Sửa</a>

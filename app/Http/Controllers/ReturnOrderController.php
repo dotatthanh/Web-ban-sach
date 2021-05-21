@@ -43,7 +43,6 @@ class ReturnOrderController extends Controller
 
     public function store(Request $request)
     {
-    	// dd($request->all());
     	DB::beginTransaction();
         try {
         	$order = Order::findOrFail($request->order_id);
@@ -55,6 +54,7 @@ class ReturnOrderController extends Controller
                 'user_id' => Auth::id(),
                 'status' => 1,
                 'total_money' => 0,
+                'reason' => $request->reason,
             ]);
 
             $total_money = 0;
@@ -68,6 +68,8 @@ class ReturnOrderController extends Controller
                     'amount' => $request->amount[$key],
                     'price' => $book->price,
                     'sale' => $book->sale,
+                    'total_money' => $request->amount[$key] * $book->price,
+                    'discount' => $request->amount[$key] * $book->price * $book->sale / 100,
                 ]);
 
                 $book->update([
@@ -145,6 +147,8 @@ class ReturnOrderController extends Controller
                     'amount' => $request->amount[$key],
                     'price' => $book->price,
                     'sale' => $book->sale,
+                    'total_money' => $request->amount[$key] * $book->price,
+                    'discount' => $request->amount[$key] * $book->price * $book->sale / 100,
                 ]);
 
                 $book->update([
@@ -157,7 +161,8 @@ class ReturnOrderController extends Controller
             }
 
             $return_order->update([
-                'total_money' => $total_money
+                'total_money' => $total_money,
+                'reason' => $request->reason,
             ]);
 
             DB::commit();

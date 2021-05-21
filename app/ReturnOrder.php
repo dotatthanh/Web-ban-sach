@@ -13,6 +13,7 @@ class ReturnOrder extends Model
         'user_id',
         'total_money',
         'status',
+        'reason',
     ];
 
     public function customer(){

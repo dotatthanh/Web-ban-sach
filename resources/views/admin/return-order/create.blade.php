@@ -29,6 +29,12 @@
 					</select>
 				</div>
 			</div>
+			<div class="form-group row mt-3">
+				<label class="col-2 col-form-label">Lý do</label>
+				<div class="col-3">
+					<textarea class="form-control" name="reason" rows="3"></textarea>
+				</div>
+			</div>
 			<table class="table table-bordered table-striped mt-3">
 				<tr class="text-center">
 					<th>STT</th>

@@ -12,6 +12,8 @@ class ReturnOrderDetail extends Model
     	'amount',
     	'price',
         'sale',
+        'total_money',
+        'discount',
     ];
 
     public function book()

@@ -13,6 +13,7 @@ class Order extends Model
         'status',
         'payment_method',
     	'total_money',
+        'type',
     ];
 
     public function customer(){
