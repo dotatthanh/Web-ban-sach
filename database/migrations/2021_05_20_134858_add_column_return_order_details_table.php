@@ -16,6 +16,7 @@ class AddColumnReturnOrderDetailsTable extends Migration
         Schema::table('return_order_details', function (Blueprint $table) {
             $table->unsignedBigInteger('total_money')->after('amount');
             $table->unsignedBigInteger('discount')->after('total_money');
+            $table->unsignedBigInteger('sale')->after('amount');
         });
     }
 
@@ -29,6 +30,7 @@ class AddColumnReturnOrderDetailsTable extends Migration
         Schema::table('return_order_details', function (Blueprint $table) {
             $table->dropColumn('total_money');
             $table->dropColumn('discount');
+            $table->dropColumn('sale');
         });
     }
 }

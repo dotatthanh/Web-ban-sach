@@ -83,18 +83,36 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
+            // Kiểm tra tồn tại KH
+            $customer = Customer::where('phone', $request->phone)->first();
+            if ($customer) {
+                $customer_id = $customer->id;
+            }
+            else {
+                $customer = Customer::create([
+                    'password' => bcrypt(12345678),
+                    'name' => $request->name,
+                    'phone' => $request->phone,
+                    'code' => 'KH',
+                ]);
+                $customer_id = $customer->id;
+                $customer->update([
+                    'code' => 'KH'.$customer->id
+                ]);
+            }
+
             // tạo đơn nhập hàng
             $order = Order::create([
                 'code' => 'PB'.strval(Order::count()+1),
                 'user_id' => Auth::id(),
-                'customer_id' => $request->customer_id,
+                'customer_id' => $customer_id,
                 'status' => 4,
                 'payment_method' => 2,
                 'total_money' => 0,
                 'type' => 'offline',
             ]);
-
             $total_money = 0;
+            
             // tạo chi tiết đơn nhập hàng
             foreach ($request->book_id as $key => $book_id) {
                 $book = Book::findOrFail($book_id);

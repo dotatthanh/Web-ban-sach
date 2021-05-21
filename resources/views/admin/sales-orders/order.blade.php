@@ -21,12 +21,16 @@
 			<div class="form-group row mt-3">
 				<label class="col-2 col-form-label">khách hàng</label>
 				<div class="col-3">
-					<select name="customer_id" class="form-control select2" required>
+					{{-- <select name="customer_id" class="form-control select2" required>
 						<option value=""></option>
 						@foreach($customers as $customer)
 						<option value="{{ $customer->id }}">{{ $customer->name }}</option>
 						@endforeach
-					</select>
+					</select> --}}
+					<input type="text" name="name" class="form-control" placeholder="Tên khách hàng" required>
+				</div>
+				<div class="col-3">
+					<input type="number" name="phone" class="form-control" placeholder="Số điện thoại khách hàng" required>
 				</div>
 			</div>
 			<table class="table table-bordered table-striped mt-3">
