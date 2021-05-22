@@ -48,13 +48,17 @@
             </div>
         @endif
 		
-		<h1 class="title-admin"><span>Danh sách</span> Thể loại sách</h1>
-
-
+		<h1 class="title-admin">Danh sách thể loại sách</h1>
 
 		<form action="{{ route('types.store') }}" method="POST">
 			@csrf
 			<div class="row mt-5">
+				<div class="col-3">
+					<input type="text" name="code" id="code" placeholder="Mã thể loại" class="form-control w-100" value="{{ old('code') }}">
+					@if($errors->has('code'))
+						<span class="text-danger d-block mt-2">{{ $errors->first('code') }}</span>
+					@endif
+				</div>
 				<div class="col-3">
 					<input type="text" name="name" id="name" placeholder="Tên thể loại" class="form-control w-100" value="{{ old('name') }}">
 					@if($errors->has('name'))
@@ -66,9 +70,6 @@
 				</div>
 			</div>
 		</form>
-
-
-
 
 
 		<form action="{{ route('types.index') }}" method="GET" class="row mt-3">
@@ -83,6 +84,7 @@
 		<table class="table table-bordered table-striped mt-3 table-responsive" id="table">
 			<tr class="text-center">
 				<th class="w-25">STT</th>
+				<th>Mã thể loại</th>
 				<th>Tên thể loại</th>
 				<th>Thao tác</th>
 			</tr>
@@ -90,6 +92,7 @@
 			@foreach ($types as $type)
 			<tr>
 				<td class="text-center align-middle">{{ $stt++ }}</td>
+				<td class="align-middle">{{ $type->code }}</td>
 				<td class="align-middle">{{ $type->name }}</td>
 				<td class="text-center">
 					<button class="btn btn-warning text-white w-25" data-toggle="modal" data-target="#edit_category_book{{ $type->id }}">Sửa</button>
@@ -111,7 +114,15 @@
 									@method('PUT')
 									<div class="modal-body container">
 										<div class="row">
-											<div class="col-3 mb-3">Tên thể loại:</div>
+											<div class="col-3 mb-3">Mã thể loại *:</div>
+											<div class="col-9 mb-3">
+												<input type="text" name="codeupdate" placeholder="Mã thể loại" class="form-control w-100" value="{{ $type->code }}">
+												@if($errors->has('codeupdate'))
+													<span class="text-danger text-left d-block mt-2">{{ $errors->first('codeupdate') }}</span>
+												@endif
+											</div>
+
+											<div class="col-3 mb-3">Tên thể loại *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="nameupdate" placeholder="Tên thể loại" class="form-control w-100" value="{{ $type->name }}">
 												@if($errors->has('nameupdate'))

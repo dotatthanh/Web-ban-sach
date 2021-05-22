@@ -27,6 +27,11 @@ class MemberCreateRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|unique:users',
             'password' => 'required',
+            'code' => 'required',
+            'birthday' => 'required',
+            'sex' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
         ];
     }
 }

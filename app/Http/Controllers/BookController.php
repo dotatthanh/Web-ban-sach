@@ -65,6 +65,9 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         $data = $request->all();
+        if (is_null($data['sale'])) {
+            $data['sale'] = 0;
+        }
         // xử lý img
         if ($request->hasFile('img')) {
             $file1Extension = $request->file('img')
@@ -148,8 +151,11 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(BookRequest $request, $id)
+    public function update(BookUpdateRequest $request, $id)
     {
+        if (is_null($request->sale)) {
+            $request->sale = 0;
+        }
         $data = [
             'supplier_id' => $request->supplier,
             'name' => $request->name,
@@ -158,6 +164,8 @@ class BookController extends Controller
             'sale' => $request->sale,
             'content' => $request->content,
             'code' => $request->code,
+            'size' => $request->size,
+            'page_number' => $request->page_number,
         ];
 
         // xử lý img

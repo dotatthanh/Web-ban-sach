@@ -47,7 +47,7 @@
             </div>
         @endif
 
-		<h1 class="title-admin"><span>Danh sách</span> Danh mục sách</h1>
+		<h1 class="title-admin">Danh sách danh mục sách</h1>
 
 		<form action="{{ route('categorys.store') }}" method="POST">
 			@csrf
@@ -104,7 +104,7 @@
 									<!-- Modal body -->
 									<div class="modal-body container">
 										<div class="row">
-											<div class="col-3 mb-3">Tên danh mục:</div>
+											<div class="col-3 mb-3">Tên danh mục *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="nameupdate" placeholder="Tên danh mục" class="form-control w-100" value="{{ $category->name }}">
 												@if($errors->has('nameupdate'))

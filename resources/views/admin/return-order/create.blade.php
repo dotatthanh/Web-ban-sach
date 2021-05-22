@@ -19,9 +19,9 @@
 		<form method="POST" action="{{ route('return-order.store') }}">
 			@csrf
 			<div class="form-group row mt-3">
-				<label class="col-2 col-form-label">Đơn hàng</label>
+				<label class="col-2 col-form-label">Đơn hàng *</label>
 				<div class="col-3">
-					<select name="order_id" class="form-control" required onchange="getBookInOrder($(this).val())">
+					<select name="order_id" class="form-control select2" required onchange="getBookInOrder($(this).val())">
 						<option value=""></option>
 						@foreach($orders as $order)
 						<option value="{{ $order->id }}">{{ $order->code }}</option>
@@ -30,9 +30,9 @@
 				</div>
 			</div>
 			<div class="form-group row mt-3">
-				<label class="col-2 col-form-label">Lý do</label>
+				<label class="col-2 col-form-label">Lý do *</label>
 				<div class="col-3">
-					<textarea class="form-control" name="reason" rows="3"></textarea>
+					<textarea class="form-control" name="reason" rows="3" required></textarea>
 				</div>
 			</div>
 			<table class="table table-bordered table-striped mt-3">
@@ -53,7 +53,7 @@
 						</select>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0)" required>
+						<input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0); checkNumberBookOrderDetail(0, $(this).val())" required>
 					</td>
 					<td class="text-center" id="price0">0</td>
 					<td class="text-center" id="sale0">0</td>
@@ -72,7 +72,7 @@
 				</tfoot>
 			</table>
 			<div class="text-center">
-				<button type="submit" class="btn btn-success mt-2">Tạo đơn bán hàng</button>
+				<button type="submit" class="btn btn-success mt-2">Tạo đơn hàng trả lại</button>
 			</div>
 		</form>
 	</div>
@@ -94,7 +94,7 @@
 						</select>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt})" required>
+						<input type="number" name="amount[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt}); checkNumberBookOrderDetail(${stt}, $(this).val())" required>
 					</td>
 					<td class="text-center" id="price${stt}">0</td>
 					<td class="text-center" id="sale${stt}">0</td>
@@ -169,6 +169,30 @@
                     		$(`select[name="book_id[${i}]"]`).html(text);
                     	}
                     }
+                }
+            })
+        }
+
+        function checkNumberBookOrderDetail(stt, amount) {
+        	let order_id = $(`select[name="order_id"]`).val();
+        	let book_id = $(`select[name="book_id[${stt}]"]`).val();
+        	$.ajax({
+                url: '/return-order/get-order-detail/',
+                method: 'GET',
+                data: {
+                    order_id: order_id,
+                    book_id: book_id,
+                },
+                success: function (response) {
+                    if (amount > response.amount) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: `Sản phẩm này đơn hàng chỉ mua ${response.amount} sản phẩm!`
+                        })
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
                 }
             })
         }

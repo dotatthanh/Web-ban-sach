@@ -12,7 +12,7 @@
             <span class="alert alert-danger mt-2 d-block text-center" role="alert">Sửa quyền thất bại!</span>
         @endif
         
-        <h1 class="title-admin"><span>Thêm</span> Quyền</h1>
+        <h1 class="title-admin">Thêm quyền</h1>
     </div>
 
     <div class="container mt-5">
@@ -24,7 +24,7 @@
                         <div class="box">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label>Tên</label>
+                                    <label>Tên *</label>
                                     <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                                     {!! $errors->first('name', '<span class="help-block error">:message</span>') !!}
                                 </div>

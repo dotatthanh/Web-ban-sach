@@ -16,10 +16,12 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('size');
+            $table->unsignedBigInteger('page_number');
             $table->string('img');
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('amount')->default(0);
-            $table->unsignedBigInteger('sale')->nullable();
+            $table->unsignedBigInteger('sale');
             $table->text('content');
             $table->timestamps();
         });

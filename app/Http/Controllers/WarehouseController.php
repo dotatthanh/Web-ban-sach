@@ -63,10 +63,14 @@ class WarehouseController extends Controller
         try {
             // tạo đơn nhập hàng
             $import_order = ImportOrder::create([
-                'code' => 'PN'.strval(ImportOrder::count()+1),
+                'code' => 'PN',
                 'user_id' => Auth::id(),
                 'supplier_id' => $request->supplier_id,
                 'total_money' => 0,
+            ]);
+
+            $import_order->update([
+                'code' => 'PN'.str_pad($import_order->id, 6, '0', STR_PAD_LEFT)
             ]);
 
             $total_money = 0;

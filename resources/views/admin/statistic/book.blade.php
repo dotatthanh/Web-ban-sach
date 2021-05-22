@@ -10,7 +10,7 @@
 	@include('admin.menu_admin')
 	
 	<div class="container mt-5">
-		<h1 class="title-admin"><span>Thống kê</span> Sách</h1>
+		<h1 class="title-admin">Thống kê sách</h1>
 	</div>
 
 	<div class="container-fluid mt-5">

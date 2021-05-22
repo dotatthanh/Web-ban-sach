@@ -46,7 +46,7 @@
                 {{ session('notificationDelete') }}
             </div>
 		@endif
-		<h1 class="title-admin"><span>Danh sách</span> Tác giả</h1>
+		<h1 class="title-admin">Danh sách tác giả</h1>
 	</div>
 	
 	<div class="container-fluid mt-5">
@@ -104,47 +104,36 @@
 									@method('PUT')
 									<div class="modal-body container">
 										<div class="row">
-											<div class="col-3 mb-3">Tên tác giả:</div>
+											<div class="col-3 mb-3">Tên tác giả *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="nameupdate" placeholder="Tên tác giả" class="form-control w-100" value="{{ $author->name }}">
 												@if($errors->has('nameupdate'))
 													<span class="text-danger d-block mt-2">{{ $errors->first('nameupdate') }}</span>
 												@endif
 											</div>
-											<div class="col-3 mb-3">Giới tính:</div>
+											<div class="col-3 mb-3">Giới tính *:</div>
 											<div class="col-9 mb-3">
-												@if($author->sex == 'Nam')
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="radio" name="sexupdate" id="nam" value="Nam" <?php echo 'checked' ?>>
-														<label class="form-check-label" for="nam">Nam</label>
-													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="radio" name="sexupdate" id="nu" value="Nữ">
-														<label class="form-check-label" for="nu">Nữ</label>
-													</div>
-												@else
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="radio" name="sexupdate" id="nam" value="Nam">
-														<label class="form-check-label" for="nam">Nam</label>
-													</div>
-													<div class="form-check form-check-inline">
-														<input class="form-check-input" type="radio" name="sexupdate" id="nu" value="Nữ" <?php echo 'checked' ?>>
-														<label class="form-check-label" for="nu">Nữ</label>
-													</div>
-												@endif
+												<div class="form-check form-check-inline">
+													<input class="form-check-input" type="radio" name="sexupdate" id="nam" value="Nam" {{ $author->sex == 'Nam' ? 'checked' : '' }}>
+													<label class="form-check-label" for="nam">Nam</label>
+												</div>
+												<div class="form-check form-check-inline">
+													<input class="form-check-input" type="radio" name="sexupdate" id="nu" value="Nữ" {{ $author->sex == 'Nữ' ? 'checked' : '' }}>
+													<label class="form-check-label" for="nu">Nữ</label>
+												</div>
 
 												@if($errors->has('sexupdate'))
 													<span class="text-danger d-block mt-2">{{ $errors->first('sexupdate') }}</span>
 												@endif
 											</div>
-											<div class="col-3 mb-3">Ngày sinh:</div>
+											<div class="col-3 mb-3">Ngày sinh *:</div>
 											<div class="col-9 mb-3">
 												<input type="date" name="birthdayupdate" class="form-control w-100" value="{{ $author->birthday }}">
 												@if($errors->has('birthdayupdate'))
 													<span class="text-danger d-block mt-2">{{ $errors->first('birthdayupdate') }}</span>
 												@endif
 											</div>
-											<div class="col-3 mb-3">Thể loại:</div>
+											<div class="col-3 mb-3">Thể loại *:</div>
 											<div class="col-9 mb-3 ">
 												<select name="typeupdate[]" id="" class="form-control select2 w-100" multiple="multiple">
 													@foreach ($types as $type)
@@ -152,7 +141,7 @@
 													@endforeach
 												</select>
 											</div>
-											<div class="col-3">Tiểu sử:</div>
+											<div class="col-3">Tiểu sử *:</div>
 											<div class="col-9">
 												<textarea name="storyupdate" id="" rows="3" placeholder="Tiểu sử" class="form-control ckeditor">{{ $author->story }}</textarea>
 												@if($errors->has('storyupdate'))
@@ -203,14 +192,14 @@
 					@csrf
 					<div class="modal-body container">
 						<div class="row">
-							<div class="col-3 mb-3">Tên tác giả:</div>
+							<div class="col-3 mb-3">Tên tác giả *:</div>
 							<div class="col-9 mb-3">
 								<input type="text" name="name" placeholder="Tên tác giả" class="form-control w-100">
 								@if($errors->has('name'))
 									<span class="text-danger d-block mt-2">{{ $errors->first('name') }}</span>
 								@endif
 							</div>
-							<div class="col-3 mb-3">Giới tính:</div>
+							<div class="col-3 mb-3">Giới tính *:</div>
 							<div class="col-9 mb-3">
 								<div class="form-check form-check-inline">
 								  <input class="form-check-input" type="radio" name="sex" id="inlineRadio1" value="Nam">
@@ -224,14 +213,14 @@
 									<span class="text-danger d-block mt-2">{{ $errors->first('sex') }}</span>
 								@endif
 							</div>
-							<div class="col-3 mb-3">Ngày sinh:</div>
+							<div class="col-3 mb-3">Ngày sinh *:</div>
 							<div class="col-9 mb-3">
 								<input type="date" name="birthday" class="form-control w-100">
 								@if($errors->has('birthday'))
 									<span class="text-danger d-block mt-2">{{ $errors->first('birthday') }}</span>
 								@endif
 							</div>
-							<div class="col-3 mb-3">Thể loại:</div>
+							<div class="col-3 mb-3">Thể loại *:</div>
 							<div class="col-9 mb-3 ">
 								<select name="type[]" id="" class="form-control select2 w-100" multiple="multiple">
 									@foreach ($types as $type)
@@ -239,7 +228,7 @@
 									@endforeach
 								</select>
 							</div>
-							<div class="col-3">Tiểu sử:</div>
+							<div class="col-3">Tiểu sử *:</div>
 							<div class="col-9">
 								<textarea name="story" rows="3" placeholder="Tiểu sử" class="form-control ckeditor"></textarea>
 								@if($errors->has('story'))

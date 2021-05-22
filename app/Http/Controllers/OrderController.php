@@ -97,13 +97,13 @@ class OrderController extends Controller
                 ]);
                 $customer_id = $customer->id;
                 $customer->update([
-                    'code' => 'KH'.$customer->id
+                    'code' => 'KH'.str_pad($customer->id, 6, '0', STR_PAD_LEFT)
                 ]);
             }
 
             // tạo đơn nhập hàng
             $order = Order::create([
-                'code' => 'PB'.strval(Order::count()+1),
+                'code' => 'PB',
                 'user_id' => Auth::id(),
                 'customer_id' => $customer_id,
                 'status' => 4,
@@ -111,12 +111,18 @@ class OrderController extends Controller
                 'total_money' => 0,
                 'type' => 'offline',
             ]);
+            $order->update([
+                'code' => 'PB'.str_pad($order->id, 6, '0', STR_PAD_LEFT)
+            ]);
+            
             $total_money = 0;
             
             // tạo chi tiết đơn nhập hàng
             foreach ($request->book_id as $key => $book_id) {
                 $book = Book::findOrFail($book_id);
-
+                if ($request->amount[$key] > $book->amount) {
+                    return redirect()->back()->with('alert-error', 'Sản phẩm '.$book->name.' cửa hàng chỉ còn lại '.$book->amount.' sản phẩm!');
+                }
                 OrderDetail::create([
                     'order_id' => $order->id,
                     'book_id' => $book_id,

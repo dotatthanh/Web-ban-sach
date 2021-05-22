@@ -19,14 +19,8 @@
 		<form method="POST" action="{{ route('orders.store') }}">
 			@csrf
 			<div class="form-group row mt-3">
-				<label class="col-2 col-form-label">khách hàng</label>
+				<label class="col-2 col-form-label">khách hàng *</label>
 				<div class="col-3">
-					{{-- <select name="customer_id" class="form-control select2" required>
-						<option value=""></option>
-						@foreach($customers as $customer)
-						<option value="{{ $customer->id }}">{{ $customer->name }}</option>
-						@endforeach
-					</select> --}}
 					<input type="text" name="name" class="form-control" placeholder="Tên khách hàng" required>
 				</div>
 				<div class="col-3">
@@ -55,8 +49,8 @@
 						</select>
 					</td>
 					<td class="text-center">
-						{{-- <input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0); checkNumberBook(0, $(this).val())" required> --}}
-						<input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0)" required>
+						<input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0); checkNumberBook(0, $(this).val())" required>
+						{{-- <input type="number" name="amount[0]" class="form-control" min="1" onkeyup="totalMoney(0)" required> --}}
 					</td>
 					<td class="text-center" id="price0">0</td>
 					<td class="text-center" id="sale0">0</td>
@@ -98,7 +92,7 @@
 						</select>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt})" required>
+						<input type="number" name="amount[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt}); checkNumberBook(${stt}, $(this).val())" required>
 					</td>
 					<td class="text-center" id="price${stt}">0</td>
 					<td class="text-center" id="sale${stt}">0</td>
@@ -158,29 +152,15 @@
         function checkNumberBook(stt, amount) {
         	let id = $(`select[name="book_id[${stt}]"]`).val();
         	$.ajax({
-                url: 'admin/books/show/' + id,
-                method: 'get',
-                data: {
-                    'id': id
-                },
+                url: '/admin/books/'+id,
+                method: 'GET',
                 success: function (response) {
-                	console.log(response);
-                    // if (response.code === 200) {
-                    //     $('tbody').html(response.html);
-                    //     Toast.fire({
-                    //         icon: 'success',
-                    //         title: "Cập nhật giỏ hàng thành công!"
-                    //     })
-
-                    //     $('header .totalProduct').text(response.totalProduct);
-                    // }
-                    // else if (response.code === 400) {
-                    //     Toast.fire({
-                    //         icon: 'error',
-                    //         title: `Cửa hàng chỉ còn lại ${response.quantity_product} sản phẩm!`
-                    //     })
-                    // }
-
+                    if (amount > response.amount) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: `Sản phẩm này cửa hàng chỉ còn lại ${response.amount} sản phẩm!`
+                        })
+                    }
                 },
                 error: function (error) {
                     console.log(error)

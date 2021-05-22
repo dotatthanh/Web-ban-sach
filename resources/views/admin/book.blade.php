@@ -10,37 +10,7 @@
 	@include('admin.menu_admin')
 	
 	<div class="container mt-5">
-		@if(session('notificationAdd'))
-			<div class="alert alert-success text-center mt-3" role="alert">
-                <button type="button" class="close d-block" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {{ session('notificationAdd') }}
-            </div>
-		@endif
-		@if(session('notificationUpdate'))
-			<div class="alert alert-success text-center mt-3" role="alert">
-                <button type="button" class="close d-block" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {{ session('notificationUpdate') }}
-            </div>
-		@endif
-		@if($errors->has('name') || $errors->has('img') || $errors->has('price') || $errors->has('sale') || $errors->has('content'))
-			<div class="alert alert-danger text-center mt-3" role="alert">
-                <button type="button" class="close d-block" data-dismiss="alert" aria-hidden="true">&times;</button>
-                Thêm thất bại!
-            </div>
-		@endif
-		@if($errors->has('nameupdate') || $errors->has('imgupdate') || $errors->has('priceupdate') || $errors->has('saleupdate') || $errors->has('contentupdate'))
-			<div class="alert alert-danger text-center mt-3" role="alert">
-                <button type="button" class="close d-block" data-dismiss="alert" aria-hidden="true">&times;</button>
-                Sửa thất bại!
-            </div>
-		@endif
-		@if(session('notificationDelete'))
-			<div class="alert alert-success text-center mt-3" role="alert">
-                <button type="button" class="close d-block" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {{ session('notificationDelete') }}
-            </div>
-		@endif
-		<h1 class="title-admin"><span>Danh sách</span> Sách</h1>
+		<h1 class="title-admin">Danh sách sách</h1>
 	</div>
 
 	<div class="container-fluid mt-5">
@@ -62,6 +32,8 @@
 				<th>Tên tác giả</th>
 				<th>Thể loại</th>
 				<th>Danh mục</th>
+				<th>Kích thước</th>
+				<th>Số trang</th>
 				<th>Đơn giá</th>
 				<th>Sale</th>
 				<th class="minw-140">Thao tác</th>
@@ -88,6 +60,8 @@
 						- {{ $category->name }}<br>
 					@endforeach
 				</td>
+				<td>{{ $book->size }}</td>
+				<td>{{ $book->page_number }}</td>
 				<td class="text-center">{{ number_format($book->price, 0, ',', '.') }}₫</td>
 				<td class="text-center">{{ $book->sale }}%</td>
 				<td class="text-center">
@@ -110,7 +84,7 @@
 									@method('PUT')
 									<div class="modal-body container">
 										<div class="row">
-											<div class="col-3 mb-3">MÃ sách:</div>
+											<div class="col-3 mb-3">Mã sách *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="code" placeholder="Mã sách" class="form-control w-100" value="{{ $book->code }}">
 												@if($errors->has('code'))
@@ -118,7 +92,7 @@
 												@endif
 											</div>
 
-											<div class="col-3 mb-3">Tên sách:</div>
+											<div class="col-3 mb-3">Tên sách *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="name" placeholder="Tên sách" class="form-control w-100" value="{{ $book->name }}">
 												@if($errors->has('name'))
@@ -126,15 +100,15 @@
 												@endif
 											</div>
 
-											<div class="col-3 mb-3">Ảnh</div>
+											<div class="col-3 mb-3">Ảnh *:</div>
 											<div class="col-9 mb-3">
-												<input type="file" name="img" class="form-control" value="{{ asset('storage/'.$book->img) }}">
+												<input type="file" name="img" class="form-control" value="{{ asset('storage/'.$book->img) }}" required>
 												@if($errors->has('img'))
 													<span class="text-danger d-block mt-2">{{ $errors->first('img') }}</span>
 												@endif
 											</div>
 
-											<div class="col-3 mb-3">Tác giả:</div>
+											<div class="col-3 mb-3">Tác giả *:</div>
 											<div class="col-9 mb-3">
 												<select name="author[]" id="" class="form-control select2 w-100" multiple="multiple">
 													@foreach ($authors as $author)
@@ -147,7 +121,7 @@
 												</select>
 											</div>
 
-											<div class="col-3 mb-3">Thể loại:</div>
+											<div class="col-3 mb-3">Thể loại *:</div>
 											<div class="col-9 mb-3">
 												<select name="type[]" id="" class="form-control select2 w-100" multiple="multiple">
 													@foreach ($types as $type)
@@ -160,7 +134,7 @@
 												</select>
 											</div>
 
-											<div class="col-3 mb-3">Danh mục:</div>
+											<div class="col-3 mb-3">Danh mục *:</div>
 											<div class="col-9 mb-3">
 												<select name="category[]" id="" class="form-control select2 w-100" multiple="multiple">
 													@foreach ($categories as $category)
@@ -173,7 +147,23 @@
 												</select>
 											</div>
 
-											<div class="col-3 mb-3">Đơn giá:</div>
+											<div class="col-3 mb-3">Kích thước *:</div>
+											<div class="col-9 mb-3">
+												<input type="text" name="size" placeholder="Kích thước sách" class="form-control w-100" value="{{ $book->size }}">
+												@if($errors->has('size'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('size') }}</span>
+												@endif
+											</div>
+
+											<div class="col-3 mb-3">Số trang *:</div>
+											<div class="col-9 mb-3">
+												<input type="text" name="page_number" placeholder="Số trang sách" class="form-control w-100" value="{{ $book->page_number }}">
+												@if($errors->has('page_number'))
+													<span class="text-danger d-block mt-2">{{ $errors->first('page_number') }}</span>
+												@endif
+											</div>
+
+											<div class="col-3 mb-3">Đơn giá *:</div>
 											<div class="col-7 mb-3 ">
 												<input name="price" type="number" min="1" class="form-control" value="{{ $book->price }}">
 												@if($errors->has('price'))
@@ -194,7 +184,7 @@
 											<div class="col-2 mb-3 ">
 												<input type="text" class="form-control text-center" value="%" disabled>
 											</div>
-											<div class="col-3 mb-3">Tóm tắt nội dung:</div>
+											<div class="col-3 mb-3">Tóm tắt nội dung *:</div>
 											<div class="col-9 mb-3">
 												<textarea name="content" id="" class="w-100 ckeditor form-control" rows="3">{{ $book->content }}</textarea>
 												@if($errors->has('content'))
@@ -244,7 +234,7 @@
 					@csrf
 					<div class="modal-body container">
 						<div class="row">
-							<div class="col-3 mb-3">Mã sách:</div>
+							<div class="col-3 mb-3">Mã sách *:</div>
 							<div class="col-9 mb-3">
 								<input type="text" name="code" placeholder="Mã sách" class="form-control w-100">
 								@if($errors->has('code'))
@@ -252,7 +242,7 @@
 								@endif
 							</div>
 
-							<div class="col-3 mb-3">Tên sách:</div>
+							<div class="col-3 mb-3">Tên sách *:</div>
 							<div class="col-9 mb-3">
 								<input type="text" name="name" placeholder="Tên sách" class="form-control w-100">
 								@if($errors->has('name'))
@@ -260,15 +250,15 @@
 								@endif
 							</div>
 
-							<div class="col-3 mb-3">Ảnh</div>
+							<div class="col-3 mb-3">Ảnh *:</div>
 							<div class="col-9 mb-3">
-								<input type="file" name="img" class="form-control">
+								<input type="file" name="img" class="form-control" required>
 								@if($errors->has('img'))
 									<span class="text-danger d-block mt-2">{{ $errors->first('img') }}</span>
 								@endif
 							</div>
 
-							<div class="col-3 mb-3">Tác giả:</div>
+							<div class="col-3 mb-3">Tác giả *:</div>
 							<div class="col-9 mb-3">
 								<select name="author_id[]" id="" class="form-control select2 w-100" multiple="multiple">
 									@foreach ($authors as $author)
@@ -277,7 +267,7 @@
 								</select>
 							</div>
 
-							<div class="col-3 mb-3">Thể loại:</div>
+							<div class="col-3 mb-3">Thể loại *:</div>
 							<div class="col-9 mb-3">
 								<select name="type[]" id="" class="form-control select2 w-100" multiple="multiple">
 									@foreach ($types as $type)
@@ -286,13 +276,29 @@
 								</select>
 							</div>
 
-							<div class="col-3 mb-3">Danh mục:</div>
+							<div class="col-3 mb-3">Danh mục *:</div>
 							<div class="col-9 mb-3">
 								<select name="category[]" id="" class="form-control select2 w-100" multiple="multiple">
 									@foreach ($categories as $category)
 									<option value="{{ $category->id }}">{{ $category->name }}</option>
 									@endforeach
 								</select>
+							</div>
+
+							<div class="col-3 mb-3">Kích thước *:</div>
+							<div class="col-9 mb-3">
+								<input type="text" name="size" placeholder="Kích thước sách" class="form-control w-100">
+								@if($errors->has('size'))
+								<span class="text-danger d-block mt-2">{{ $errors->first('size') }}</span>
+								@endif
+							</div>
+
+							<div class="col-3 mb-3">Số trang *:</div>
+							<div class="col-9 mb-3">
+								<input type="text" name="page_number" placeholder="Số trang sách" class="form-control w-100">
+								@if($errors->has('page_number'))
+								<span class="text-danger d-block mt-2">{{ $errors->first('page_number') }}</span>
+								@endif
 							</div>
 
 							{{-- <div class="col-3 mb-3">Số lượng:</div>
@@ -317,7 +323,7 @@
 								<input type="text" class="form-control text-center" value="VNĐ" disabled>
 							</div> --}}
 
-							<div class="col-3 mb-3">Đơn giá:</div>
+							<div class="col-3 mb-3">Đơn giá *:</div>
 							<div class="col-7 mb-3 ">
 								<input name="price" type="number" min="1" class="form-control">
 								@if($errors->has('price'))
@@ -338,7 +344,7 @@
 							<div class="col-2 mb-3 ">
 								<input type="text" class="form-control text-center" value="%" disabled>
 							</div>
-							<div class="col-3 mb-3">Tóm tắt nội dung:</div>
+							<div class="col-3 mb-3">Tóm tắt nội dung *:</div>
 							<div class="col-9 mb-3">
 								<textarea name="content" id="ckeditor" class="w-100 ckeditor form-control" rows="3"></textarea>
 								@if($errors->has('content'))

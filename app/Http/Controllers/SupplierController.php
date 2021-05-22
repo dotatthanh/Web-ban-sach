@@ -59,6 +59,7 @@ class SupplierController extends Controller
         DB::beginTransaction();
         try {
             Supplier::create([
+                'code' => $request->code,
                 'name' => $request->name,
                 'slug' => Str::slug($request->name),
                 'email' => $request->email,
@@ -121,6 +122,7 @@ class SupplierController extends Controller
         DB::beginTransaction();
         try {
             Supplier::findOrFail($id)->update([
+                'code' => $request->code,
                 'name' => $request->name,
                 'slug' => Str::slug($request->name),
                 'email' => $request->email,
