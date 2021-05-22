@@ -19,7 +19,7 @@
                 <span class="alert alert-danger mt-2 d-block text-center" role="alert">Sửa vai trò thất bại!</span>
             @endif
             
-            <h1 class="title-admin"><span>Danh sách</span> Vai trò</h1>
+            <h1 class="title-admin">Danh sách vai trò</h1>
         </div>
     </div>
     <div class="container mt-5">
@@ -38,8 +38,8 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-bordered">
                         <thead>
-                            <tr>
-                                <th>ID</th>
+                            <tr class="text-center">
+                                <th>STT</th>
                                 <th>Vai trò</th>
                                 <th>Quyền hạn</th>
                                 <th style="min-width: 100px">Ngày tạo</th>
@@ -48,9 +48,10 @@
                         </thead>
 
                         <tbody>
+                            @php ($stt = 1) @endphp
                             @foreach ($roles as $role)
                             <tr>
-                                <td>{{ $role->id }}</td>
+                                <td class="text-center">{{ $stt++ }}</td>
                                 <td>
                                     <span>{{ $role->name }}</span>
                                 </td>

@@ -29,8 +29,10 @@ class BookRequest extends FormRequest
             // 'amount' => 'required|min:1',
             'price' => 'required|min:1',
             // 'cover_price' => 'required|min:1',
-            'sale' => 'required|min:0',
+            'sale' => 'min:0',
             'content' => 'required',
+            'size' => 'required',
+            'page_number' => 'required',
         ];
     }
 
@@ -38,6 +40,8 @@ class BookRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên sách không được trống.',
+            'size.required' => 'Kích thước sách không được trống.',
+            'page_number.required' => 'Số trang không được trống.',
             'name.unique' => 'Sách đã tồn tại.',
             'name.max'  => 'Tên sách không được phép vượt quá 100 kí tự.',
             'img.required'  => 'Ảnh không được trống.',
@@ -47,7 +51,6 @@ class BookRequest extends FormRequest
             'price.min'  => 'Đơn giá lớn hơn 0.',
             // 'cover_price.required'  => 'Giá bìa không được trống.',
             // 'cover_price.min'  => 'Giá bìa lớn hơn 0.',
-            'sale.required'  => 'Giảm giá không được trống.',
             'sale.min'  => 'Giảm giá lớn hơn hoặc bằng 0.',
             'content.required'  => 'Tóm tắt nội dung không được trống.',
         ];

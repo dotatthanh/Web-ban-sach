@@ -12,7 +12,7 @@
             <span class="alert alert-danger mt-2 d-block text-center" role="alert">Sửa nhân viên thất bại!</span>
         @endif
         
-        <h1 class="title-admin"><span>Thêm</span> Nhân viên</h1>
+        <h1 class="title-admin">Sửa nhân viên</h1>
     </div>
 
     <div class="container">
@@ -24,15 +24,48 @@
                         <div class="box">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label>Tên</label>
+                                    <label>Mã *</label>
+                                    <input type="text" name="code" class="form-control" value="{{ $user->code }}">
+                                    {!! $errors->first('code', '<span class="help-block error">:message</span>') !!}
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Tên *</label>
                                     <input type="text" name="name" class="form-control" value="{{ $user->name }}">
                                     {!! $errors->first('name', '<span class="help-block error">:message</span>') !!}
                                 </div>
-            
+
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label>Email *</label>
                                     <input type="email" name="email" class="form-control" value="{{ $user->email }}">
                                     {!! $errors->first('email', '<span class="help-block error">:message</span>') !!}
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Ngày sình *</label>
+                                    <input type="date" name="birthday" class="form-control" value="{{ $user->birthday }}">
+                                    {!! $errors->first('birthday', '<span class="help-block error">:message</span>') !!}
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Giới tính *</label>
+                                    <div>
+                                        <input type="radio" name="sex" value="Nam" {{ $user->sex == 'Nam' ? 'checked' : '' }}> Nam
+                                        <input type="radio" name="sex" value="Nữ" {{ $user->sex == 'Nữ' ? 'checked' : '' }}> Nữ
+                                    </div>
+                                    {!! $errors->first('sex', '<span class="help-block error">:message</span>') !!}
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Số điện thoại *</label>
+                                    <input type="number" name="phone" class="form-control" value="{{ $user->phone }}">
+                                    {!! $errors->first('phone', '<span class="help-block error">:message</span>') !!}
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Địa chỉ *</label>
+                                    <input type="text" name="address" class="form-control" value="{{ $user->address }}">
+                                    {!! $errors->first('address', '<span class="help-block error">:message</span>') !!}
                                 </div>
             
                                 <div class='form-group'>
@@ -54,7 +87,7 @@
                                 </div>
             
                                 <div class="form-group">
-                                    <label>Mật khẩu</label>
+                                    <label>Mật khẩu *</label>
                                     <input type="password" name="password" class="form-control">
                                     {!! $errors->first('password', '<span class="help-block error">:message</span>') !!}
                                 </div>

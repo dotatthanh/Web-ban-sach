@@ -42,7 +42,7 @@ class PermissionController extends Controller
             $permission = Permission::create([
                 'name' => $data['name']
             ]);
-            return redirect()->route('admin.permission.index')->with('notificationAdd', 'Tạo quyền thành công!');
+            return redirect()->route('admin.permission.index')->with('alert-success', 'Tạo quyền thành công!');
         } catch (Exception $e) {
             return redirect()->back()->with('alert-danger', 'Tạo quyền thất bại!');
         }
@@ -63,7 +63,7 @@ class PermissionController extends Controller
             $input = $request->all();
             $permission->fill($input)->save();
 
-            return redirect()->route('admin.permission.index')->with('notificationUpdate', 'Cập nhật quyền hạn thành công!');
+            return redirect()->route('admin.permission.index')->with('alert-success', 'Cập nhật quyền hạn thành công!');
         } catch (Exception $e) {
             return redirect()->back()->with('alert-danger', 'Cập nhật quyền thất bại!');
         }

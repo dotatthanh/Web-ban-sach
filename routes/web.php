@@ -123,6 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::put('/update/{id}', 'ReturnOrderController@update')->name('update');
 		Route::delete('/show/{id}', 'ReturnOrderController@destroy')->name('destroy');
 		Route::get('/get-book-in-order/{id}', 'ReturnOrderController@getBookInOrder');
+		Route::get('/get-order-detail', 'ReturnOrderController@getOrderDetail')->name('get-order-detail');
 	});
 
 	// Nhà cung cấp

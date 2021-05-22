@@ -25,7 +25,7 @@
 			@method('PUT')
 
 			<div class="form-group row mt-3">
-				<label class="col-2 col-form-label">Lý do</label>
+				<label class="col-2 col-form-label">Lý do *</label>
 				<div class="col-3">
 					<textarea class="form-control" name="reason" rows="3">{{ $return_order->reason }}</textarea>
 				</div>

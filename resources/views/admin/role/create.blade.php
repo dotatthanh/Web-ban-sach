@@ -9,7 +9,7 @@
             <span class="alert alert-danger mt-2 d-block text-center" role="alert">Thêm vai trò thất bại!</span>
         @endif
         
-        <h1 class="title-admin"><span>Thêm</span> Vai trò</h1>
+        <h1 class="title-admin">Thêm vai trò</h1>
     </div>
 
     <div class="container mt-5">
@@ -21,12 +21,12 @@
                         <div class="box">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label>Tên</label>
+                                    <label>Tên *</label>
                                     <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                                     {!! $errors->first('name', '<span class="help-block error">:message</span>') !!}
                                 </div>
                                 <div class="form-group">
-                                    <p>Quyền hạn</p>
+                                    <p>Quyền hạn *</p>
                                     <div class="row">
                                         @foreach ($permissions as $permission)
                                             <div class="col-md-4">

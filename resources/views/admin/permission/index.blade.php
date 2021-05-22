@@ -18,7 +18,7 @@
             <span class="alert alert-danger mt-2 d-block text-center" role="alert">Sửa quyền thất bại!</span>
         @endif
         
-        <h1 class="title-admin"><span>Danh sách</span> Quyền</h1>
+        <h1 class="title-admin">Danh sách quyền</h1>
     </div>
 
     <div class="container mt-5">

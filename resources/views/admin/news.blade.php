@@ -20,7 +20,7 @@
 			<span class="alert alert-danger mt-2 d-block text-center" role="alert">Sửa sách thất bại!</span>
 		@endif
 		
-		<h1 class="title-admin"><span>Danh sách</span> Tin tức</h1>
+		<h1 class="title-admin">Danh sách tin tức</h1>
 	</div>
 
 	<div class="container-fluid mt-5">
@@ -58,7 +58,7 @@
 
 								<!-- Modal Header -->
 								<div class="modal-header">
-									<h4 class="modal-title">Sửa sách</h4>
+									<h4 class="modal-title">Sửa tin tức</h4>
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 								</div>
 
@@ -68,7 +68,7 @@
 									@method('PUT')
 									<div class="modal-body container">
 										<div class="row">
-											<div class="col-3 mb-3">Tiêu đề:</div>
+											<div class="col-3 mb-3">Tiêu đề *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="titleupdate" placeholder="Tiêu đề" class="form-control w-100" value="{{ $new->title }}">
 												@if($errors->has('titleupdate'))
@@ -76,7 +76,7 @@
 												@endif
 											</div>
 
-											<div class="col-3 mb-3">Tóm tắt:</div>
+											<div class="col-3 mb-3">Tóm tắt *:</div>
 											<div class="col-9 mb-3">
 												<textarea name="summaryupdate" class="w-100 ckeditor form-control" rows="3">{{ $new->summary }}</textarea>
 												@if($errors->has('summaryupdate'))
@@ -84,7 +84,7 @@
 												@endif
 											</div>
 
-											<div class="col-3 mb-3">Ảnh</div>
+											<div class="col-3 mb-3">Ảnh *:</div>
 											<div class="col-9 mb-3">
 												<input type="file" name="imgupdate" class="form-control" value="">
 												@if($errors->has('imgupdate'))
@@ -92,7 +92,7 @@
 												@endif
 											</div>
 
-											<div class="col-3 mb-3">Nội dung:</div>
+											<div class="col-3 mb-3">Nội dung *:</div>
 											<div class="col-9 mb-3">
 												<textarea name="contentupdate" id="" class="w-100 ckeditor form-control" rows="3">{{ $new->content }}</textarea>
 												@if($errors->has('contentupdate'))
@@ -142,7 +142,7 @@
 					@csrf
 					<div class="modal-body container">
 						<div class="row">
-							<div class="col-3 mb-3">Tiêu đề:</div>
+							<div class="col-3 mb-3">Tiêu đề *:</div>
 							<div class="col-9 mb-3">
 								<input type="text" name="title" placeholder="Tiêu đề" class="form-control w-100">
 								@if($errors->has('title'))
@@ -150,7 +150,7 @@
 								@endif
 							</div>
 
-							<div class="col-3 mb-3">Tóm tắt:</div>
+							<div class="col-3 mb-3">Tóm tắt *:</div>
 							<div class="col-9 mb-3">
 								<textarea name="summary" class="w-100 ckeditor form-control" rows="3"></textarea>
 								@if($errors->has('summary'))
@@ -158,7 +158,7 @@
 								@endif
 							</div>
 
-							<div class="col-3 mb-3">Ảnh</div>
+							<div class="col-3 mb-3">Ảnh *:</div>
 							<div class="col-9 mb-3">
 								<input type="file" name="img" class="form-control">
 								@if($errors->has('img'))
@@ -166,7 +166,7 @@
 								@endif
 							</div>
 
-							<div class="col-3 mb-3">Nội dung:</div>
+							<div class="col-3 mb-3">Nội dung *:</div>
 							<div class="col-9 mb-3">
 								<textarea name="content" id="ckeditor" class="w-100 form-control ckeditor" rows="3"></textarea>
 								@if($errors->has('content'))

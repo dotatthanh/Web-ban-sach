@@ -10,7 +10,7 @@
             <span class="alert alert-danger mt-2 d-block text-center" role="alert">{{ session('alert-error') }}</span>
         @endif
         
-        <h1 class="title-admin"><span>Thông tin cá nhân</h1>
+        <h1 class="title-admin">Thông tin cá nhân</h1>
     </div>
 
     <div class="container">

@@ -10,7 +10,7 @@
             <span class="alert alert-danger mt-2 d-block text-center" role="alert">{{ session('alert-error') }}</span>
         @endif
         
-        <h1 class="title-admin"><span>Danh sách</span> Khách hàng</h1>
+        <h1 class="title-admin">Danh sách khách hàng</h1>
     </div>
 
     <div class="container mt-5">
@@ -25,9 +25,12 @@
         <table class="table table-bordered table-striped mt-3 mb-5">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>STT</th>
+                    <th>Mã</th>
                     <th>Tên</th>
                     <th>Email</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th style="min-width: 100px">Ngày tạo</th>
@@ -36,20 +39,24 @@
             </thead>
 
             <tbody>
+                @php ($stt = 1) @endphp
                 @foreach ($customers as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
+                    <td>{{ $stt++ }}</td>
+                    <td>{{ $item->code }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
+                    <td>{{ date('d/m/Y', strtotime($item->birthday)) }}</td>
+                    <td>{{ $item->sex }}</td>
                     <td>{{ $item->phone }}</td>
                     <td>{{ $item->address }}</td>
                     <td>{{ date('d/m/Y', strtotime($item->created_at)) }}</td>
                     <td>
-                        <a href="{{ route('admin.customer.edit', $item->id) }}" class="btn btn-warning w-25 text-white pull-left" style="margin-right: 3px;">
+                        <a href="{{ route('admin.customer.edit', $item->id) }}" class="btn btn-warning text-white pull-left" style="margin-right: 3px;">
                             <span>Sửa</span>
                         </a>
                         <a href="{{ route('admin.customer.destroy', $item->id) }}">
-                            <button class="btn btn-danger w-25">
+                            <button class="btn btn-danger">
                                 <span>Xóa</span>
                             </button>
                         </a>

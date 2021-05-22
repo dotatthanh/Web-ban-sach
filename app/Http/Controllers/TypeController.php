@@ -57,7 +57,7 @@ class TypeController extends Controller
     public function store(TypeRequest $request)
     {
         Type::create($request->all());
-        return redirect()->route('types.index')->with('notificationAdd', 'Thêm thành công!');
+        return redirect()->route('types.index')->with('alert-success', 'Thêm thành công!');
     }
 
     /**
@@ -92,9 +92,10 @@ class TypeController extends Controller
     public function update(TypeUpdateRequest $request, $id)
     {
         Type::findOrFail($id)->update([
-            'name' => $request->nameupdate
+            'name' => $request->nameupdate,
+            'code' => $request->codeupdate
         ]);
-        return redirect()->route('types.index')->with('notificationUpdate', 'Sửa thành công!');
+        return redirect()->route('types.index')->with('alert-success', 'Sửa thành công!');
     }
 
     /**
@@ -107,12 +108,12 @@ class TypeController extends Controller
     {
         if(Type::findOrFail($id)->books->count() != 0 || Type::findOrFail($id)->authors->count() != 0)
         {
-            return redirect()->back()->with('notificationDeleteFail', 'Xóa thất bại! Cần xóa hết các sách thuộc danh mục này trước');
+            return redirect()->back()->with('alert-error', 'Xóa thất bại! Cần xóa hết các sách thuộc danh mục này trước');
         }
         else
         {
             Type::findOrFail($id)->delete();
-            return redirect()->back()->with('notificationDelete', 'Xóa thành công!');
+            return redirect()->back()->with('alert-success', 'Xóa thành công!');
         }
     }
 }

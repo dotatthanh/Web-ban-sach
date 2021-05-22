@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <h1 class="title-admin"><span>Thêm</span> nhà cung cấp</h1>
+        <h1 class="title-admin">Thêm nhà cung cấp</h1>
     </div>
     <div class="container mt-5">
         <div class="row">

@@ -15,6 +15,8 @@ class Book extends Model
         'content',
         'amount',
         'amount_return',
+        'size',
+        'page_number',
     ];
 
     public function authors(){
@@ -68,10 +70,10 @@ class Book extends Model
         return $this->orderDetails->sum('discount');
     }
 
-    public function getAmountReturnAttribute()
-    {
-        return $this->returnOrderDetails->sum('amount');
-    }
+    // public function getAmountReturnAttribute()
+    // {
+    //     return $this->returnOrderDetails->sum('amount');
+    // }
 
     public function getTotalReturnAttribute()
     {

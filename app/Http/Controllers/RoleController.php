@@ -36,7 +36,7 @@ class RoleController extends Controller
     public function store(Request $request) {
         try {
             $this->validate($request, [
-                'name'=>'required|unique:roles|max:10',
+                'name'=>'required|unique:roles|max:255',
                 'permissions' =>'required',
                 ]
             );
@@ -50,7 +50,7 @@ class RoleController extends Controller
                 $p = Permission::where('id', '=', $permission)->first(); 
                 $role->givePermissionTo($p);
             }
-            return redirect()->route('admin.role.index')->with('notificationAdd','Tạo vai trò thành công');
+            return redirect()->route('admin.role.index')->with('alert-success','Tạo vai trò thành công');
         } catch (Exception $e) {
             return redirect()->back()->with('alert-danger', 'Tạo vai trò thất bại.');
         }
@@ -66,7 +66,7 @@ class RoleController extends Controller
         try {
             $role = Role::findOrFail($id);
             $this->validate($request, [
-                'name'=>'required|max:10|unique:roles,name,'.$id,
+                'name'=>'required|max:255|unique:roles,name,'.$id,
                 'permissions' =>'required',
             ]);
 
@@ -85,7 +85,7 @@ class RoleController extends Controller
                 $role->givePermissionTo($p);  //Assign permission to role
             }
 
-            return redirect()->route('admin.role.index')->with('notificationUpdate','Cập nhật vai trò thành công.');
+            return redirect()->route('admin.role.index')->with('alert-success','Cập nhật vai trò thành công.');
         } catch (Exception $e) {
             return redirect()->back()->with('alert-danger','Cập nhật vai trò thất bại');
         }
@@ -95,7 +95,7 @@ class RoleController extends Controller
     {
         $role = Role::findOrFail($id);
         $role->delete();
-        return redirect()->route('admin.role.index')->with('notificationDelete','Xóa vai trò thành công.');
+        return redirect()->route('admin.role.index')->with('alert-success','Xóa vai trò thành công.');
     }
 
     public function getAllRole() {

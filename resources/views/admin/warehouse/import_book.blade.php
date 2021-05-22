@@ -15,13 +15,15 @@
 
 	<div class="container-fluid mt-5">
 		<a class="btn btn-success text-white" href="{{ route('warehouses.index') }}">Danh sách nhập hàng</a>
+		<a class="btn btn-success text-white" href="{{ route('books.index') }}" target="blank">Thêm sách mới</a>
+		<a class="btn btn-success text-white" href="{{ route('suppliers.create') }}" target="blank">Thêm nhà cung cấp mới</a>
 		
 		<form method="POST" action="{{ route('warehouses.store') }}">
 			@csrf
 			<div class="form-group row mt-3">
-				<label class="col-2 col-form-label">Nhà cung cấp</label>
+				<label class="col-2 col-form-label">Nhà cung cấp *</label>
 				<div class="col-3">
-					<select name="supplier_id" class="form-control" required>
+					<select name="supplier_id" class="form-control select2" required>
 						<option value=""></option>
 						@foreach($suppliers as $supplier)
 						<option value="{{ $supplier->id }}">{{ $supplier->name }}</option>

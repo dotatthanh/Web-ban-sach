@@ -15,7 +15,9 @@ class Customer extends Authenticatable
     	'phone',
     	'address',
         'password',
-        'code'
+        'code',
+        'birthday',
+        'sex',
     ];
 
     public function orders(){

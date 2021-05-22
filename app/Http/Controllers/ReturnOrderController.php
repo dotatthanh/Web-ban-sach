@@ -8,6 +8,7 @@ use App\ReturnOrder;
 use App\ReturnOrderDetail;
 use App\Book;
 use App\Order;
+use App\OrderDetail;
 use DB;
 use Auth;
 
@@ -32,7 +33,7 @@ class ReturnOrderController extends Controller
 
     public function create()
     {
-    	$orders = Order::all();
+    	$orders = Order::where('status', 4)->get();
 
         $data = [
             'orders' => $orders,
@@ -48,7 +49,7 @@ class ReturnOrderController extends Controller
         	$order = Order::findOrFail($request->order_id);
             // tạo đơn hàng trả lại
             $return_order = ReturnOrder::create([
-                'code' => 'PT'.strval(ReturnOrder::count()+1),
+                'code' => 'PT',
                 'order_id' => $request->order_id,
                 'customer_id' => $order->customer->id,
                 'user_id' => Auth::id(),
@@ -56,11 +57,19 @@ class ReturnOrderController extends Controller
                 'total_money' => 0,
                 'reason' => $request->reason,
             ]);
+            $return_order->update([
+                'code' => 'PT'.str_pad($return_order->id, 6, '0', STR_PAD_LEFT)
+            ]);
 
             $total_money = 0;
             // tạo chi tiết đơn hàng trả lại
             foreach ($request->book_id as $key => $book_id) {
                 $book = Book::findOrFail($book_id);
+
+                $order_detail = $order->orderDetails->where('book_id', $book->id)->first();
+                if ($request->amount[$key] > $order_detail->amount) {
+                    return redirect()->back()->with('alert-error', 'Sản phẩm '.$book->name.' đơn hàng chỉ mua '.$order_detail->amount.' sản phẩm!');
+                }
 
                 ReturnOrderDetail::create([
                     'return_order_id' => $return_order->id,
@@ -123,8 +132,10 @@ class ReturnOrderController extends Controller
     {
     	DB::beginTransaction();
         try {
-            // Đơn hàng
+            // Đơn hàng trả lại
             $return_order = ReturnOrder::findOrFail($id);
+            // Đơn hàng
+            $order = Order::findOrFail($return_order->order_id);
 
             // Hoàn trả số sách trả lại
             foreach ($return_order->returnOrderDetails as $return_order_detail) {
@@ -140,6 +151,11 @@ class ReturnOrderController extends Controller
             // tạo chi tiết đơn hàng trả lại
             foreach ($request->book_id as $key => $book_id) {
                 $book = Book::findOrFail($book_id);
+
+                $order_detail = $order->orderDetails->where('book_id', $book->id)->first();
+                if ($request->amount[$key] > $order_detail->amount) {
+                    return redirect()->back()->with('alert-error', 'Sản phẩm '.$book->name.' đơn hàng chỉ mua '.$order_detail->amount.' sản phẩm!');
+                }
 
                 ReturnOrderDetail::create([
                     'return_order_id' => $return_order->id,
@@ -195,5 +211,12 @@ class ReturnOrderController extends Controller
     	$order = Order::findOrFail($id)->orderDetails()->with('book')->get();
 
     	return $order;
+    }
+
+    public function getOrderDetail(Request $request)
+    {
+        $order_detail = OrderDetail::where('order_id', $request->order_id)->where('book_id', $request->book_id)->first();
+
+        return $order_detail;
     }
 }
