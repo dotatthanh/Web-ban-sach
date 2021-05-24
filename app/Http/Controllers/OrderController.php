@@ -237,6 +237,10 @@ class OrderController extends Controller
             foreach ($request->book_id as $key => $book_id) {
                 $book = Book::findOrFail($book_id);
 
+                if ($request->amount[$key] > $book->amount) {
+                    return redirect()->back()->with('alert-error', 'Sản phẩm '.$book->name.' cửa hàng chỉ còn lại '.$book->amount.' sản phẩm!');
+                }
+                
                 OrderDetail::create([
                     'order_id' => $order->id,
                     'book_id' => $book_id,

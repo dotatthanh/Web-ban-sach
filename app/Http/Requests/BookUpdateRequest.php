@@ -25,7 +25,7 @@ class BookUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|max:100',
-            'img' => 'required',
+            // 'img' => 'required',
             'price' => 'required|min:1',
             'sale' => 'min:0',
             'content' => 'required',
@@ -41,7 +41,7 @@ class BookUpdateRequest extends FormRequest
             'page_number.required' => 'Số trang không được trống.',
             'name.required' => 'Tên sách không được trống.',
             'name.max'  => 'Tên sách không được phép vượt quá 100 kí tự.',
-            'img.required'  => 'Ảnh không được trống.',
+            // 'img.required'  => 'Ảnh không được trống.',
             'price.required'  => 'Đơn giá không được trống.',
             'price.min'  => 'Đơn giá lớn hơn 0.',
             'sale.min'  => 'Giảm giá lớn hơn hoặc bằng 0.',

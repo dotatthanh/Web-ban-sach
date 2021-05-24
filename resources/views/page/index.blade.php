@@ -61,14 +61,17 @@
 						@endforeach
 						<!-- <div class="star-base">
 							<div class="star-rate" style="width:90%;"></div>
-							<a href="#" title=""></a>
-							<a href="#" title=""></a>
-							<a href="#" title=""></a>
-							<a href="#" title=""></a>
-							<a href="#" title=""></a>
+							<a href="void:javascript(0)" title=""></a>
+							<a href="void:javascript(0)" title=""></a>
+							<a href="void:javascript(0)" title=""></a>
+							<a href="void:javascript(0)" title=""></a>
+							<a href="void:javascript(0)" title=""></a>
 						</div>
 						<p class="vote">(2000 đánh giá)</p> -->
-						<span>{{ number_format($bookTV->price-($bookTV->price*$bookTV->sale/100), 0, ",", ".") }} ₫</span><strike>{{ number_format($bookTV->cover_price, 0, ",", ".") }} đ</strike>
+						<span>{{ number_format($bookTV->price-($bookTV->price*$bookTV->sale/100), 0, ",", ".") }}₫</span>
+						@if ($bookTV->sale > 0)
+							<strike>{{ number_format($bookTV->price, 0, ",", ".") }}đ</strike>
+						@endif
 					</div>
 				</div>
 			@endforeach
@@ -99,7 +102,7 @@
 						<!-- <span class="book-sale">New</span> -->
 					</div>
 					<div class="book-info">
-						<h4><a href="#" title="{{ $bookTA->name }}">
+						<h4><a href="void:javascript(0)" title="{{ $bookTA->name }}">
 						<?php
 								$str = strip_tags($bookTA->name); //Lược bỏ các tags HTML
 								if(strlen($str)>39) { //Đếm kí tự chuỗi $str, 25 ở đây là chiều dài bạn cần quy định
@@ -114,7 +117,10 @@
 								{{ $author->name }}
 							</a></p>
 						@endforeach
-						<span>{{ number_format($bookTA->price-($bookTA->price*$bookTA->sale/100), 0, ",", ".") }} ₫</span><strike>{{ number_format($bookTA->cover_price, 0, ",", ".") }} đ</strike>
+						<span>{{ number_format($bookTA->price-($bookTA->price*$bookTA->sale/100), 0, ",", ".") }}₫</span>
+						@if ($bookTA->sale > 0)
+							<strike>{{ number_format($bookTA->price, 0, ",", ".") }}đ</strike>
+						@endif
 					</div>
 				</div>
 			@endforeach
@@ -125,7 +131,7 @@
 	<div class="container qc">
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-lg-12">
-				<a class="img-responsive" href="#" title="">
+				<a class="img-responsive" href="void:javascript(0)" title="">
 					<img title="" src="{{ asset('images/qc.jpg') }}" alt="">
 				</a>
 			</div>
@@ -136,7 +142,7 @@
 	<div class="container book-tv">
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-lg-12">
-				<h2><a href="{{ route('page.category', $id_categoryBookSale) }}" title="Sách đang khuyến mãi">Sách đang khuyến mãi</a></h2>
+				<h2><a href="{{ route('page.category_sale') }}" title="Sách đang khuyến mãi">Sách đang khuyến mãi</a></h2>
 			</div>
 			@foreach ($bookSales as $bookSale)
 				<div class="col20 book">
@@ -152,10 +158,10 @@
 								</a>
 							</div>
 						</div>
-						<!-- <span class="book-sale">New</span> -->
+						<span class="book-sale">{{ $bookSale->sale }}%</span>
 					</div>
 					<div class="book-info">
-						<h4><a href="#" title="{{ $bookSale->name }}">
+						<h4><a href="void:javascript(0)" title="{{ $bookSale->name }}">
 							<?php
 								$str = strip_tags($bookSale->name); //Lược bỏ các tags HTML
 								if(strlen($str)>39) { //Đếm kí tự chuỗi $str, 25 ở đây là chiều dài bạn cần quy định
@@ -170,7 +176,7 @@
 								{{ $author->name }}
 							</a></p>
 						@endforeach
-						<span>{{ number_format($bookSale->price-($bookSale->price*$bookSale->sale/100), 0, ",", ".") }} ₫</span><strike>{{ number_format($bookSale->cover_price, 0, ",", ".") }} đ</strike>
+						<span>{{ number_format($bookSale->price-($bookSale->price*$bookSale->sale/100), 0, ",", ".") }}₫</span><strike>{{ number_format($bookSale->price, 0, ",", ".") }}đ</strike>
 					</div>
 				</div>
 			@endforeach
@@ -199,13 +205,59 @@
 		</div>
 	</div>
 
+
+	<!-- Bán chạy -->
+	<div class="book-tv">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-lg-12">
+					<h2><a href="" title="Sách đang khuyến mãi">Sách bán chạy</a></h2>
+				</div>
+				
+				@foreach ($book_sellings as $book_selling)
+				<div class="col20 book">
+					<div class="book-img">
+						<img title="" src="{{ asset('storage/'.$book_selling->img) }}" alt="" class="img-item">
+						<div class="hover">
+							<div class="icon-book">
+								<a href="{{ route('pages.show', $book_selling->id) }}" title="">
+									<img title="" src="{{ asset('images/timkiem.png') }}" alt="">
+								</a>
+								<a href="{{ route('page.add-to-cart', [$book_selling->id, $book_selling->name]) }}" title="" class="add-to-cart">
+									<img title="" src="{{ asset('images/cart.png') }}" alt="">
+								</a>
+							</div>
+						</div>
+						<!-- <span class="book-sale">New</span> -->
+					</div>
+					<div class="book-info">
+						<h4><a href="{{ route('pages.show', $book_selling->id) }}" title="{{ $book_selling->name }}">
+							{{ str_limit($book_selling->name, 25) }}
+							
+						</a></h4>
+						@foreach ($book_selling->authors as $author)
+						<p><a title="{{ $author->name }}">
+							{{ $author->name }}
+						</a></p>
+						@endforeach
+						<span>{{ number_format($book_selling->price-($book_selling->price*$book_selling->sale/100), 0, ",", ".") }}₫</span>
+						@if ($book_selling->sale > 0)
+							<strike>{{ number_format($book_selling->price, 0, ",", ".") }}đ</strike>
+						@endif
+					</div>
+				</div>
+				@endforeach
+			</div>
+		</div>
+	</div>
+
 	
 
 	<!-- Quảng cáo 2 -->
 	<div class="container qc">
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-lg-12">
-				<a class="img-responsive" href="#" title="">
+				<a class="img-responsive" href="void:javascript(0)" title="">
 					<img title="" src="{{ asset('images/qc2.jpg') }}" alt="">
 				</a>
 			</div>
@@ -236,7 +288,7 @@
 						<!-- <span class="book-sale">New</span> -->
 					</div>
 					<div class="book-info">
-						<h4><a href="#" title="{{ $bookLiterature->name }}">
+						<h4><a href="void:javascript(0)" title="{{ $bookLiterature->name }}">
 							<?php
 								$str = strip_tags($bookLiterature->name); //Lược bỏ các tags HTML
 								if(strlen($str)>39) { //Đếm kí tự chuỗi $str, 25 ở đây là chiều dài bạn cần quy định
@@ -251,7 +303,10 @@
 								{{ $author->name }}
 							</a></p>
 						@endforeach
-						<span>{{ number_format($bookLiterature->price-($bookLiterature->price*$bookLiterature->sale/100), 0, ",", ".") }} ₫</span><strike>{{ number_format($bookLiterature->cover_price, 0, ",", ".") }} đ</strike>
+						<span>{{ number_format($bookLiterature->price-($bookLiterature->price*$bookLiterature->sale/100), 0, ",", ".") }}₫</span>
+						@if ($bookLiterature->sale > 0)
+							<strike>{{ number_format($bookLiterature->price, 0, ",", ".") }}đ</strike>
+						@endif
 					</div>
 				</div>
 			@endforeach

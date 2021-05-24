@@ -9,7 +9,7 @@
 					<meta itemprop="position" content="1">
 				</li>
 				<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-					<a itemprop="item"><span itemprop="name">Danh mục {{ $category['name'] }}</span></a>
+					<a itemprop="item"><span itemprop="name">Danh mục sách bán chạy</span></a>
 					<meta itemprop="position" content="2">
 				</li>
 			</ul>
@@ -20,7 +20,7 @@
 		<div class="row">
 			<div class="order-2 col-md-12 col-sm-12 col-12 col-lg-8">
 				<div class="title-book-highlights">
-					<h1>{{ $category['name'] }}</h1>
+					<h1>Sách bán chạy</h1>
 					<!-- <form action="">
 						<select name="" id="">
 							<option value="">-- Chọn đầu sách --</option>
@@ -52,6 +52,14 @@
 											<a href="{{ route('page.add-to-cart', [$book->id, $book->name]) }}" title="" class="add-to-cart">
 												<img title="" src="{{ asset('images/cart.png') }}" alt="">
 											</a>
+											{{-- <a href="{{ route('pages.show', $book->id) }}" title="" class="text-white align-top">
+												<img title="" src="{{ asset('images/timkiem.png') }}" alt="" class="d-block m-auto">
+												<span class="mt-1 d-inline-block font-10 mr-0">Chi tiết sách</span>
+											</a>
+											<a href="{{ route('page.add-to-cart', [$book->id, $book->name]) }}" title="" class="add-to-cart text-white">
+												<img title="" src="{{ asset('images/cart.png') }}" alt="" class="d-block m-auto">
+												<span class="mt-1 d-inline-block font-10 mr-0">Thêm vào giỏ hàng</span>
+											</a> --}}
 										</div>
 									</div>
 								</div>
@@ -98,7 +106,7 @@
 			</div>
 			<div class="order-1 order-lg-12 col-md-12 col-sm-12 col-12 col-lg-4 cate-book-selling">
 				<div class="search-cate-book">
-					<form action="{{ route('page.category', $category->id) }}" method="GET">
+					<form action="{{ route('page.category_selling') }}" method="GET">
 						<input type="text" name="key" placeholder="Bạn muốn tìm sách?">
 						<button type="submit">
 							<img title="" src="{{ asset('images/timkiem.png') }}" alt="">

@@ -32,6 +32,7 @@
 				<th>Tên tác giả</th>
 				<th>Thể loại</th>
 				<th>Danh mục</th>
+				<th>Sách nổi bật</th>
 				<th>Kích thước</th>
 				<th>Số trang</th>
 				<th>Đơn giá</th>
@@ -59,6 +60,12 @@
 					@foreach ($book->categories as $category)
 						- {{ $category->name }}<br>
 					@endforeach
+				</td>
+				<td>
+					<label class="switch switch-small">
+						<input type="checkbox" {{ $book->is_highlight ? 'checked' : '' }} disabled>
+						<span class="slider"></span>
+					</label>
 				</td>
 				<td>{{ $book->size }}</td>
 				<td>{{ $book->page_number }}</td>
@@ -102,10 +109,18 @@
 
 											<div class="col-3 mb-3">Ảnh *:</div>
 											<div class="col-9 mb-3">
-												<input type="file" name="img" class="form-control" value="{{ asset('storage/'.$book->img) }}" required>
+												<input type="file" name="img" class="form-control" value="{{ asset('storage/'.$book->img) }}">
 												@if($errors->has('img'))
 													<span class="text-danger d-block mt-2">{{ $errors->first('img') }}</span>
 												@endif
+											</div>
+
+											<div class="col-3 mb-3">Sách nổi bật:</div>
+											<div class="col-9 mb-3">
+												<label class="switch switch-small">
+													<input type="checkbox"  name="is_highlight" value="1" {{ $book->is_highlight ? 'checked' : '' }}>
+													<span class="slider"></span>
+												</label>
 											</div>
 
 											<div class="col-3 mb-3">Tác giả *:</div>
@@ -256,6 +271,14 @@
 								@if($errors->has('img'))
 									<span class="text-danger d-block mt-2">{{ $errors->first('img') }}</span>
 								@endif
+							</div>
+
+							<div class="col-3 mb-3">Sách nổi bật:</div>
+							<div class="col-9 mb-3">
+								<label class="switch switch-small">
+									<input type="checkbox"  name="is_highlight" value="1">
+									<span class="slider"></span>
+								</label>
 							</div>
 
 							<div class="col-3 mb-3">Tác giả *:</div>

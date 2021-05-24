@@ -39,7 +39,8 @@
 						</div>
 
 						<div class="price-cover">
-							<span>Giá bìa:</span> <span>{{ number_format($book->cover_price, 0, ",", ".") }}đ</span>
+							{{-- <span>Giá bìa:</span> <span>{{ number_format($book->cover_price, 0, ",", ".") }}đ</span> --}}
+							<span>Giá gốc:</span> <span>{{ number_format($book->price, 0, ",", ".") }}đ</span>
 						</div>
 						<div class="price">
 							<span>Giá:</span> <span>{{ number_format($book->price-($book->price*$book->sale/100), 0, ",", ".") }}đ</span>
@@ -47,7 +48,7 @@
 
 						<div class="s-content">
 							<p class="d-block">
-								Tiết kiệm: {{ number_format($book->cover_price - ($book->price-($book->price*$book->sale/100)), 0, ",", ".") }}đ  (Giảm {{ number_format(($book->cover_price - ($book->price-($book->price*$book->sale/100))) / $book->cover_price * 100, 0, ",", ".") }}%)
+								Tiết kiệm: {{ number_format($book->price - ($book->price-($book->price*$book->sale/100)), 0, ",", ".") }}đ (Giảm {{ $book->sale }}%)
 							</p>
 							<p class="d-block">
 								Thông tin Giao hàng:
@@ -103,7 +104,7 @@
 				    </div>
 				</div>
 
-				<div class="fb-comments" data-width="100%" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5"></div>
+				{{-- <div class="fb-comments" data-width="100%" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5"></div> --}}
 			</div>
 		</div>
 	</div>
