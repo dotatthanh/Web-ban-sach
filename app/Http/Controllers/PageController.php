@@ -10,10 +10,12 @@ use App\Book;
 use App\Book_Category;
 use App\Contact;
 use App\Order;
+use App\OrderDetail;
 use App\Customer;
 use App\Http\Requests\ContactRequest;
 use App\Http\Requests\CustomerRequest;
 use DB;
+use Auth;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -37,17 +39,13 @@ class PageController extends Controller
         $bookTAs = Category::find($id_categoryBookTA)->books()->limit(5)->latest()->get();
 
         // Sách đang khuyến mãi
-        $id_categoryBookSale = Category::where('name', 'Sách đang khuyến mãi')->first()->id;
-        $bookSales = Category::find($id_categoryBookSale)->books()->limit(5)->latest()->get();
+        $bookSales = Book::where('sale', '>', 0)->limit(5)->latest()->get();
 
         // Sách nổi bật
-        // $id_categoryBookHighlight = Category::where('name', 'Sách nổi bật')->first()->id;
-        // $bookHighlights = Category::find($id_categoryBookHighlight)->books()->limit(5)->latest()->get();
-        $bookHighlights = Book::all()->sortByDesc('total_export')->take(3);
+        $bookHighlights = Book::where('is_highlight', 1)->limit(3)->latest()->get();
 
         // Sách bán chạy
-        // $id_categoryBookSelling = Category::where('name', 'Sách bán chạy')->first()->id;
-        // $bookSellings = Category::find($id_categoryBookSelling)->books()->limit(5)->latest()->get();
+        $book_sellings = Book::all()->sortByDesc('book_selling')->take(5);
 
         // Sách văn học nước ta
         $id_categoryBookLiterature = Category::where('name', 'Sách văn học nước ta')->first()->id;
@@ -60,7 +58,17 @@ class PageController extends Controller
         return view('page.index', compact(
             'title', 
             'categories', 
-            'bookTVs', 'bookTAs', 'bookSales', 'bookHighlights', 'bookLiteratures', 'content', 'total', 'id_categoryBookTV', 'id_categoryBookTA', 'id_categoryBookSale', 'id_categoryBookLiterature'
+            'bookTVs',
+            'bookTAs',
+            'bookSales',
+            'bookHighlights',
+            'bookLiteratures',
+            'book_sellings',
+            'content',
+            'total',
+            'id_categoryBookTV',
+            'id_categoryBookTA',
+            'id_categoryBookLiterature'
         ));
     }
 
@@ -178,16 +186,17 @@ class PageController extends Controller
     {
         $categories = Category::all();
 
-        $category = Category::where('name', 'Sách bán chạy')->first();
-        $books = $category->books()->paginate(8);
+        $books = Book::paginate(8);
         if($request->key) {
-            $books = $category->books()->where('name', 'like', '%'. $request->key .'%')->paginate(8);
+            $books = Book::where('name', 'like', '%'. $request->key .'%')->paginate(8);
         }
+
+        $books->setCollection($books->sortByDesc('book_selling'));
 
         $title = "Danh mục Sách bán chạy";
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
-        return view('page.cate-book', compact('title', 'categories', 'category', 'books', 'content', 'total', 'request'));
+        return view('page.cate-book-selling', compact('title', 'categories', 'books', 'content', 'total', 'request'));
     }
 
     // Danh mục sách đang khuyến mãi
@@ -195,25 +204,24 @@ class PageController extends Controller
     {
         $categories = Category::all();
 
-        $category = Category::where('name', 'Sách đang khuyến mãi')->first();
-        $books = $category->books()->paginate(8);
+
+        $books = Book::where('sale', '>', 0);
         if($request->key) {
-            $books = $category->books()->where('name', 'like', '%'. $request->key .'%')->paginate(8);
+            $books = $books->where('name', 'like', '%'. $request->key .'%');
         }
+
+        $books = $books->latest()->paginate(8);
 
         $title = "Danh mục Sách đang khuyến mãi";
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
-        return view('page.cate-book', compact('title', 'categories', 'category', 'books', 'content', 'total', 'request'));
+        return view('page.cate-book-sale', compact('title', 'categories', 'books', 'content', 'total', 'request'));
     }
     
     // Danh mục sách mới ra mắt
     public function category_new(Request $request)
     {
         $categories = Category::all();
-
-        // $category = Category::where('name', 'Sách mới ra mắt')->first();
-        // $books = $category->books()->paginate(8);
 
         $books = Book::orderBy('created_at', 'desc')->paginate(8);
         if($request->key) {
@@ -233,7 +241,7 @@ class PageController extends Controller
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
 
-        $books = Book::all()->sortByDesc('total_export')->take(10);
+        $books = Book::where('is_highlight', 1)->limit(10)->latest()->get();
         return view('page.book-hl', compact('title', 'categories', 'content', 'total', 'books'));
     }
 
@@ -261,52 +269,95 @@ class PageController extends Controller
 
     // Thêm sản phẩm vào giỏ
     public function add_to_cart($id){
-        $product_buy = Book::find($id);
+        $book = Book::find($id);
+
+        if ($book->amount == 0) {
+            return redirect()->back()->with('alert-error', 'Sản phẩm '.$book->name.' hiện tại đã hết hàng!');
+        }
 
         Cart::add([
             'id' => $id,
-            'name' => $product_buy->name,
+            'name' => $book->name,
             'qty' => 1,
-            'price' => $product_buy->price-($product_buy->price*$product_buy->sale/100),
+            'price' => $book->price-($book->price*$book->sale/100),
             'weight' => 0,
             'options' => [
-                'img' => $product_buy->img
+                'img' => $book->img,
             ]
         ]);
 
         $content = Cart::content();
 
-        return redirect()->back();
+        return redirect()->back()->with('alert-success', 'Thêm sản phẩm '.$book->name.' vào giỏ hàng thành công!');
     }
 
 
 
     // Đặt hàng
-    public function order(CustomerRequest $request){
+    public function order(){
         if(Cart::count() < 1)
         {
-            return redirect()->back()->with('notificationOrderFail', 'Đặt hàng thất bại! Giỏ hàng của bạn chưa có sản phẩm!');
+            return redirect()->back()->with('alert-error', 'Giỏ hàng của bạn không có sản phẩm!');
         }
-        else
-        {
-            $customer = Customer::create($request->all());
 
-            $content = Cart::content();
-            $test = array();
-            foreach ($content as $key) {
-                $order = new Order;
-                $order -> book_id = $key->id;
-                $order -> customer_id = $customer->id;
-                $order -> price = $key->price;
-                $order -> amount = $key->qty;
-                $order -> save();
+        $carts = Cart::content();
 
-                $book = Book::find($key->id);
-                $book->amount = $book->amount - $key->qty;
-                $book->save();
+        DB::beginTransaction();
+        try {
+            // tạo đơn nhập hàng
+            $order = Order::create([
+                'code' => 'PD',
+                // 'user_id' => null,
+                'customer_id' => auth()->guard('customer')->user()->id,
+                'status' => 1,
+                'payment_method' => 1,
+                'total_money' => 0,
+                'type' => 'online',
+            ]);
+            $order->update([
+                'code' => 'PD'.str_pad($order->id, 6, '0', STR_PAD_LEFT)
+            ]);
+            
+            $total_money = 0;
+            
+            // tạo chi tiết đơn nhập hàng
+            foreach ($carts as $cart) {
+                $book = Book::findOrFail($cart->id);
+                if ($cart->qty > $book->amount) {
+                    return redirect()->back()->with('alert-error', 'Sản phẩm '.$book->name.' cửa hàng chỉ còn lại '.$book->amount.' sản phẩm!');
+                }
+
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'book_id' => $cart->id,
+                    'amount' => $cart->qty,
+                    'price' => $book->price,
+                    'sale' => $book->sale,
+                    'total_money' => $cart->qty * $cart->price,
+                    'discount' => $cart->qty * $book->price * $book->sale / 100,
+                ]);
+
+                $book->update([
+                    'amount' => $book->amount - $cart->qty,
+                ]);
+
+                // Thành tiền 1 sản phẩm
+                $total = ($cart->qty * $book->price) - ($cart->qty * $book->price * $book->sale / 100);
+                $total_money += $total;
             }
+
+            $order->update([
+                'total_money' => $total_money,
+            ]);
+
             Cart::destroy();
-            return redirect()->back()->with('notificationOrder', 'Đặt hàng thành công! Cảm ơn quý khách hàng đã tin tưởng và sử dụng dịch vụ của chúng tôi');;
+
+            DB::commit();
+            return redirect()->back()->with('alert-success', 'Đặt hàng thành công! Cảm ơn quý khách hàng đã tin tưởng và sử dụng dịch vụ của chúng tôi');
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+            return redirect()->back()->with('alert-error', 'Có lỗi xảy ra! Đặt hàng thất bại!');
         }
     }
 
@@ -326,25 +377,11 @@ class PageController extends Controller
 
     // Sửa sản phẩm trong giỏ
     public function update_product_cart(Request $request, $rowid, $qty){
-        // dd($id);
-        // if ($request->ajax()) {
-        //     $rowid = $request->get('id');
-        //     $qty = $request->get('qty');
-        //     // if(Book::find($id)->amount > $id = $request->get('idsp')){
-
-        //     // }
-        //     Cart::update($rowid, $qty);
-        //     echo "oke";
-        // }
-
-
-        // dd($qty);
-        // dd($id);
         $id = $request->id;
         $qty = $request->qty;
-        $amount = Book::find($id)->amount;
-        if($qty > $amount){
-            return redirect()->back()->with('notificationUpdate', 'Sửa thất bại! Số lượng sản phẩm cập nhật chỉ còn '.$amount);
+        $book = Book::find($id);
+        if($qty > $book->amount){
+            return redirect()->back()->with('alert-error', 'Cập nhật thất bại! Sản phẩm '.$book->name.' cửa hàng chỉ còn lại '.$book->amount.' sản phẩm!');
         }
         else{
             Cart::update($rowid, $qty);
@@ -365,7 +402,7 @@ class PageController extends Controller
     // Phản hồi
     public function send_us(ContactRequest $request){
         Contact::create($request->all());
-        return redirect()->route('page.contact')->with('notificationContact', 'Phản hồi của bạn đã được tiếp nhận!');
+        return redirect()->route('page.contact')->with('alert-success', 'Phản hồi của bạn đã được tiếp nhận!');
     }
 
     // Tìm kiếm

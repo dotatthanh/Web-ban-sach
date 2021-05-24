@@ -16,6 +16,7 @@ class Book extends Model
         'amount',
         'amount_return',
         'size',
+        'is_highlight',
         'page_number',
     ];
 
@@ -70,11 +71,6 @@ class Book extends Model
         return $this->orderDetails->sum('discount');
     }
 
-    // public function getAmountReturnAttribute()
-    // {
-    //     return $this->returnOrderDetails->sum('amount');
-    // }
-
     public function getTotalReturnAttribute()
     {
         return $this->returnOrderDetails->sum('total_money') - $this->returnOrderDetails->sum('discount');
@@ -83,5 +79,10 @@ class Book extends Model
     public function getInventoryValueAttribute()
     {
         return $this->amount * $this->price;
+    }
+
+    public function getBookSellingAttribute()
+    {
+        return $this->orderDetails->sum('amount');
     }
 }

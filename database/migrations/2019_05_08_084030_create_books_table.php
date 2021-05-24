@@ -23,6 +23,7 @@ class CreateBooksTable extends Migration
             $table->unsignedBigInteger('amount')->default(0);
             $table->unsignedBigInteger('sale');
             $table->text('content');
+            $table->unsignedBigInteger('is_highlight');
             $table->timestamps();
         });
     }

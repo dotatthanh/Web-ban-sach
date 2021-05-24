@@ -11,10 +11,10 @@
 	<header class="header">
 		<div class="container">
 			<div class="brand">
-				<a href="#" title=""><i class="icon fa fa-facebook" aria-hidden="true"></i></a>
-				<a href="#" title=""><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
-				<a href="#" title=""><i class="icon fa fa-google-plus" aria-hidden="true"></i></a>
-				<a href="#" title=""><i class="icon fa fa-youtube" aria-hidden="true"></i></a>
+				<a href="void:javascript(0)" title=""><i class="icon fa fa-facebook" aria-hidden="true"></i></a>
+				<a href="void:javascript(0)" title=""><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+				<a href="void:javascript(0)" title=""><i class="icon fa fa-google-plus" aria-hidden="true"></i></a>
+				<a href="void:javascript(0)" title=""><i class="icon fa fa-youtube" aria-hidden="true"></i></a>
 			</div>
 			<div class="search">
 				<form action="{{ route('page.search') }}" method="GET">
@@ -24,7 +24,7 @@
 					</button>
 				</form>
 
-				<a href="#" title="" class="cart" data-toggle="modal" data-target="#cart">
+				<a href="void:javascript(0)" title="" class="cart" data-toggle="modal" data-target="#cart">
 					<img title="" src="{{ asset('images/cart.png') }}" alt="">
 				</a>
 			</div>
@@ -45,8 +45,11 @@
 						</button>
 						<ul>
 							<li><a href="{{ route('pages.index') }}" title="">Trang chủ</a></li>
-							<li><a href="#" title="">Danh mục sách</a>
+							<li><a href="void:javascript(0)" title="">Danh mục sách</a>
 								<ul>
+									<li><a href="{{ route('page.category_selling') }}" title="">Sách bán chạy</a></li>
+									<li><a href="{{ route('page.category_sale') }}" title="">Sách đang khuyến mãi</a></li>
+									<li><a href="{{ route('page.category_new') }}" title="">Sách mới ra mắt</a></li>
 									@foreach ($categories as $category)
 									<li><a href="{{ route('page.category', $category->id) }}" title="">{{ $category->name }}</a></li>
 									@endforeach
@@ -54,11 +57,18 @@
 							</li>
 							<li><a href="{{ route('page.tophighlight') }}" title="">Top nổi bật</a></li>
 							<li><a href="{{ route('page.forum') }}" title="">Diễn đàn</a></li>
-							<li><a href="{{ route('page.contact') }}" title="">Liên hệ</a></li>
+							{{-- <li><a href="{{ route('page.contact') }}" title="">Liên hệ</a></li> --}}
 							@if (auth()->guard('customer')->user())
-								<li><a href="{{ route('user.profile') }}">Xin chào: {{ auth()->guard('customer')->user()->name }}</a></li>
+							<li>
+								<a href="{{ route('user.profile') }}">Tài khoản</a>
+								<ul style="width: 155px;">
+									<li>
+										<a href="{{ route('user.logout') }}" title="">Đăng xuất</a>
+									</li>
+								</ul>
+							</li>
 							@else
-								<li><a href="{{ route('user.login') }}">Tài khoản</a></li>
+							<li><a href="{{ route('user.login') }}">Đăng nhập</a></li>
 							@endif
 						</ul>
 					</div>
@@ -104,36 +114,31 @@
 											@foreach ($content as $cart)
 											<tr>
 												<td  class="content-product" data-content="Sản phẩm">
-													<a href="" class="c-img w-50 p-80">
+													<a href="void:javascript(0)" class="c-img w-50 p-80">
 													<img src="{{ asset('storage/'.$cart->options['img']) }}" alt="">
 													</a>
 													<div class="info-book">
 														<span>{{ $cart->name }}</span>
-														<!-- <p>Rosie Nguyễn</p> -->
+														<p>Rosie Nguyễn</p>
 													</div>
 												</td>
 												<td  class="content-price align-middle" data-content="Giá">
 													<p>{{ number_format($cart->price, 0, ",", ".") }} đ</p>
 												</td>
-												<td  class="content-sl align-middle" data-content="Số lượng">
-													<!-- <form action="#"> -->
-													<form action="{{ route('page.update-product-cart', ['rowid' => $cart->rowId, 'qty' => $cart->qty]) }}" method="GET">
-														<input type="number" name="qty" class="qty" min="1" value="{{ $cart->qty }}">
+												<form action="{{ route('page.update-product-cart', ['rowid' => $cart->rowId, 'qty' => $cart->qty]) }}" method="GET">
+													<td  class="content-sl align-middle" data-content="Số lượng">
+														<input type="number" name="qty" class="qty" min="1" value="{{ $cart->qty }}" onkeyup="checkNumberBook({{ $cart->id }}, $(this).val())">
 														<input type="number" name="id" value="{{ $cart->id }}" hidden="">
-													<!-- </form> -->
-												</td>
-												<td  class="content-sale align-middle" data-content="Thao tác" id="{{ $cart->id }}">
-													<!-- <a href="#" title="" class="updatecart" id="{{ $cart->rowId }}" data-id="{{ $cart->id }}">
-														<i class="fa fa-circle-o-notch" aria-hidden="true"></i>
-													</a> -->
+													</td>
+													<td  class="content-sale align-middle" data-content="Thao tác" id="{{ $cart->id }}">
 														<button class="updatecart" id="{{ $cart->rowId }}" data-id="{{ $cart->id }}">
 															<i class="fa fa-circle-o-notch" aria-hidden="true"></i>
 														</button>
-													</form>
-													<a href="{{ route('page.del-product-cart', ['id' => $cart->rowId]) }}" class="delete-cart" id="{{ $cart->rowId }}">
-														<i class="fa fa-trash" aria-hidden="true"></i>
-													</a>
-												</td>
+														<a href="{{ route('page.del-product-cart', ['id' => $cart->rowId]) }}" class="delete-cart" id="{{ $cart->rowId }}">
+															<i class="fa fa-trash" aria-hidden="true"></i>
+														</a>
+													</td>
+												</form>
 												<td  class="content-pay align-middle" data-content="Thanh toán">
 													<!-- <div class="tamtinh">
 														<p>Tạm tính:</p> <span>{{ $total }} VND</span>
@@ -154,9 +159,14 @@
 					                    @endif
 								<div class="action">
 									<a href="{{ route('page.del-cart') }}" title="" class="del-cart">Xóa</a>
-									<!-- <a href="">Để mua sau</a> -->
-									<!-- <button class="buying">Tiếp tục mua hàng</button> -->
+									{{-- <a href="">Để mua sau</a> --}}
+									{{-- <button class="buying">Tiếp tục mua hàng</button> --}}
+									@if (auth()->guard('customer')->user() && $content->count() > 0)
 									<a href="#order" title="" class="to-pay">Tiến hành thanh toán</a>
+									@endif
+									@if (!auth()->guard('customer')->user())
+									<a href="{{ route('user.login') }}" title="">Đăng nhập để đặt hàng</a>
+									@endif
 								</div>
 							</div>
 							<div class="pay d-none">
@@ -181,28 +191,28 @@
 							      				<p>Địa chỉ khách hàng</p>
 						      					<div class="w-100">
 							      					<label>Họ và tên</label>
-							  						<input required type="text" name="name" value="{{ old('name') }}">
+							  						<input required type="text" name="name" value="{{ auth()->guard('customer')->user() ? auth()->guard('customer')->user()->name : '' }}" disabled>
 							  						@if($errors->has('name'))
 														<span class="text-danger d-block mt-2">{{ $errors->first('name') }}</span>
 													@endif
 						      					</div>
 						      					<div class="email">
 							      					<label>Email</label>
-							  						<input required type="email" name="email" value="{{ old('email') }}">
+							  						<input required type="email" name="email" value="{{ auth()->guard('customer')->user() ? auth()->guard('customer')->user()->email : '' }}" disabled>
 							  						@if($errors->has('email'))
 														<span class="text-danger d-block mt-2">{{ $errors->first('email') }}</span>
 													@endif
 						      					</div>
 						      					<div class="sdt">
 							      					<label>Số điện thoại</label>
-							  						<input required type="number" name="phone" value="{{ old('phone') }}">
+							  						<input required type="number" name="phone" value="{{ auth()->guard('customer')->user() ? auth()->guard('customer')->user()->phone : '' }}" disabled>
 							  						@if($errors->has('phone'))
 														<span class="text-danger d-block mt-2">{{ $errors->first('phone') }}</span>
 													@endif
 						      					</div>
 						      					<div class="diachi">
 							      					<label>Địa chỉ (Tỉnh/thành phố)</label>
-							  						<input required type="text" name="address" value="{{ old('address') }}">
+							  						<input required type="text" name="address" value="{{ auth()->guard('customer')->user() ? auth()->guard('customer')->user()->address : '' }}" disabled>
 							  						@if($errors->has('address'))
 														<span class="text-danger d-block mt-2">{{ $errors->first('address') }}</span>
 													@endif
@@ -229,7 +239,7 @@
 												<div class="pay-methods">
 													<p>Tổng cộng:</p><span>{!! $total !!} ₫</span>
 													<div>
-														<input type="radio" name="checkbox" id="transfer" value="value">
+														<input type="radio" name="checkbox" id="transfer" value="value" disabled>
 														<label for="transfer" class="lblpay">Chuyển khoản ngân hàng</label>
 														<p>Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong phần Nội dung thanh toán. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.</p>
 													</div>
@@ -273,26 +283,38 @@
 		<div class="search">
 			<form action="#">
 				<input type="text" placeholder="Bạn muốn tìm gì?">
-				<a href="#" title="">
+				<a href="void:javascript(0)" title="">
 					<img title="" src="{{ asset('images/timkiem.png') }}" alt="">
 				</a>
 			</form>
 		</div>
 		<ul>
-			<li><a href="#" title="">Trang chủ</a></li>
-			<li><a href="#" title="">Danh mục sách</a>
+			<li><a href="{{ route('pages.index') }}" title="">Trang chủ</a></li>
+			<li><a href="void:javascript(0)" title="">Danh mục sách</a>
 				<ul>
-					<li><a href="#" title="">Sách hay</a></li>
-					<li><a href="#" title="">Sách nổi bật</a></li>
-					<li><a href="#" title="">Sách bán chạy</a></li>
-					<li><a href="#" title="">Sách tiếng anh</a></li>
-					<li><a href="#" title="">Sách tiếng việt</a></li>
+					<li><a href="{{ route('page.category_selling') }}" title="">Sách bán chạy</a></li>
+					<li><a href="{{ route('page.category_sale') }}" title="">Sách đang khuyến mãi</a></li>
+					<li><a href="{{ route('page.category_new') }}" title="">Sách mới ra mắt</a></li>
+					@foreach ($categories as $category)
+					<li><a href="{{ route('page.category', $category->id) }}" title="">{{ $category->name }}</a></li>
+					@endforeach
 				</ul>
 			</li>
-			<li><a href="#" title="">Top nổi bật</a></li>
-			<li><a href="#" title="">Diễn đàn</a></li>
-			<li><a href="#" title="">Liên hệ</a></li>
-			<li><a href="{{ route('user.login') }}">Tài khoản</a></li>
+			<li><a href="{{ route('page.tophighlight') }}" title="">Top nổi bật</a></li>
+			<li><a href="{{ route('page.forum') }}" title="">Diễn đàn</a></li>
+			{{-- <li><a href="{{ route('page.contact') }}" title="">Liên hệ</a></li> --}}
+			@if (auth()->guard('customer')->user())
+			<li>
+				<a href="{{ route('user.profile') }}">Tài khoản</a>
+				<ul style="width: 155px;">
+					<li>
+						<a href="{{ route('user.logout') }}" title="">Đăng xuất</a>
+					</li>
+				</ul>
+			</li>
+			@else
+			<li><a href="{{ route('user.login') }}">Đăng nhập</a></li>
+			@endif
 		</ul>
 	</div>
 
@@ -368,17 +390,17 @@
 				<div class="row">
 					<div class="col-12 col-md-12 col-sm-12 col-lg-12">
 						<ul>
-							<li><a href="#" title="">Giới thiệu</a></li>
-							<li><a href="#" title="">Chính sách bảo mật</a></li>
-							<li><a href="#" title="">Điều khoản sử dụng</a></li>
-							<li><a href="#" title="">Điều khoản mua bán hàng hóa</a></li>
-							<li><a href="#" title="">Quy chế sàn giao dịch</a></li>
+							<li><a href="void:javascript(0)" title="">Giới thiệu</a></li>
+							<li><a href="void:javascript(0)" title="">Chính sách bảo mật</a></li>
+							<li><a href="void:javascript(0)" title="">Điều khoản sử dụng</a></li>
+							<li><a href="void:javascript(0)" title="">Điều khoản mua bán hàng hóa</a></li>
+							<li><a href="void:javascript(0)" title="">Quy chế sàn giao dịch</a></li>
 						</ul>
 						<div class="brand-transport">
-							<a href="#" title=""><i class="icon-transport fa fa-facebook" aria-hidden="true"></i></a>
-							<a href="#" title=""><i class="icon-transport fa fa-twitter" aria-hidden="true"></i></a>
-							<a href="#" title=""><i class="icon-transport fa fa-google-plus" aria-hidden="true"></i></a>
-							<a href="#" title=""><i class="icon-transport fa fa-youtube" aria-hidden="true"></i></a>
+							<a href="void:javascript(0)" title=""><i class="icon-transport fa fa-facebook" aria-hidden="true"></i></a>
+							<a href="void:javascript(0)" title=""><i class="icon-transport fa fa-twitter" aria-hidden="true"></i></a>
+							<a href="void:javascript(0)" title=""><i class="icon-transport fa fa-google-plus" aria-hidden="true"></i></a>
+							<a href="void:javascript(0)" title=""><i class="icon-transport fa fa-youtube" aria-hidden="true"></i></a>
 						</div>
 					</div>
 				</div>
@@ -393,41 +415,41 @@
 					<div class="col-6 col-md-6 col-sm-6 col-lg-3 foot-index bold">
 						<h3>HỖ TRỢ KHÁCH HÀNg</h3>
 						<ul>
-							<li><a href="#" title="">Liên hệ với chúng tôi</a></li>
-							<li><a href="#" title="">Tư vấn chọn mẫu</a></li>
-							<li><a href="#" title="">Trung tâm hỗ trợ</a></li>
-							<li><a href="#" title="">Chính sách bảo mật</a></li>
-							<li><a href="#" title="">Hình thức thanh toán</a></li>
-							<li><a href="#" title="">Hỗ trợ</a></li>
+							<li><a href="void:javascript(0)" title="">Liên hệ với chúng tôi</a></li>
+							<li><a href="void:javascript(0)" title="">Tư vấn chọn mẫu</a></li>
+							<li><a href="void:javascript(0)" title="">Trung tâm hỗ trợ</a></li>
+							<li><a href="void:javascript(0)" title="">Chính sách bảo mật</a></li>
+							<li><a href="void:javascript(0)" title="">Hình thức thanh toán</a></li>
+							<li><a href="void:javascript(0)" title="">Hỗ trợ</a></li>
 						</ul>
 					</div>
 					<div class="col-6 col-md-6 col-sm-6 col-lg-3 foot-index">
 						<h3>TẤT CẢ NGHÀNH  NGHỀ</h3>
 						<ul>
-							<li><a href="#" title="">Thiết bị công nghiệp</a></li>
-							<li><a href="#" title="">Thời trang</a></li>
-							<li><a href="#" title="">Trang sức</a></li>
-							<li><a href="#" title="">Thể thao - dịch vụ</a></li>
-							<li><a href="#" title="">Bất động sản</a></li>
-							<li><a href="#" title="">Thủ công mỹ nghệ</a></li>
-							<li><a href="#" title="">Khác - Tổng hợp</a></li>
+							<li><a href="void:javascript(0)" title="">Thiết bị công nghiệp</a></li>
+							<li><a href="void:javascript(0)" title="">Thời trang</a></li>
+							<li><a href="void:javascript(0)" title="">Trang sức</a></li>
+							<li><a href="void:javascript(0)" title="">Thể thao - dịch vụ</a></li>
+							<li><a href="void:javascript(0)" title="">Bất động sản</a></li>
+							<li><a href="void:javascript(0)" title="">Thủ công mỹ nghệ</a></li>
+							<li><a href="void:javascript(0)" title="">Khác - Tổng hợp</a></li>
 						</ul>
 					</div>
 					<div class="col-6 col-md-6 col-sm-6 col-lg-3 foot-index">
 						<h3>KIỂU GIAO DIỆN</h3>
 						<ul>
-							<li><a href="#" title="">Giới thiệu dịch vụ</a></li>
-							<li><a href="#" title="">Giới thiệu sản phẩm</a></li>
-							<li><a href="#" title="">Bán hàng - Tin tức</a></li>
-							<li><a href="#" title="">Langding page</a></li>
+							<li><a href="void:javascript(0)" title="">Giới thiệu dịch vụ</a></li>
+							<li><a href="void:javascript(0)" title="">Giới thiệu sản phẩm</a></li>
+							<li><a href="void:javascript(0)" title="">Bán hàng - Tin tức</a></li>
+							<li><a href="void:javascript(0)" title="">Langding page</a></li>
 						</ul>
 					</div>
 					<div class="col-6 col-md-6 col-sm-6 col-lg-3 foot-index bold">
 						<h3>Mẫu thiết kế</h3>
 						<ul>
-							<li><a href="#" title="">Web doanh nghiệp</a></li>
-							<li><a href="#" title="">Web bán hàng</a></li>
-							<li><a href="#" title="">Landing Page</a></li>
+							<li><a href="void:javascript(0)" title="">Web doanh nghiệp</a></li>
+							<li><a href="void:javascript(0)" title="">Web bán hàng</a></li>
+							<li><a href="void:javascript(0)" title="">Landing Page</a></li>
 						</ul>
 					</div>
 				</div>
@@ -440,7 +462,7 @@
 
 
 	<!-- Modal Thông báo add-to-cart -->
-	<div class="modal fade" id="notice-add-to-cart">
+	{{-- <div class="modal fade" id="notice-add-to-cart">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 
@@ -463,10 +485,10 @@
 
 			</div>
 		</div>
-	</div>
+	</div> --}}
 
 	<!-- Modal Thông báo đặt hàng -->
-	<div class="modal fade" id="notice-order">
+	{{-- <div class="modal fade" id="notice-order">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 
@@ -497,7 +519,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 
 	@include('layout.script')
 
@@ -507,16 +529,16 @@
 				$('#cart').removeClass('show d-block p-r-17');
 				$('body').removeClass('modal-open');
 			});
-			$('.btn-modal-notification').click(function(event) {
-				$('#notice-add-to-cart').removeClass('show d-block p-r-17');
-				$('body').removeClass('modal-open');
-				$("html, body").animate({ scrollTop: $('.slider').height() }, 500);
-			});
-			$('.btn-modal-notification1').click(function(event) {
-				$('#notice-order').removeClass('show d-block p-r-17');
-				$('body').removeClass('modal-open');
-				$("html, body").animate({ scrollTop: $('.slider').height() }, 500);
-			});
+			// $('.btn-modal-notification').click(function(event) {
+			// 	$('#notice-add-to-cart').removeClass('show d-block p-r-17');
+			// 	$('body').removeClass('modal-open');
+			// 	$("html, body").animate({ scrollTop: $('.slider').height() }, 500);
+			// });
+			// $('.btn-modal-notification1').click(function(event) {
+			// 	$('#notice-order').removeClass('show d-block p-r-17');
+			// 	$('body').removeClass('modal-open');
+			// 	$("html, body").animate({ scrollTop: $('.slider').height() }, 500);
+			// });
 			$('.to-pay').click(function(event) {
 				$('.pay').removeClass('d-none').addClass('d-block');
 			});
@@ -559,41 +581,25 @@
                 $('body').addClass('modal-open');
                 sessionStorage.removeItem('.del-cart');
             }
-            if ( sessionStorage.getItem('.add-to-cart') ) {
-                $('#notice-add-to-cart').toggleClass('show d-block p-r-17');
-                $('body').addClass('modal-open');
-                sessionStorage.removeItem('.add-to-cart');
-            }
-            if ( sessionStorage.getItem('.dat-hang') ) {
-                $('#notice-order').toggleClass('show d-block p-r-17');
-                $('body').addClass('modal-open');
-                sessionStorage.removeItem('.dat-hang');
-            }
         });
 
-        // Update cart
-  //       $('.updatecart').click(function(event) {
-		// 	let rowid = $(this).attr('id');
-		// 	let qty = $(this).parent().parent().find('.qty').val();
-		// 	let id = $(this).attr('data-id');
-		// 	let token = $("input[name='_token']").val();
-		// 	$.ajax({
-		// 		url: '{{ route("page.update-product-cart", ["id" =>'+rowid+', "qty" => '+qty+']) }}',
-		// 		type: 'GET',
-		// 		cache: false,
-		// 		data: {
-		// 			"_token": token,
-		// 			"id": rowid,
-		// 			"qty": qty,
-		// 			"idsp": id
-		// 		},
-		// 		success:function (data){
-		// 			if (data == "oke") {
-		// 				window.location = ""
-		// 			}
-		// 		}
-		// 	});
-		// });
+		function checkNumberBook(id, amount) {
+        	$.ajax({
+                url: '/admin/books/'+id,
+                method: 'GET',
+                success: function (response) {
+                    if (amount > response.amount) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: `Sản phẩm này cửa hàng chỉ còn lại ${response.amount} sản phẩm!`
+                        })
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
 	</script>
 
 	@yield('script')

@@ -18,9 +18,6 @@ class CategorySeeder extends Seeder
             'name' => 'Sách Tiếng Anh'
         ]);
         \App\Category::create([
-            'name' => 'Sách đang khuyến mãi'
-        ]);
-        \App\Category::create([
             'name' => 'Sách văn học nước ta'
         ]);
     }

@@ -49,7 +49,7 @@
 							</select>
 						</td>
 						<td class="text-center">
-							<input type="number" name="amount[{{ $stt-2 }}]" class="form-control" min="1" onkeyup="totalMoney({{ $stt-2 }})" value="{{ $order_detail->amount }}" required>
+							<input type="number" name="amount[{{ $stt-2 }}]" class="form-control" min="1" onkeyup="totalMoney({{ $stt-2 }}); checkNumberBook({{ $stt-2 }}, $(this).val())" value="{{ $order_detail->amount }}" required>
 						</td>
 						<td class="text-center" id="price{{ $stt-2 }}">{{ $order_detail->price }}</td>
 						<td class="text-center" id="sale{{ $stt-2 }}">{{ $order_detail->sale }}</td>
@@ -94,7 +94,7 @@
 						</select>
 					</td>
 					<td class="text-center">
-						<input type="number" name="amount[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt})" required>
+						<input type="number" name="amount[${stt}]" class="form-control" min="1" onkeyup="totalMoney(${stt}); checkNumberBook(${stt}, $(this).val())" required>
 					</td>
 					<td class="text-center" id="price${stt}">0</td>
 					<td class="text-center" id="sale${stt}">0</td>
@@ -149,6 +149,25 @@
 	        	}
 	        }
 	        $(`#total`).text(total);
+        }
+
+        function checkNumberBook(stt, amount) {
+        	let id = $(`select[name="book_id[${stt}]"]`).val();
+        	$.ajax({
+                url: '/admin/books/'+id,
+                method: 'GET',
+                success: function (response) {
+                    if (amount > response.amount) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: `Sản phẩm này cửa hàng chỉ còn lại ${response.amount} sản phẩm!`
+                        })
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         }
 	</script>
 </body>

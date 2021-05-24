@@ -6,8 +6,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'TypeController@index')->name('home');
-
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function(){
 	Route::resource('books', 'BookController');
 	Route::resource('authors', 'AuthorController');
@@ -73,6 +71,22 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'],function(){
 
 		Route::get('/getAll', 'PermissionController@getAllRole')->name('admin.permission.getAll');
 	});
+
+	// Đơn hàng trả lại
+	Route::prefix('return-order')->name('return-order.')->group(function(){
+		Route::get('/', 'ReturnOrderController@index')->name('index');
+		Route::get('/create', 'ReturnOrderController@create')->name('create');
+		Route::post('/store', 'ReturnOrderController@store')->name('store');
+		Route::get('/show/{id}', 'ReturnOrderController@show')->name('show');
+		Route::get('/{id}/edit', 'ReturnOrderController@edit')->name('edit');
+		Route::put('/update/{id}', 'ReturnOrderController@update')->name('update');
+		Route::delete('/show/{id}', 'ReturnOrderController@destroy')->name('destroy');
+		Route::get('/get-book-in-order/{id}', 'ReturnOrderController@getBookInOrder');
+		Route::get('/get-order-detail', 'ReturnOrderController@getOrderDetail')->name('get-order-detail');
+	});
+
+	// Nhà cung cấp
+	Route::resource('suppliers', 'SupplierController');
 });
 
 
@@ -113,21 +127,6 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::post('/edit/{id}', 'CustomerController@update')->name('pages.customer.update');
 		Route::get('/destroy/{id}', 'CustomerController@destroy')->name('pages.customer.destroy');
 	});
-	// Đơn hàng trả lại
-	Route::prefix('return-order')->name('return-order.')->group(function(){
-		Route::get('/', 'ReturnOrderController@index')->name('index');
-		Route::get('/create', 'ReturnOrderController@create')->name('create');
-		Route::post('/store', 'ReturnOrderController@store')->name('store');
-		Route::get('/show/{id}', 'ReturnOrderController@show')->name('show');
-		Route::get('/{id}/edit', 'ReturnOrderController@edit')->name('edit');
-		Route::put('/update/{id}', 'ReturnOrderController@update')->name('update');
-		Route::delete('/show/{id}', 'ReturnOrderController@destroy')->name('destroy');
-		Route::get('/get-book-in-order/{id}', 'ReturnOrderController@getBookInOrder');
-		Route::get('/get-order-detail', 'ReturnOrderController@getOrderDetail')->name('get-order-detail');
-	});
-
-	// Nhà cung cấp
-	Route::resource('suppliers', 'SupplierController');
 });
 
 

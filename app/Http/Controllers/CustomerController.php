@@ -13,6 +13,7 @@ use DB;
 use Str;
 use Hash;
 use Auth;
+use Cart;
 
 class CustomerController extends Controller
 {
@@ -107,10 +108,12 @@ class CustomerController extends Controller
             $categories = Category::where('name', 'like', '%'. $request->key .'%')->paginate(10);
         }
 
+        $content = Cart::content();
+
         $data = [
             'title' => "Đăng nhập tài khoản",
             'categories' => $categories,
-            'content' => [],
+            'content' => $content,
             'total' => '',
         ];
         return view('page.user.login', $data);

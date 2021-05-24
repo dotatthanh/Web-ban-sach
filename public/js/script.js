@@ -169,13 +169,7 @@ var MenuAdmin=function(){
 		$('.menu-admin').toggleClass('show');
 	});
 
-	$('.menu-admin').find("ul li").each(function() {
-		if($(this).find("ul>li").length > 0){
-			$(this).append('<i class="fa fa-angle-down btn-drop1" aria-hidden="true"></i>');
-		}
-	});
-
-	$('.btn-drop1').click(function(){
+	$('.btn-drop-admin').click(function(){
 		$(this).toggleClass('fa-angle-down').toggleClass('fa-angle-up');
 		$(this).parent('li').children('ul').stop().slideToggle(500);
 	});

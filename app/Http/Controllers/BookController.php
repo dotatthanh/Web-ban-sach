@@ -65,6 +65,10 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         $data = $request->all();
+        if (!isset($data['is_highlight'])) {
+            $data['is_highlight'] = 0;
+        }
+
         if (is_null($data['sale'])) {
             $data['sale'] = 0;
         }
@@ -156,17 +160,38 @@ class BookController extends Controller
         if (is_null($request->sale)) {
             $request->sale = 0;
         }
-        $data = [
-            'supplier_id' => $request->supplier,
-            'name' => $request->name,
-            'img' => $request->img,
-            'price' => $request->price,
-            'sale' => $request->sale,
-            'content' => $request->content,
-            'code' => $request->code,
-            'size' => $request->size,
-            'page_number' => $request->page_number,
-        ];
+
+        if (!isset($request->is_highlight)) {
+            $request->is_highlight = 0;
+        }
+        
+        if (isset($request->img)) {
+            $data = [
+                'supplier_id' => $request->supplier,
+                'name' => $request->name,
+                'img' => $request->img,
+                'price' => $request->price,
+                'sale' => $request->sale,
+                'content' => $request->content,
+                'code' => $request->code,
+                'size' => $request->size,
+                'page_number' => $request->page_number,
+                'is_highlight' => $request->is_highlight,
+            ];
+        }
+        else {
+            $data = [
+                'supplier_id' => $request->supplier,
+                'name' => $request->name,
+                'price' => $request->price,
+                'sale' => $request->sale,
+                'content' => $request->content,
+                'code' => $request->code,
+                'size' => $request->size,
+                'page_number' => $request->page_number,
+                'is_highlight' => $request->is_highlight,
+            ];
+        }
 
         // xử lý img
         if ($request->hasFile('img')) {

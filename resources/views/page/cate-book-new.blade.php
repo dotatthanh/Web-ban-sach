@@ -81,7 +81,10 @@
 										<a href="#" title=""></a>
 									</div>
 									<p class="vote">(2000 đánh giá)</p> -->
-									<span>{{ number_format($book->price-($book->price*$book->sale/100), 0, ",", ".") }} ₫</span><strike>{{ number_format($book->cover_price, 0, ",", ".") }} đ</strike>
+									<span>{{ number_format($book->price-($book->price*$book->sale/100), 0, ",", ".") }}₫</span>
+									@if ($book->sale > 0)
+									<strike>{{ number_format($book->price, 0, ",", ".") }}đ</strike>
+									@endif
 								</div>
 							</div>
 						</div>
