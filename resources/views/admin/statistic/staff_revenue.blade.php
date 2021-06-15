@@ -19,9 +19,15 @@
 				<input type="text" name="name" placeholder="Tên nhân viên" class="form-control w-100">
 			</div>
 			<div class="col-2">
+				<input type="date" name="from_date" class="form-control w-100">
+			</div>
+			<div class="col-2">
+				<input type="date" name="to_date" class="form-control w-100">
+			</div>
+			<div class="col-2">
 				<button class="btn btn-success w-75">Tìm kiếm</button>
 			</div>
-			<div class="col-7 text-right font-weight-bold">
+			<div class="col-12 text-right font-weight-bold">
 				Doanh thu hệ thống: {{ number_format($revenue) }} VNĐ
 			</div>
 		</form>
@@ -53,6 +59,8 @@
 		<div class="text-center">
 			{{ $users->appends([
 				'name' => $request->name,
+				'from_date' => $request->from_date,
+				'to_date' => $request->to_date,
 			])->links()}}
 		</div>
 	</div>

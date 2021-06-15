@@ -18,6 +18,8 @@ use Cart;
 class CustomerController extends Controller
 {
     public function register(Request $request) {
+        $content = Cart::content();
+        
         $categories = Category::paginate(10);
         if($request->key){
             $key = $request->key;
@@ -27,7 +29,7 @@ class CustomerController extends Controller
         $data = [
             'title' => "Đăng ký tài khoản",
             'categories' => $categories,
-            'content' => [],
+            'content' => $content,
             'total' => '',
         ];
         return view('page.user.register', $data);
@@ -61,6 +63,8 @@ class CustomerController extends Controller
     }
 
     public function profile(Request $request) {
+        $content = Cart::content();
+
         if (!Auth()->guard('customer')->user()) {
             return redirect(route('user.login'));
         }
@@ -73,7 +77,7 @@ class CustomerController extends Controller
         $data = [
             'title' => "Đăng nhập tài khoản",
             'categories' => $categories,
-            'content' => [],
+            'content' => $content,
             'total' => '',
         ];
         return view('page.user.profile', $data);

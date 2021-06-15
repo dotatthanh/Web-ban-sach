@@ -19,6 +19,12 @@
 				<input type="text" name="name" placeholder="Tên sản phẩm" class="form-control w-100">
 			</div>
 			<div class="col-2">
+				<input type="date" name="from_date" class="form-control w-100">
+			</div>
+			<div class="col-2">
+				<input type="date" name="to_date" class="form-control w-100">
+			</div>
+			<div class="col-2">
 				<button class="btn btn-success w-75">Tìm kiếm</button>
 			</div>
 		</form>
@@ -41,7 +47,7 @@
 				<td class="text-center">{{ $books->sum('quantity_sold') }}</td>
 				<td class="text-center">{{ $books->sum('total_money_sold') }}</td>
 				<td class="text-center">{{ -$books->sum('discount') }}</td>
-				<td class="text-center">{{ $books->sum('amount_return') }}</td>
+				<td class="text-center">{{ $books->sum('amount_return_of_month') }}</td>
 				<td class="text-center">{{ -$books->sum('total_return') }}</td>
 				<td class="text-center">{{ $books->sum('total_money_sold') - $books->sum('discount') - $books->sum('total_return') }}</td>
 			</tr>
@@ -54,7 +60,7 @@
 				<td class="text-center">{{ $book->quantity_sold }}</td>
 				<td class="text-center">{{ $book->total_money_sold }}</td>
 				<td class="text-center">{{ -$book->discount }}</td>
-				<td class="text-center">{{ $book->amount_return }}</td>
+				<td class="text-center">{{ $book->amount_return_of_month }}</td>
 				<td class="text-center">{{ -$book->total_return }}</td>
 				<td class="text-center">{{ $book->total_money_sold - $book->discount - $book->total_return }}</td>
 			</tr>
@@ -63,6 +69,8 @@
 		<div class="text-center">
 			{{ $books->appends([
 				'name' => $request->name,
+				'from_date' => $request->from_date,
+				'to_date' => $request->to_date,
 			])->links()}}
 		</div>
 	</div>
