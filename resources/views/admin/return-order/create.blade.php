@@ -154,11 +154,11 @@
         function getBookInOrder(id) {
         	text = '<option value=""></option>';
         	$.ajax({
-                url: "/return-order/get-book-in-order/" + id,
+                url: "/admin/return-order/get-book-in-order/" + id,
                 method: 'GET',
-                data: {
-                    id: id,
-                },
+                // data: {
+                //     id: id,
+                // },
                 success: function (respon) {
                     $.each( respon, function( key, value ) {
                         text += `<option value="${value.book.id}">${value.book.name}</option>`;
@@ -177,7 +177,7 @@
         	let order_id = $(`select[name="order_id"]`).val();
         	let book_id = $(`select[name="book_id[${stt}]"]`).val();
         	$.ajax({
-                url: '/return-order/get-order-detail/',
+                url: '/admin/return-order/get-order-detail/',
                 method: 'GET',
                 data: {
                     order_id: order_id,

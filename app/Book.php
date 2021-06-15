@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Book extends Model
 {
@@ -58,22 +59,132 @@ class Book extends Model
 
     public function getQuantitySoldAttribute()
     {
-        return $this->orderDetails->sum('amount');
+        $first_month = date('Y-m-01 00:00:00');
+        $end_month = date('Y-m-t 23:59:59');
+
+        $request = resolve(Request::class);
+
+        $result = $this->orderDetails
+            ->where('created_at', '>=', $first_month)
+            ->where('created_at', '<=', $end_month);
+
+        if (isset($request->from_date)) {
+            $result = $this->orderDetails->where('created_at', '>=', $request->from_date);
+        }
+
+        if (isset($request->to_date)) {
+            $result = $this->orderDetails->where('created_at', '<=', $request->to_date);
+        }
+
+        if (isset($request->from_date) && isset($request->to_date)) {
+            $result = $this->orderDetails->where('created_at', '>=', $request->from_date)->where('created_at', '<=', $request->to_date);
+        }
+
+        return $result->sum('amount');
     }
 
     public function getTotalMoneySoldAttribute()
     {
-        return $this->orderDetails->sum('total_money');
+        $first_month = date('Y-m-01 00:00:00');
+        $end_month = date('Y-m-t 23:59:59');
+
+        $request = resolve(Request::class);
+
+        $result = $this->orderDetails
+            ->where('created_at', '>=', $first_month)
+            ->where('created_at', '<=', $end_month);
+
+        if (isset($request->from_date)) {
+            $result = $this->orderDetails->where('created_at', '>=', $request->from_date);
+        }
+
+        if (isset($request->to_date)) {
+            $result = $this->orderDetails->where('created_at', '<=', $request->to_date);
+        }
+
+        if (isset($request->from_date) && isset($request->to_date)) {
+            $result = $this->orderDetails->where('created_at', '>=', $request->from_date)->where('created_at', '<=', $request->to_date);
+        }
+
+        return $result->sum('total_money');
     }
 
     public function getDiscountAttribute()
     {
-        return $this->orderDetails->sum('discount');
+        $first_month = date('Y-m-01 00:00:00');
+        $end_month = date('Y-m-t 23:59:59');
+
+        $request = resolve(Request::class);
+
+        $result = $this->orderDetails
+            ->where('created_at', '>=', $first_month)
+            ->where('created_at', '<=', $end_month);
+
+        if (isset($request->from_date)) {
+            $result = $this->orderDetails->where('created_at', '>=', $request->from_date);
+        }
+
+        if (isset($request->to_date)) {
+            $result = $this->orderDetails->where('created_at', '<=', $request->to_date);
+        }
+
+        if (isset($request->from_date) && isset($request->to_date)) {
+            $result = $this->orderDetails->where('created_at', '>=', $request->from_date)->where('created_at', '<=', $request->to_date);
+        }
+
+        return $result->sum('discount');
     }
 
     public function getTotalReturnAttribute()
     {
-        return $this->returnOrderDetails->sum('total_money') - $this->returnOrderDetails->sum('discount');
+        $first_month = date('Y-m-01 00:00:00');
+        $end_month = date('Y-m-t 23:59:59');
+
+        $request = resolve(Request::class);
+
+        $result = $this->returnOrderDetails
+            ->where('created_at', '>=', $first_month)
+            ->where('created_at', '<=', $end_month);
+
+        if (isset($request->from_date)) {
+            $result = $this->returnOrderDetails->where('created_at', '>=', $request->from_date);
+        }
+
+        if (isset($request->to_date)) {
+            $result = $this->returnOrderDetails->where('created_at', '<=', $request->to_date);
+        }
+
+        if (isset($request->from_date) && isset($request->to_date)) {
+            $result = $this->returnOrderDetails->where('created_at', '>=', $request->from_date)->where('created_at', '<=', $request->to_date);
+        }
+
+        return $result->sum('total_money') - $result->sum('discount');
+    }
+
+    public function getAmountReturnOfMonthAttribute()
+    {
+        $first_month = date('Y-m-01 00:00:00');
+        $end_month = date('Y-m-t 23:59:59');
+
+        $request = resolve(Request::class);
+
+        $result = $this->returnOrderDetails
+            ->where('created_at', '>=', $first_month)
+            ->where('created_at', '<=', $end_month);
+
+        if (isset($request->from_date)) {
+            $result = $this->returnOrderDetails->where('created_at', '>=', $request->from_date);
+        }
+
+        if (isset($request->to_date)) {
+            $result = $this->returnOrderDetails->where('created_at', '<=', $request->to_date);
+        }
+
+        if (isset($request->from_date) && isset($request->to_date)) {
+            $result = $this->returnOrderDetails->where('created_at', '>=', $request->from_date)->where('created_at', '<=', $request->to_date);
+        }
+
+        return $result->sum('amount');
     }
 
     public function getInventoryValueAttribute()
