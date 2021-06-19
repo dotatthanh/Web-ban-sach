@@ -22,12 +22,6 @@
                         <div class="box">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label>Mã *</label>
-                                    <input type="text" name="code" class="form-control" value="{{ $user->code }}">
-                                    {!! $errors->first('code', '<span class="help-block error">:message</span>') !!}
-                                </div>
-
-                                <div class="form-group">
                                     <label>Tên *</label>
                                     <input type="text" name="name" class="form-control" value="{{ $customer->name }}">
                                     {!! $errors->first('name', '<span class="help-block error">:message</span>') !!}
@@ -39,17 +33,17 @@
                                     {!! $errors->first('email', '<span class="help-block error">:message</span>') !!}
                                 </div>
 
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label>Ngày sình *</label>
-                                    <input type="date" name="birthday" class="form-control" value="{{ $user->birthday }}">
+                                    <input type="date" name="birthday" class="form-control" value="{{ $customer->birthday }}">
                                     {!! $errors->first('birthday', '<span class="help-block error">:message</span>') !!}
                                 </div>
 
                                 <div class="form-group">
                                     <label>Giới tính *</label>
                                     <div>
-                                        <input type="radio" name="sex" value="Nam" {{ $user->sex == 'Nam' ? 'checked' : '' }}> Nam
-                                        <input type="radio" name="sex" value="Nữ" {{ $user->sex == 'Nữ' ? 'checked' : '' }}> Nữ
+                                        <input type="radio" name="sex" value="Nam" {{ $customer->sex == 'Nam' ? 'checked' : '' }}> Nam
+                                        <input type="radio" name="sex" value="Nữ" {{ $customer->sex == 'Nữ' ? 'checked' : '' }}> Nữ
                                     </div>
                                     {!! $errors->first('sex', '<span class="help-block error">:message</span>') !!}
                                 </div>

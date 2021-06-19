@@ -33,9 +33,20 @@
 						<h1>{{ $book->name }}</h1>
 
 						<div class="author">
+							<span>Tác giả:</span>
+							@php ($string = '')
 							@foreach ($book->authors as $author)
-								<span>Tác giả:</span> <span><a href="">{{ $author->name }}</a></span>
+								@php ($string .= $author->name.' ,')
 							@endforeach
+							{{ rtrim($string, ',') }}
+						</div>
+
+						<div class="author">
+							<span>Số trang: {{ $book->page_number }}</span>
+						</div>
+
+						<div class="author">
+							<span>Kích thước: {{ $book->size }}</span>
 						</div>
 
 						<div class="price-cover">

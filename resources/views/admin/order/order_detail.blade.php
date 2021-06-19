@@ -18,8 +18,14 @@
 			<div class="col-3">
 				<a class="btn btn-success text-white" href="{{ route('orders.index') }}">Danh sách đặt hàng</a>
 			</div>
-			<div class="col-9 font-weight-bold text-right">
-				Địa chỉ: {{ $address }}
+			<div class="col-12 font-weight-bold mt-3">
+				Họ và tên: {{ $customer->name }}
+			</div>
+			<div class="col-12 font-weight-bold">
+				Địa chỉ: {{ $customer->address }}
+			</div>
+			<div class="col-12 font-weight-bold">
+				Số điện thoại: {{ $customer->phone }}
 			</div>
 		</div>
 

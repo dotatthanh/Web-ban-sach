@@ -16,6 +16,16 @@
 	<div class="container-fluid mt-5">
 		<a class="btn btn-success text-white" href="{{ route('orders.sales-orders') }}">Danh sách bán hàng</a>
 
+		<div class="col-12 font-weight-bold mt-3">
+			Họ và tên: {{ $customer->name }}
+		</div>
+		<div class="col-12 font-weight-bold">
+			Địa chỉ: {{ $customer->address }}
+		</div>
+		<div class="col-12 font-weight-bold">
+			Số điện thoại: {{ $customer->phone }}
+		</div>
+
 
 		<table class="table table-bordered table-striped mt-3 mb-5">
 			<tr class="text-center">

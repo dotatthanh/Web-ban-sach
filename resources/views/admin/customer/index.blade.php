@@ -46,7 +46,7 @@
                     <td>{{ $item->code }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
-                    <td>{{ date('d/m/Y', strtotime($item->birthday)) }}</td>
+                    <td>{{ isset($item->birthday) ? date('d/m/Y', strtotime($item->birthday)) : '' }}</td>
                     <td>{{ $item->sex }}</td>
                     <td>{{ $item->phone }}</td>
                     <td>{{ $item->address }}</td>

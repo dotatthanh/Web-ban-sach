@@ -25,6 +25,10 @@ class Book extends Model
     	return $this->belongsToMany(Author::class);
     }
 
+    public function suppliers(){
+        return $this->belongsToMany(Supplier::class);
+    }
+
     public function types(){
         return $this->belongsToMany(Type::class);
     }

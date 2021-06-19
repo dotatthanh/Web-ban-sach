@@ -103,14 +103,17 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        if(Category::findOrFail($id)->books->count() != 0)
+        if ($id <= 3) {
+            return redirect()->back()->with('alert-error', 'Xóa thất bại! Danh mục này đang hiển thị trên website!');
+        }
+        elseif (Category::findOrFail($id)->books->count() != 0)
         {
-            return redirect()->back()->with('notificationDeleteFail', 'Xóa thất bại! Cần xóa hết các sách thuộc danh mục này trước');
+            return redirect()->back()->with('alert-error', 'Xóa thất bại! Cần xóa hết các sách thuộc danh mục này trước');
         }
         else
         {
             Category::findOrFail($id)->delete();
-            return redirect()->back()->with('notificationDelete', 'Xóa thành công!');
+            return redirect()->back()->with('alert-success', 'Xóa thành công!');
         }
     }
 }

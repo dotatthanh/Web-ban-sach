@@ -163,12 +163,12 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $address = Order::findOrFail($id)->customer->address;
+        $customer = Order::findOrFail($id)->customer;
         $order_details = OrderDetail::where('order_id', $id)->paginate(10);
 
         $data = [
             'order_details' => $order_details,
-            'address' => $address,
+            'customer' => $customer,
         ];
 
         return view('admin.order.order_detail', $data);
@@ -176,10 +176,12 @@ class OrderController extends Controller
 
     public function salesOrdersDetail($id)
     {
+        $customer = Order::findOrFail($id)->customer;
         $order_details = OrderDetail::where('order_id', $id)->paginate(10);
 
         $data = [
-            'order_details' => $order_details
+            'order_details' => $order_details,
+            'customer' => $customer,
         ];
 
         return view('admin.sales-orders.order_detail', $data);

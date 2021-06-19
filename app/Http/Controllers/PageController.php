@@ -31,11 +31,13 @@ class PageController extends Controller
         $categories = Category::all();
 
         // Sách Tiếng Việt
-        $id_categoryBookTV = Category::where('name', 'Sách Tiếng Việt')->first()->id;
+        // $id_categoryBookTV = Category::where('name', 'Sách Tiếng Việt')->first()->id;
+        $id_categoryBookTV = Category::find(1)->id;
         $bookTVs = Category::find($id_categoryBookTV)->books()->limit(5)->latest()->get();
 
         // Sách Tiếng Anh
-        $id_categoryBookTA = Category::where('name', 'Sách Tiếng Anh')->first()->id;
+        // $id_categoryBookTA = Category::where('name', 'Sách Tiếng Anh')->first()->id;
+        $id_categoryBookTA = Category::find(2)->id;
         $bookTAs = Category::find($id_categoryBookTA)->books()->limit(5)->latest()->get();
 
         // Sách đang khuyến mãi
@@ -48,7 +50,8 @@ class PageController extends Controller
         $book_sellings = Book::all()->sortByDesc('book_selling')->take(5);
 
         // Sách văn học nước ta
-        $id_categoryBookLiterature = Category::where('name', 'Sách văn học nước ta')->first()->id;
+        // $id_categoryBookLiterature = Category::where('name', 'Sách văn học nước ta')->first()->id;
+        $id_categoryBookLiterature = Category::find(3)->id;
         $bookLiteratures = Category::find($id_categoryBookLiterature)->books()->limit(5)->latest()->get();
 
         $content = Cart::content();

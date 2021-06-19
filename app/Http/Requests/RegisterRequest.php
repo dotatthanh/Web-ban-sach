@@ -25,16 +25,18 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'birthday' => 'required',
+            'sex' => 'required',
             'phone' => 'required',
             'address' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:customers',
             'password' => 'required|min:6|max:32',
         ];
     }
 
     public function messages() {
         return [
-            'email.unique' => 'Địa chỉ email đã tồn tại, vui lòng nhập địa chỉ khác.',
+            'email.unique' => 'Địa chỉ email đã tồn tại!',
         ];
     }
 }
