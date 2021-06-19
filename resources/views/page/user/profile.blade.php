@@ -26,22 +26,36 @@
             @csrf
             <div class="col-md-6" style="margin: 0 auto">
                 <div class="form-group">
-                    <label>Tên</label>
+                    <label>Tên *</label>
                     <input type="text" name="name" class="form-control" value="{{ old('name', auth()->guard('customer')->user()->name) }}">
                     {!! $errors->first('name', '<span class="help-block error">:message</span>') !!}
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>Email *</label>
                     <input type="email" name="email" class="form-control" readonly value="{{ old('email', auth()->guard('customer')->user()->email) }}">
                     {!! $errors->first('email', '<span class="help-block error">:message</span>') !!}
                 </div>
                 <div class="form-group">
-                    <label>Sô điện thoại</label>
+                    <label>Ngày sình *</label>
+                    <input type="date" name="birthday" class="form-control" value="{{ old('birthday', auth()->guard('customer')->user()->birthday) }}">
+                    {!! $errors->first('birthday', '<span class="help-block error">:message</span>') !!}
+                </div>
+
+                <div class="form-group">
+                    <label>Giới tính *</label>
+                    <div>
+                        <input type="radio" name="sex" value="Nam" {{ auth()->guard('customer')->user()->sex == 'Nam' ? 'checked' : '' }}> Nam
+                        <input type="radio" name="sex" value="Nữ" {{ auth()->guard('customer')->user()->sex == 'Nữ' ? 'checked' : '' }}> Nữ
+                    </div>
+                    {!! $errors->first('sex', '<span class="help-block error">:message</span>') !!}
+                </div>
+                <div class="form-group">
+                    <label>Sô điện thoại *</label>
                     <input type="text" name="phone" class="form-control" value="{{ old('phone', auth()->guard('customer')->user()->phone) }}">
                     {!! $errors->first('phone', '<span class="help-block error">:message</span>') !!}
                 </div>
                 <div class="form-group">
-                    <label>Địa chỉ</label>
+                    <label>Địa chỉ *</label>
                     <input type="text" name="address" class="form-control" value="{{ old('address', auth()->guard('customer')->user()->address) }}">
                     {!! $errors->first('address', '<span class="help-block error">:message</span>') !!}
                 </div>

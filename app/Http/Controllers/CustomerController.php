@@ -41,6 +41,8 @@ class CustomerController extends Controller
 
         $created = Customer::create([
             'name' => $params['name'],
+            'sex' => $params['sex'],
+            'birthday' => $params['birthday'],
             'phone' => $params['phone'],
             'address' => $params['address'],
             'email' => $params['email'],
@@ -163,11 +165,8 @@ class CustomerController extends Controller
         try {
             $customer = Customer::findOrFail($id);
             $data = $request->all();
-
-            $data = array_merge($request->all(), [
-                'code' => 0
-            ]);
             $customer->update($data);
+            
             return redirect()->route('admin.customer.index')->with('alert-success','Cập nhật thông tin khách hàng thành công!');
         } catch (Exception $e) {
             return redirect()->back()->with('alert-danger', 'Cập nhật thông tin khách hàng thất bại!');

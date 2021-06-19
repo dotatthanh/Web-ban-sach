@@ -20,27 +20,40 @@
             @csrf
             <div class="col-md-6" style="margin: 0 auto">
                 <div class="form-group">
-                    <label>Tên</label>
+                    <label>Tên *</label>
                     <input type="text" name="name" class="form-control">
                     {!! $errors->first('name', '<span class="help-block error">:message</span>') !!}
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>Email *</label>
                     <input type="email" name="email" class="form-control">
                     {!! $errors->first('email', '<span class="help-block error">:message</span>') !!}
                 </div>
                 <div class="form-group">
-                    <label>Sô điện thoại</label>
+                    <label>Ngày sình *</label>
+                    <input type="date" name="birthday" class="form-control">
+                    {!! $errors->first('birthday', '<span class="help-block error">:message</span>') !!}
+                </div>
+                <div class="form-group">
+                    <label>Giới tính *</label>
+                    <div>
+                        <input type="radio" name="sex" value="Nam" checked> Nam
+                        <input type="radio" name="sex" value="Nữ"> Nữ
+                    </div>
+                    {!! $errors->first('sex', '<span class="help-block error">:message</span>') !!}
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại *</label>
                     <input type="text" name="phone" class="form-control">
                     {!! $errors->first('phone', '<span class="help-block error">:message</span>') !!}
                 </div>
                 <div class="form-group">
-                    <label>Địa chỉ</label>
+                    <label>Địa chỉ *</label>
                     <input type="text" name="address" class="form-control">
                     {!! $errors->first('address', '<span class="help-block error">:message</span>') !!}
                 </div>
                 <div class="form-group">
-                    <label>Mật khẩu</label>
+                    <label>Mật khẩu *</label>
                     <input type="password" name="password" class="form-control">
                     {!! $errors->first('password', '<span class="help-block error">:message</span>') !!}
                 </div>
