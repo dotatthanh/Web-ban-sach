@@ -2,14 +2,6 @@
 
 @section('content')
     <div class="container mt-5">
-        @if(session('alert-success'))
-            <span class="alert alert-success mt-2 d-block text-center" role="alert">{{ session('alert-success') }}</span>
-        @endif
-
-        @if(session('alert-error'))
-            <span class="alert alert-danger mt-2 d-block text-center" role="alert">{{ session('alert-error') }}</span>
-        @endif
-        
         <h1 class="title-admin">Danh sách khách hàng</h1>
     </div>
 
