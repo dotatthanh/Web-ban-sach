@@ -174,8 +174,12 @@ class CustomerController extends Controller
     }
 
     public function destroy($id) {
-        $user = Customer::findOrFail($id);
-        $user->delete();
+        $customer = Customer::findOrFail($id);
+        if ($customer->orders->count() == 0) {
+            return redirect()->route('admin.customer.index')->with('alert-error', 'Xóa khách hàng thất bại! Khách hàng này đang có đơn hàng!');
+        }
+        
+        $customer->delete();
         return redirect()->route('admin.customer.index')->with('alert-success', 'Xóa khách hàng thành công!');
     }
 
