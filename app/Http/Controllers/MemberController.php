@@ -46,9 +46,14 @@ class MemberController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();
+            $data['code'] = 'NV';
             $user = User::create(array_merge($data, [
                 'password' => bcrypt($data['password'])
             ]));
+
+            $user->update([
+                'code' => 'NV'.str_pad($user->id, 4, '0', STR_PAD_LEFT)
+            ]);
 
             if (isset($request['roles'])) {
                 foreach ($request['roles'] as $role) {

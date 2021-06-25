@@ -58,13 +58,17 @@ class SupplierController extends Controller
     {
         DB::beginTransaction();
         try {
-            Supplier::create([
-                'code' => $request->code,
+            $supplier = Supplier::create([
+                'code' => 'NCC',
                 'name' => $request->name,
                 'slug' => Str::slug($request->name),
                 'email' => $request->email,
                 'address' => $request->address,
                 'phone' => $request->phone,
+            ]);
+
+            $supplier->update([
+                'code' => 'NCC'.str_pad($supplier->id, 4, '0', STR_PAD_LEFT)
             ]);
 
             DB::commit();
@@ -122,7 +126,7 @@ class SupplierController extends Controller
         DB::beginTransaction();
         try {
             Supplier::findOrFail($id)->update([
-                'code' => $request->code,
+                // 'code' => $request->code,
                 'name' => $request->name,
                 'slug' => Str::slug($request->name),
                 'email' => $request->email,

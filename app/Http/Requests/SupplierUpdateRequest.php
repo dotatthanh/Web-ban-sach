@@ -24,7 +24,7 @@ class SupplierUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|max:255',
+            // 'code' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'address' => 'required|max:255',
             'phone' => 'required|min:10',
@@ -38,9 +38,9 @@ class SupplierUpdateRequest extends FormRequest
             'name.string' => 'Tên nhà cung cấp không được chứa các ký tự đặc biệt.',
             'name.max' => 'Tên nhà cung cấp không được phép quá 255 ký tự.',
             'name.required' => 'Tên nhà cung cấp là trường bắt buộc.',
-            'code.string' => 'Tên nhà cung cấp không được chứa các ký tự đặc biệt.',
-            'code.max' => 'Tên nhà cung cấp không được phép quá 255 ký tự.',
-            'code.required' => 'Tên nhà cung cấp là trường bắt buộc.',
+            // 'code.string' => 'Tên nhà cung cấp không được chứa các ký tự đặc biệt.',
+            // 'code.max' => 'Tên nhà cung cấp không được phép quá 255 ký tự.',
+            // 'code.required' => 'Tên nhà cung cấp là trường bắt buộc.',
             'address.required' => 'Địa chỉ là trường bắt buộc.',
             'address.max' => 'Địa chỉ không được phép quá 255 ký tự.',
             'phone.required' => 'Số điện thoại là trường bắt buộc.',

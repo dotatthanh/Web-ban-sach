@@ -25,7 +25,7 @@ class BookRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:books|max:100',
-            'code' => 'required|unique:books',
+            // 'code' => 'required|unique:books',
             'img' => 'required',
             'price' => 'required|min:1',
             'sale' => 'min:0',
@@ -39,11 +39,11 @@ class BookRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên sách không được trống.',
-            'code.required' => 'Mã sách không được trống.',
+            // 'code.required' => 'Mã sách không được trống.',
+            // 'code.unique' => 'Mã sách đã tồn tại.',
             'size.required' => 'Kích thước sách không được trống.',
             'page_number.required' => 'Số trang không được trống.',
             'name.unique' => 'Sách đã tồn tại.',
-            'code.unique' => 'Mã sách đã tồn tại.',
             'name.max'  => 'Tên sách không được phép vượt quá 100 kí tự.',
             'img.required'  => 'Ảnh không được trống.',
             'price.required'  => 'Đơn giá không được trống.',

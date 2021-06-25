@@ -56,7 +56,13 @@ class TypeController extends Controller
      */
     public function store(TypeRequest $request)
     {
-        Type::create($request->all());
+        $request['code'] = 'TL';
+        $type = Type::create($request->all());
+
+        $type->update([
+            'code' => 'TL'.str_pad($type->id, 4, '0', STR_PAD_LEFT)
+        ]);
+
         return redirect()->route('types.index')->with('alert-success', 'Thêm thành công!');
     }
 
@@ -93,8 +99,8 @@ class TypeController extends Controller
     {
         Type::findOrFail($id)->update([
             'name' => $request->nameupdate,
-            'code' => $request->codeupdate
         ]);
+
         return redirect()->route('types.index')->with('alert-success', 'Sửa thành công!');
     }
 

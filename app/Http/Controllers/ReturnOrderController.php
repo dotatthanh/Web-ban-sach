@@ -83,6 +83,7 @@ class ReturnOrderController extends Controller
 
                 $book->update([
                     'amount_return' => $book->amount_return + $request->amount[$key],
+                    'amount' => $book->amount + $request->amount[$key],
                 ]);
 
                 // Thành tiền 1 sản phẩm

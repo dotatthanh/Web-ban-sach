@@ -53,12 +53,12 @@
 		<form action="{{ route('types.store') }}" method="POST">
 			@csrf
 			<div class="row mt-5">
-				<div class="col-3">
+				{{-- <div class="col-3">
 					<input type="text" name="code" id="code" placeholder="Mã thể loại" class="form-control w-100" value="{{ old('code') }}">
 					@if($errors->has('code'))
 						<span class="text-danger d-block mt-2">{{ $errors->first('code') }}</span>
 					@endif
-				</div>
+				</div> --}}
 				<div class="col-3">
 					<input type="text" name="name" id="name" placeholder="Tên thể loại" class="form-control w-100" value="{{ old('name') }}">
 					@if($errors->has('name'))
@@ -114,13 +114,13 @@
 									@method('PUT')
 									<div class="modal-body container">
 										<div class="row">
-											<div class="col-3 mb-3">Mã thể loại *:</div>
+											{{-- <div class="col-3 mb-3">Mã thể loại *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="codeupdate" placeholder="Mã thể loại" class="form-control w-100" value="{{ $type->code }}">
 												@if($errors->has('codeupdate'))
 													<span class="text-danger text-left d-block mt-2">{{ $errors->first('codeupdate') }}</span>
 												@endif
-											</div>
+											</div> --}}
 
 											<div class="col-3 mb-3">Tên thể loại *:</div>
 											<div class="col-9 mb-3">

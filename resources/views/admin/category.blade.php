@@ -76,6 +76,7 @@
 		<table class="table table-bordered table-striped mt-3 table-responsive">
 			<tr class="text-center">
 				<th>STT</th>
+				<th>Mã danh mục</th>
 				<th>Tên danh mục</th>
 				<th>Thao tác</th>
 			</tr>
@@ -83,6 +84,7 @@
 			@foreach ($categories as $category)
 			<tr>
 				<td class="text-center align-middle">{{ $stt++ }}</td>
+				<td class="align-middle">{{ $category->code }}</td>
 				<td class="align-middle">{{ $category->name }}</td>
 				<td class="text-center">
 					<button class="btn btn-warning text-white w-25" data-toggle="modal" data-target="#edit_book_list{{ $category->id }}">Sửa</button>

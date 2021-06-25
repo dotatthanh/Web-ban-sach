@@ -91,13 +91,13 @@
 									@method('PUT')
 									<div class="modal-body container">
 										<div class="row">
-											<div class="col-3 mb-3">Mã sách *:</div>
+											{{-- <div class="col-3 mb-3">Mã sách *:</div>
 											<div class="col-9 mb-3">
 												<input type="text" name="code" placeholder="Mã sách" class="form-control w-100" value="{{ $book->code }}">
 												@if($errors->has('code'))
 													<span class="text-danger d-block mt-2">{{ $errors->first('code') }}</span>
 												@endif
-											</div>
+											</div> --}}
 
 											<div class="col-3 mb-3">Tên sách *:</div>
 											<div class="col-9 mb-3">
@@ -249,13 +249,13 @@
 					@csrf
 					<div class="modal-body container">
 						<div class="row">
-							<div class="col-3 mb-3">Mã sách *:</div>
+							{{-- <div class="col-3 mb-3">Mã sách *:</div>
 							<div class="col-9 mb-3">
 								<input type="text" name="code" placeholder="Mã sách" class="form-control w-100">
 								@if($errors->has('code'))
 									<span class="text-danger d-block mt-2">{{ $errors->first('code') }}</span>
 								@endif
-							</div>
+							</div> --}}
 
 							<div class="col-3 mb-3">Tên sách *:</div>
 							<div class="col-9 mb-3">

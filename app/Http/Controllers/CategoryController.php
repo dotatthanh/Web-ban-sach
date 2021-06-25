@@ -54,8 +54,14 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        Category::create($request->all());
-        return redirect()->route('categorys.index')->with('notificationAdd', 'Thêm thành công!');
+        $request['code'] = 'DM';
+        $category = Category::create($request->all());
+
+        $category->update([
+            'code' => 'DM'.str_pad($category->id, 4, '0', STR_PAD_LEFT)
+        ]);
+
+        return redirect()->route('categorys.index')->with('alert-success', 'Thêm thành công!');
     }
 
     /**
@@ -92,7 +98,7 @@ class CategoryController extends Controller
         Category::findOrFail($id)->update([
             'name' => $request->nameupdate,
         ]);
-        return redirect()->route('categorys.index')->with('notificationUpdate', 'Sửa thành công!');
+        return redirect()->route('categorys.index')->with('alert-success', 'Sửa thành công!');
     }
 
     /**
