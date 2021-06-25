@@ -25,15 +25,15 @@ class TypeUpdateRequest extends FormRequest
     {
         return [
             'nameupdate' => 'required|max:255',
-            'codeupdate' => 'required|max:255',
+            // 'codeupdate' => 'required|max:255',
         ];
     }
 
     public function messages()
     {
         return [
-            'codeupdate.required' => 'Mã thể loại không được trống.',
-            'codeupdate.max'  => 'Mã thể loại không được phép vượt quá 255 kí tự.',
+            // 'codeupdate.required' => 'Mã thể loại không được trống.',
+            // 'codeupdate.max'  => 'Mã thể loại không được phép vượt quá 255 kí tự.',
             'nameupdate.required' => 'Tên thể loại không được trống.',
             'nameupdate.max'  => 'Tên thể loại không được phép vượt quá 255 kí tự.',
         ];

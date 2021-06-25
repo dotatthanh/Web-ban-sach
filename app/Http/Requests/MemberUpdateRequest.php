@@ -26,7 +26,7 @@ class MemberUpdateRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required',
-            'code' => 'required',
+            // 'code' => 'required',
             'birthday' => 'required',
             'sex' => 'required',
             'phone' => 'required',

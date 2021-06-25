@@ -12,7 +12,7 @@ class SupplierSeeder extends Seeder
     public function run()
     {
         \App\Supplier::create([
-            'code' => 'NCC1',
+            'code' => 'NCC0001',
             'name' => 'Nhà xuất bản Kim Đồng',
             'slug' => 'nha-xuat-ban-kim-dong',
 	        'email' => 'nxbkimdong@gmail.com',
@@ -20,7 +20,7 @@ class SupplierSeeder extends Seeder
 	        'phone' => '0123456789',
         ]);
         \App\Supplier::create([
-            'code' => 'NCC2',
+            'code' => 'NCC0002',
             'name' => 'Nhà xuất bản Việt Nam',
             'slug' => 'nha-xuat-ban-viet-nam',
             'email' => 'nxbvn@gmail.com',

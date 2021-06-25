@@ -65,6 +65,18 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         $data = $request->all();
+        
+        $name = '';
+        foreach ($data['category'] as $category_id) {
+            $category = Category::find($category_id);
+
+            $nameParts = explode(' ', trim($category->name));
+            foreach ($nameParts as $value) {
+                $name .= substr($value, 0, 1);
+            }
+        }
+        $data['code'] = strtoupper($name);
+
         if (!isset($data['is_highlight'])) {
             $data['is_highlight'] = 0;
         }
@@ -120,6 +132,10 @@ class BookController extends Controller
                 $author_book->save();
             }
         }
+
+        $book->update([
+            'code' => strtoupper($name).str_pad($book->id, 4, '0', STR_PAD_LEFT)
+        ]);
 
         return redirect()->route('books.index')->with('alert-success', 'Thêm thành công!');
     }

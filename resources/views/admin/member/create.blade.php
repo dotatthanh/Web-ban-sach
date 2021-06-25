@@ -21,11 +21,11 @@
 			<div class="col-md-12">
 				<div class="box">
 					<div class="box-body">
-						<div class="form-group">
+						{{-- <div class="form-group">
 							<label>Mã *</label>
 							<input type="text" name="code" class="form-control" value="{{ old('code') }}">
 							{!! $errors->first('code', '<span class="help-block error">:message</span>') !!}
-						</div>
+						</div> --}}
 
 						<div class="form-group">
 							<label>Tên *</label>

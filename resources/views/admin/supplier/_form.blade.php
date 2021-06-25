@@ -3,11 +3,11 @@
         <div class="box">
             <div class="box-body">
                 {{-- @include('admin::includes.form-title') --}}
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="name">Mã <span class="required">*</span></label>
                     <input type="text" name="code" value="{{ old('code', $dataEdit->code ?? null) }}" class="form-control" required>
                     {!! $errors->first('code', '<span class="help-block error">:message</span>') !!}
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="name">Tên <span class="required">*</span></label>
                     <input type="text" name="name" value="{{ old('name', $dataEdit->name ?? null) }}" class="form-control" required>
