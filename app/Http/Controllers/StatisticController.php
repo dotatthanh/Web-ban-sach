@@ -39,9 +39,42 @@ class StatisticController extends Controller
 
     public function bookSoldStatistic(Request $request)
     {
-        $books = Book::query();
+        // $books = Book::query();
 
-        if ($request->name) {
+        $first_month = date('Y-m-01 00:00:00');
+        $end_month = date('Y-m-t 23:59:59');
+
+        $books = Book::whereHas('orderDetails', function ($query) use ($first_month, $end_month, $request) {
+            $query->where('created_at', '>=', $first_month)->where('created_at', '<=', $end_month);
+        })->orWhereHas('returnOrderDetails', function ($query) use ($first_month, $end_month, $request) {
+            $query->where('created_at', '>=', $first_month)->where('created_at', '<=', $end_month);
+        });
+
+        if (isset($request->from_date)) {
+            $books = Book::whereHas('orderDetails', function ($query) use ($first_month, $end_month, $request) {
+                $query->where('created_at', '>=', $request->from_date);
+            })->orWhereHas('returnOrderDetails', function ($query) use ($first_month, $end_month, $request) {
+                $query->where('created_at', '>=', $request->from_date);
+            });
+        }
+
+        if (isset($request->to_date)) {
+            $books = Book::whereHas('orderDetails', function ($query) use ($first_month, $end_month, $request) {
+                $query->where('created_at', '<=', $request->to_date);
+            })->orWhereHas('returnOrderDetails', function ($query) use ($first_month, $end_month, $request) {
+                $query->where('created_at', '<=', $request->to_date);
+            });
+        }
+
+        if (isset($request->from_date) && isset($request->to_date)) {
+            $books = Book::whereHas('orderDetails', function ($query) use ($first_month, $end_month, $request) {
+                $query->where('created_at', '>=', $request->from_date)->where('created_at', '<=', $request->to_date);
+            })->orWhereHas('returnOrderDetails', function ($query) use ($first_month, $end_month, $request) {
+                $query->where('created_at', '>=', $request->from_date)->where('created_at', '<=', $request->to_date);
+            });
+        }
+
+        if (isset($request->name)) {
             $books = $books->where('name', 'like', '%'.$request->name.'%');
         }
 
