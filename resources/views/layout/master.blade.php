@@ -44,20 +44,26 @@
 							<i class="fa fa-bars" aria-hidden="true"></i>
 						</button>
 						<ul>
-							<li><a href="{{ route('pages.index') }}" title="">Trang chủ</a></li>
-							<li><a href="void:javascript(0)" title="">Danh mục sách</a>
+							<li><a href="{{ route('pages.index') }}" title="Trang chủ">Trang chủ</a></li>
+							<li><a href="void:javascript(0)" title="Danh mục sách">Danh mục sách</a>
 								<ul>
-									<li><a href="{{ route('page.category_selling') }}" title="">Sách bán chạy</a></li>
-									<li><a href="{{ route('page.category_sale') }}" title="">Sách đang khuyến mãi</a></li>
-									<li><a href="{{ route('page.category_new') }}" title="">Sách mới ra mắt</a></li>
-									@foreach ($categories as $category)
-									<li><a href="{{ route('page.category', $category->id) }}" title="">{{ $category->name }}</a></li>
+									<li><a href="{{ route('page.category_selling') }}" title="Sách bán chạy">Sách bán chạy</a></li>
+									<li><a href="{{ route('page.category_sale') }}" title="Sách đang khuyến mãi">Sách đang khuyến mãi</a></li>
+									<li><a href="{{ route('page.category_new') }}" title="Sách mới ra mắt">Sách mới ra mắt</a></li>
+									@foreach ($category_parents as $category)
+									<li><a href="{{ route('page.category', $category->id) }}" title="{{ $category->name }}">{{ $category->name }}</a>
+										<ul>
+											@foreach ($category->subcategory as $sub_category)
+											<li><a href="{{ route('page.category', $sub_category->id) }}" title="{{ $sub_category->name }}">{{ $sub_category->name }}</a></li>
+											@endforeach
+										</ul>
+									</li>
 									@endforeach
 								</ul>
 							</li>
-							<li><a href="{{ route('page.tophighlight') }}" title="">Top nổi bật</a></li>
-							<li><a href="{{ route('page.forum') }}" title="">Diễn đàn</a></li>
-							{{-- <li><a href="{{ route('page.contact') }}" title="">Liên hệ</a></li> --}}
+							<li><a href="{{ route('page.tophighlight') }}" title="Top nổi bật">Top nổi bật</a></li>
+							<li><a href="{{ route('page.forum') }}" title="Diễn đàn">Diễn đàn</a></li>
+							{{-- <li><a href="{{ route('page.contact') }}" title="Liên hệ">Liên hệ</a></li> --}}
 							@if (auth()->guard('customer')->user())
 							<li>
 								<a href="{{ route('user.profile') }}">Tài khoản</a>
@@ -289,19 +295,25 @@
 			</form>
 		</div>
 		<ul>
-			<li><a href="{{ route('pages.index') }}" title="">Trang chủ</a></li>
-			<li><a href="void:javascript(0)" title="">Danh mục sách</a>
+			<li><a href="{{ route('pages.index') }}" title="Trang chủ">Trang chủ</a></li>
+			<li><a href="void:javascript(0)" title="Danh mục sách">Danh mục sách</a>
 				<ul>
-					<li><a href="{{ route('page.category_selling') }}" title="">Sách bán chạy</a></li>
-					<li><a href="{{ route('page.category_sale') }}" title="">Sách đang khuyến mãi</a></li>
-					<li><a href="{{ route('page.category_new') }}" title="">Sách mới ra mắt</a></li>
-					@foreach ($categories as $category)
-					<li><a href="{{ route('page.category', $category->id) }}" title="">{{ $category->name }}</a></li>
+					<li><a href="{{ route('page.category_selling') }}" title="Sách bán chạy">Sách bán chạy</a></li>
+					<li><a href="{{ route('page.category_sale') }}" title="Sách đang khuyến mãi">Sách đang khuyến mãi</a></li>
+					<li><a href="{{ route('page.category_new') }}" title="Sách mới ra mắt">Sách mới ra mắt</a></li>
+					@foreach ($category_parents as $category)
+					<li><a href="{{ route('page.category', $category->id) }}" title="{{ $category->name }}">{{ $category->name }}</a>
+						<ul>
+							@foreach ($category->subcategory as $sub_category)
+							<li><a href="{{ route('page.category', $sub_category->id) }}" title="{{ $sub_category->name }}">{{ $sub_category->name }}</a></li>
+							@endforeach
+						</ul>
+					</li>
 					@endforeach
 				</ul>
 			</li>
-			<li><a href="{{ route('page.tophighlight') }}" title="">Top nổi bật</a></li>
-			<li><a href="{{ route('page.forum') }}" title="">Diễn đàn</a></li>
+			<li><a href="{{ route('page.tophighlight') }}" title="Top nổi bật">Top nổi bật</a></li>
+			<li><a href="{{ route('page.forum') }}" title="Diễn đàn">Diễn đàn</a></li>
 			{{-- <li><a href="{{ route('page.contact') }}" title="">Liên hệ</a></li> --}}
 			@if (auth()->guard('customer')->user())
 			<li>

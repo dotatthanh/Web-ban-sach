@@ -29,6 +29,7 @@ class PageController extends Controller
     {
         $title = "Trang chủ";
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
 
         // Sách Tiếng Việt
         // $id_categoryBookTV = Category::where('name', 'Sách Tiếng Việt')->first()->id;
@@ -61,6 +62,7 @@ class PageController extends Controller
         return view('page.index', compact(
             'title', 
             'categories', 
+            'category_parents', 
             'bookTVs',
             'bookTAs',
             'bookSales',
@@ -110,9 +112,10 @@ class PageController extends Controller
         $book = Book::findOrFail($id);
         $title = "Chi tiết cuốn sách $book->name";
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
-        return view ('page.book-detail', compact('title', 'categories', 'book', 'content', 'total'));
+        return view ('page.book-detail', compact('title', 'categories', 'book', 'content', 'total', 'category_parents'));
     }
 
     /**
@@ -153,6 +156,7 @@ class PageController extends Controller
     public function category(Request $request, $id)
     {
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
         $category = Category::find($id);
         $books = $category->books()->paginate(8);
         $title = "Danh mục $category->name";
@@ -173,6 +177,7 @@ class PageController extends Controller
         $data = [
             'title' => $title,
             'categories' => $categories,
+            'category_parents' => $category_parents,
             'category' => $category,
             'books' => $books,
             'content' => $content,
@@ -188,6 +193,7 @@ class PageController extends Controller
     public function category_selling(Request $request)
     {
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
 
         $books = Book::paginate(8);
         if($request->key) {
@@ -199,13 +205,14 @@ class PageController extends Controller
         $title = "Danh mục Sách bán chạy";
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
-        return view('page.cate-book-selling', compact('title', 'categories', 'books', 'content', 'total', 'request'));
+        return view('page.cate-book-selling', compact('title', 'categories', 'books', 'content', 'total', 'request', 'category_parents'));
     }
 
     // Danh mục sách đang khuyến mãi
     public function category_sale(Request $request)
     {
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
 
 
         $books = Book::where('sale', '>', 0);
@@ -218,13 +225,14 @@ class PageController extends Controller
         $title = "Danh mục Sách đang khuyến mãi";
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
-        return view('page.cate-book-sale', compact('title', 'categories', 'books', 'content', 'total', 'request'));
+        return view('page.cate-book-sale', compact('title', 'categories', 'books', 'content', 'total', 'request', 'category_parents'));
     }
     
     // Danh mục sách mới ra mắt
     public function category_new(Request $request)
     {
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
 
         $books = Book::orderBy('created_at', 'desc')->paginate(8);
         if($request->key) {
@@ -234,40 +242,43 @@ class PageController extends Controller
         $title = "Danh mục Sách mới ra mắt";
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
-        return view('page.cate-book-new', compact('title', 'categories', 'books', 'content', 'total', 'request'));
+        return view('page.cate-book-new', compact('title', 'categories', 'books', 'content', 'total', 'request', 'category_parents'));
     }
 
     // Top nổi bật
     public function tophighlight(){
         $title = 'Top nổi bật';
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
 
         $books = Book::where('is_highlight', 1)->limit(10)->latest()->get();
-        return view('page.book-hl', compact('title', 'categories', 'content', 'total', 'books'));
+        return view('page.book-hl', compact('title', 'categories', 'content', 'total', 'books', 'category_parents'));
     }
 
     // Diễn đàn
     public function forum(){
         $title = 'Tin tức';
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
         $news = News::latest()->paginate(5);
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
         $random = News::inRandomOrder()->limit(5)->get();
-        return view('page.forum', compact('title', 'categories', 'news', 'content', 'total', 'random'));
+        return view('page.forum', compact('title', 'categories', 'news', 'content', 'total', 'random', 'category_parents'));
     }
 
     // Chi tiết tin tức
     public function forum_detail($id){
         $title = 'Chi tiêt tin tức';
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
         $news = News::find($id);
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
         $random = News::inRandomOrder()->limit(5)->get();
-        return view('page.forum-detail', compact('title', 'categories', 'news', 'content', 'total', 'random'));
+        return view('page.forum-detail', compact('title', 'categories', 'news', 'content', 'total', 'random', 'category_parents'));
     }
 
     // Thêm sản phẩm vào giỏ
@@ -396,10 +407,11 @@ class PageController extends Controller
     public function contact(){
         $title = 'Chi tiêt tin tức';
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
 
-        return view('page.contact', compact('title', 'categories', 'content', 'total'));
+        return view('page.contact', compact('title', 'categories', 'content', 'total', 'category_parents'));
     }
 
     // Phản hồi
@@ -412,6 +424,7 @@ class PageController extends Controller
     public function search(Request $request){
         $title = 'Tìm kiếm';
         $categories = Category::all();
+        $category_parents = Category::where('parent_id', NULL)->get();
         $content = Cart::content();
         $total = Cart::subtotal(0,",",".",".");
         // $books = Book::where('name', 'like', '%'. $request->keyall .'%')->paginate(10);
@@ -424,6 +437,6 @@ class PageController extends Controller
         })->orWhere('name', 'LIKE', "%$keyword%")
           ->with('authors')
           ->get();
-        return view('page.search', compact('title', 'categories', 'content', 'total', 'books'));
+        return view('page.search', compact('title', 'categories', 'content', 'total', 'books', 'category_parents'));
     }
 }
