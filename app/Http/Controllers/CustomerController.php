@@ -19,7 +19,7 @@ class CustomerController extends Controller
 {
     public function register(Request $request) {
         $content = Cart::content();
-        
+        $category_parents = Category::where('parent_id', NULL)->get();
         $categories = Category::paginate(10);
         if($request->key){
             $key = $request->key;
@@ -30,6 +30,7 @@ class CustomerController extends Controller
             'title' => "Đăng ký tài khoản",
             'categories' => $categories,
             'content' => $content,
+            'category_parents' => $category_parents,
             'total' => '',
         ];
         return view('page.user.register', $data);
@@ -109,6 +110,7 @@ class CustomerController extends Controller
             return redirect(route('pages.index'));
         }
         $categories = Category::paginate(10);
+        $category_parents = Category::where('parent_id', NULL)->get();
         if($request->key){
             $key = $request->key;
             $categories = Category::where('name', 'like', '%'. $request->key .'%')->paginate(10);
@@ -121,6 +123,7 @@ class CustomerController extends Controller
             'categories' => $categories,
             'content' => $content,
             'total' => '',
+            'category_parents' => $category_parents,
         ];
         return view('page.user.login', $data);
     }
