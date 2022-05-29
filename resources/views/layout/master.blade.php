@@ -468,7 +468,7 @@
 			</div>
 		</div>
 		<div class="footer">
-			<p>© Copyright 2017. Designed by Tech5s - Bản quyền thiết kế web thuộc về Tech5s</p>
+			<p>© Copyright 2022. Designed by 2-64CS3 - Bản quyền thiết kế web thuộc về 2-64CS3</p>
 		</div>
 	</footer>
 
