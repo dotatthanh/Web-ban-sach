@@ -34,7 +34,7 @@
 				<div class="col-6 col-md-4 col-sm-4 col-lg-4">
 					<div class="logo">
 						<a href="{{ route('pages.index') }}" title="">
-							<img title="" src="{{ asset('images/logo.png') }}" alt="">
+							<img title="" src="{{ asset('images/logo1.jpg') }}" alt="">
 						</a>
 					</div>
 				</div>

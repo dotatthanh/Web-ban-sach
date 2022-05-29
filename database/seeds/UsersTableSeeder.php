@@ -17,10 +17,10 @@ class UsersTableSeeder extends Seeder
         	'email' => 'admin@gmail.com',
         	'password' => bcrypt(12345678),
             'code' => 'ADMIN',
-            'birthday' => '2000/01/01',
-            'sex' => 'nữ',
+            'birthday' => '1998/04/03',
+            'sex' => 'Nam',
             'phone' => 0123123123,
-            'address' => 'test',
+            'address' => 'Đồng Lý - Lý Nhân - Hà Nam',
         ]);
     }
 }
