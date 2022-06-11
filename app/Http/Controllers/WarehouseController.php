@@ -7,6 +7,9 @@ use App\ImportOrder;
 use App\ImportOrderDetail;
 use App\Book;
 use App\Supplier;
+use App\Author;
+use App\Type;
+use App\Category;
 use Auth;
 use DB;
 
@@ -46,6 +49,9 @@ class WarehouseController extends Controller
         $data = [
             'books' => $books,
             'suppliers' => $suppliers,
+            'authors' => Author::all(),
+            'types' => Type::all(),
+            'categories' => Category::all(),
         ]; 
 
         return view('admin.warehouse.import_book', $data);

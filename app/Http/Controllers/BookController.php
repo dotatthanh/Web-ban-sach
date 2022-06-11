@@ -137,7 +137,7 @@ class BookController extends Controller
             'code' => strtoupper($name).str_pad($book->id, 4, '0', STR_PAD_LEFT)
         ]);
 
-        return redirect()->route('books.index')->with('alert-success', 'Thêm thành công!');
+        return redirect()->back()->with('alert-success', 'Thêm thành công!');
     }
 
     /**
