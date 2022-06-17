@@ -522,25 +522,25 @@ body {
     position: relative;
     display: inline-block; }
     .search form input {
-      border: 1px solid #1a94ff;
+      border: 1px solid #0bdb7d;
       background: #000000;
       min-width: 260px;
       color: #ffffff;
       padding-right: 50px; }
     .search form input[type="text"]::-webkit-input-placeholder {
-      color: #1a94ff;
+      color: #0bdb7d;
       font-family: 'UTM'; }
     .search form button {
       position: absolute;
       top: 0;
       bottom: 0;
       right: 0;
-      background: #1a94ff;
+      background: #0bdb7d;
       cursor: pointer; }
       .search form button img {
         padding: 0 8px; }
   .search a.cart {
-    background: #1a94ff;
+    background: #0bdb7d;
     height: 25px;
     display: inline-block;
     padding: 0 8px;
@@ -571,7 +571,7 @@ header {
       display: inline-block;
       transition: .3s; }
       header .brand a .icon {
-        background: #1a94ff;
+        background: #0bdb7d;
         border-radius: 100%;
         width: 33px;
         height: 33px;
@@ -661,7 +661,7 @@ header {
     line-height: 54px;
     text-align: center;
     color: #fff;
-    background: #1a94ff;
+    background: #0bdb7d;
     position: relative; }
     .btn-call span i {
       -webkit-animation-name: lac;
@@ -678,7 +678,7 @@ header {
       right: 0;
       bottom: 0;
       border-radius: 50%;
-      border: solid 1px #1a94ff;
+      border: solid 1px #0bdb7d;
       -webkit-animation-name: zoomin;
       animation-name: zoomin;
       -webkit-animation-duration: 1.5s;
@@ -693,7 +693,7 @@ header {
       right: -10px;
       bottom: -10px;
       border-radius: 50%;
-      background: #1a94ff;
+      background: #0bdb7d;
       z-index: -1;
       -webkit-animation-name: zoomout;
       animation-name: zoomout;
@@ -777,7 +777,7 @@ header {
   color: #4b4b4b;
   padding-bottom: 45px; }
   .category-book .flex:nth-child(2) .book-item {
-    border: 10px solid #1a94ff; }
+    border: 10px solid #0bdb7d; }
   .category-book .flex:nth-child(3) .book-item {
     border: 10px solid #00aeef; }
   .category-book .flex a {
@@ -816,7 +816,7 @@ header {
   .book-tv h1, .book-tv h2 {
     font-family: 'SVNB';
     font-size: 24px;
-    color: #1a94ff;
+    color: #0bdb7d;
     text-transform: uppercase;
     padding-left: 80px;
     height: 43px;
@@ -982,7 +982,7 @@ header {
 
 .transport {
   background: #041620;
-  color: #1a94ff; }
+  color: #0bdb7d; }
   .transport .title-transport {
     font-size: 24px;
     text-align: center;
@@ -1047,7 +1047,7 @@ header {
         .transport .menu-transport .brand-transport a:last-child {
           margin-right: 0; }
         .transport .menu-transport .brand-transport a:hover {
-          color: #1a94ff; }
+          color: #0bdb7d; }
 
 .foot {
   padding-top: 50px;
@@ -1079,7 +1079,7 @@ header {
   font-family: 'RCB'; }
 
 .footer {
-  background: #1a94ff; }
+  background: #0bdb7d; }
   .footer p {
     color: #ffffff;
     text-align: center;
@@ -1088,7 +1088,7 @@ header {
     font-family: 'UTM'; }
 
 .book-info a:hover, .menu-transport ul li a:hover, .foot .foot-index ul li a:hover {
-  color: #1a94ff; }
+  color: #0bdb7d; }
 
 /*			Liên hệ			*/
 .list-item {
@@ -1146,7 +1146,7 @@ header {
   .form .form-contact input[type="email"]::-webkit-input-placeholder, .form .form-contact input[type="text"]::-webkit-input-placeholder, .form .form-contact textarea::-webkit-input-placeholder {
     font-family: 'SVN'; }
 .form button {
-  background: #1a94ff;
+  background: #0bdb7d;
   color: #ffffff;
   padding: 10px 15px;
   border-radius: 5px;
@@ -1184,7 +1184,7 @@ header {
 .new-book-good .title-book-good {
   font-family: 'SVNB';
   font-size: 18px;
-  background: #1a94ff;
+  background: #0bdb7d;
   color: #ffffff;
   text-align: center;
   padding: 10px 0;
@@ -1220,7 +1220,7 @@ header {
   .forum .news-forum .new-forum {
     padding-bottom: 20px;
     margin-bottom: 20px;
-    border-bottom: 1px solid #1a94ff; }
+    border-bottom: 1px solid #0bdb7d; }
     .forum .news-forum .new-forum .img-new-forum {
       position: relative; }
       .forum .news-forum .new-forum .img-new-forum .c-img {
@@ -1231,7 +1231,7 @@ header {
         bottom: 10px;
         font-family: 'SVNB';
         font-size: 16px;
-        border: 2px solid #1a94ff;
+        border: 2px solid #0bdb7d;
         background: #ffffff;
         padding: 5px 10px;
         line-height: 1.2; }
@@ -1253,7 +1253,7 @@ header {
 .see-more {
   text-align: center; }
   .see-more a {
-    background: #1a94ff;
+    background: #0bdb7d;
     color: #ffffff;
     padding: 10px 30px;
     display: inline-block;
@@ -1265,7 +1265,7 @@ header {
 .title-book-highlights h1 {
   font-family: 'SVNB';
   font-size: 24px;
-  color: #1a94ff;
+  color: #0bdb7d;
   text-transform: uppercase;
   padding-left: 80px;
   height: 43px;
@@ -1294,7 +1294,7 @@ header {
     padding-bottom: 30px; }
     .book-noibat .all-featured-books .featured-books {
       padding-top: 30px;
-      border-bottom: 1px solid #1a94ff;
+      border-bottom: 1px solid #0bdb7d;
       padding-bottom: 25px; }
       .book-noibat .all-featured-books .featured-books:last-child {
         border-bottom: none; }
@@ -1327,7 +1327,7 @@ header {
             display: block;
             transition: .3s; }
             .book-noibat .all-featured-books .featured-books .featured-book .book-detail a:hover {
-              color: #1a94ff; }
+              color: #0bdb7d; }
           .book-noibat .all-featured-books .featured-books .featured-book .book-detail .author {
             margin-top: 5px; }
           .book-noibat .all-featured-books .featured-books .featured-book .book-detail p {
@@ -1348,12 +1348,12 @@ header {
         font-family: 'SVNB';
         transition: .3s; }
         .book-noibat .all-featured-books .featured-books .buy-now:hover {
-          background: #1a94ff; }
+          background: #0bdb7d; }
 
 .cate-book-selling .book-selling {
   margin-bottom: 20px; }
   .cate-book-selling .book-selling h2 {
-    background: #1a94ff;
+    background: #0bdb7d;
     color: #ffffff;
     text-align: center;
     font-size: 18px;
@@ -1379,7 +1379,7 @@ header {
       .cate-book-selling .book-selling ul li a {
         transition: .3s; }
         .cate-book-selling .book-selling ul li a:hover {
-          color: #1a94ff; }
+          color: #0bdb7d; }
 .cate-book-selling .filter {
   background: url("../images/bg-sachnoibat4.png");
   padding-top: 30px;
@@ -1441,7 +1441,7 @@ header {
         margin-top: 25px;
         transition: .3s; }
         .cate-book-selling .filter .slider-filter form button:hover {
-          background: #1a94ff; }
+          background: #0bdb7d; }
 
 /*			Danh mục sách 			*/
 .search-cate-book {
@@ -1526,7 +1526,7 @@ header {
       .cate-book-detail .info-product .author a {
         transition: .3s; }
         .cate-book-detail .info-product .author a:hover {
-          color: #1a94ff; }
+          color: #0bdb7d; }
     .cate-book-detail .info-product .price, .cate-book-detail .info-product .price-cover {
       margin-top: 10px; }
     .cate-book-detail .info-product .price span:last-child {
@@ -1534,7 +1534,7 @@ header {
       font-size: 18px;
       font-family: 'SVNB'; }
   .cate-book-detail .nav-tabs {
-    border-bottom: 1px solid #1a94ff;
+    border-bottom: 1px solid #0bdb7d;
     margin-top: 20px; }
     .cate-book-detail .nav-tabs .nav-item {
       margin-bottom: 0; }
@@ -1547,10 +1547,10 @@ header {
         text-align: center;
         transition: 0.3s; }
         .cate-book-detail .nav-tabs .nav-item a:hover {
-          background: #1a94ff;
+          background: #0bdb7d;
           color: #ffffff; }
       .cate-book-detail .nav-tabs .nav-item .active {
-        background: #1a94ff;
+        background: #0bdb7d;
         color: #ffffff; }
   .cate-book-detail .cart-cate-book-detail {
     background: url("../images/bg-sachnoibat4.png");
@@ -1587,7 +1587,7 @@ header {
           background: none; }
       .cate-book-detail .cart-cate-book-detail form button {
         display: block;
-        background: #1a94ff;
+        background: #0bdb7d;
         color: #ffffff;
         position: relative;
         height: 40px;
@@ -1640,7 +1640,7 @@ input[type=number]::-webkit-inner-spin-button {
           padding-bottom: 12px;
           border-bottom: none;
           border-top: none;
-          background: #1a94ff;
+          background: #0bdb7d;
           color: #ffffff;
           text-align: center;
           vertical-align: middle; }
@@ -1769,13 +1769,13 @@ input[type=number]::-webkit-inner-spin-button {
               margin-right: 10px; }
           .modal-cart .modal-lg .modal-content .shop-cart .pay .nav-tabs .nav-item .nav-link.active {
             background: none;
-            color: #1a94ff;
-            border-bottom: 2px solid #1a94ff;
+            color: #0bdb7d;
+            border-bottom: 2px solid #0bdb7d;
             border-top: none;
             border-right: none;
             border-left: none; }
             .modal-cart .modal-lg .modal-content .shop-cart .pay .nav-tabs .nav-item .nav-link.active span {
-              background: #1a94ff; }
+              background: #0bdb7d; }
       .modal-cart .modal-lg .modal-content .shop-cart .pay form .form-info {
         /*form{*/
         /*}*/ }
@@ -1848,7 +1848,7 @@ input[type=number]::-webkit-inner-spin-button {
             padding-right: 1px;
             line-height: 1.5; }
         .modal-cart .modal-lg .modal-content .shop-cart .pay form .order .btn-order {
-          background: #1a94ff;
+          background: #0bdb7d;
           color: #ffffff;
           text-align: center;
           display: block;
@@ -1864,7 +1864,7 @@ input[type=number]::-webkit-inner-spin-button {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #1a94ff;
+  background: #0bdb7d;
   color: #ffffff;
   cursor: pointer;
   z-index: 999;
@@ -1936,7 +1936,7 @@ textarea {
   font-size: 24px;
   padding: 15px;
   color: #fff;
-  background: #1a94ff;
+  background: #0bdb7d;
   transition: all 600ms ease-in-out;
   z-index: 999; }
   .btn-menu-admin:hover {
@@ -1982,7 +1982,7 @@ textarea {
         font-family: 'SVNB';
         font-size: 16px;
         border-bottom: 1px solid #e1e1e1;
-        color: #1a94ff;
+        color: #0bdb7d;
         transition: .3s; }
         .menu-admin ul li a:hover {
           color: rgba(11, 219, 125, 0.4117647059); }

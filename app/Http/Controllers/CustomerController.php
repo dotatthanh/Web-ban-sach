@@ -67,6 +67,7 @@ class CustomerController extends Controller
 
     public function profile(Request $request) {
         $content = Cart::content();
+        $category_parents = Category::where('parent_id', NULL)->get();
 
         if (!Auth()->guard('customer')->user()) {
             return redirect(route('user.login'));
@@ -81,6 +82,7 @@ class CustomerController extends Controller
             'title' => "Đăng nhập tài khoản",
             'categories' => $categories,
             'content' => $content,
+            'category_parents' => $category_parents,
             'total' => '',
         ];
         return view('page.user.profile', $data);
