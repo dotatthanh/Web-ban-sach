@@ -110,7 +110,7 @@ class CategoryController extends Controller
             }
 
             $category->update([
-                'nameupdate' => $request->nameupdate,
+                'name' => $request->nameupdate,
                 'parent_id' => $request->parent_id,
             ]);
 
